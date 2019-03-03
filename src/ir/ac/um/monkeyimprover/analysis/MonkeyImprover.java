@@ -3,7 +3,10 @@ package ir.ac.um.monkeyimprover.analysis;
 import com.intellij.execution.ui.ConsoleViewContentType;
 import com.intellij.openapi.project.Project;
 import com.intellij.execution.ui.ConsoleView;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+
+import java.util.List;
 
 
 public class MonkeyImprover implements Runnable {
@@ -20,7 +23,16 @@ public class MonkeyImprover implements Runnable {
     @Override
     public void run() {
         showMessage("started processing project " + project.getName());
-        //  LayoutAnalyzer layoutAnalyzer = new LayoutAnalyzer(this);
+        LayoutAnalyzer layoutAnalyzer = new LayoutAnalyzer(this);
+        List<VirtualFile> layoutFiles = layoutAnalyzer.getLayoutFiles(project.getBaseDir());
+        for(VirtualFile layoutFile: layoutFiles) {
+            List<String> callbackMethodNames = layoutAnalyzer.getCallbackMethodNames(layoutFile);
+            showMessage("layout " + layoutFile.getName());
+            for(String callbackMethodName: callbackMethodNames) {
+                showMessage("\t" + callbackMethodName);
+            }
+
+        }
         //VirtualFile baseDirectory = project.getBaseDir();
         psiElement.accept(new JavaFileVisitor(this));
         showMessage("Finished");

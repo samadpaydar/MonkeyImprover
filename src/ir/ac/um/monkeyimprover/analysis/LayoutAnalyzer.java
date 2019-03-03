@@ -46,15 +46,7 @@ public class LayoutAnalyzer {
         return layoutFiles;
     }
 
-    public List<String> getCallbackMethodNames(List<VirtualFile> layoutXMLFiles) {
-        List<String> callbackMethodNames = new ArrayList<>();
-        for (VirtualFile layoutXMLFile : layoutXMLFiles) {
-            callbackMethodNames.addAll(getCallbackMethodNames(layoutXMLFile));
-        }
-        return callbackMethodNames;
-    }
-
-    private List<String> getCallbackMethodNames(VirtualFile layoutXMLFile) {
+    public List<String> getCallbackMethodNames(VirtualFile layoutXMLFile) {
         List<String> callbackMethodNames = new ArrayList<>();
         String path = layoutXMLFile.getCanonicalPath();
         File xmlFile = new File(path);
