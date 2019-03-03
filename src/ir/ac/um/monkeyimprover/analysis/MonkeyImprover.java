@@ -25,13 +25,14 @@ public class MonkeyImprover implements Runnable {
         showMessage("started processing project " + project.getName());
         LayoutAnalyzer layoutAnalyzer = new LayoutAnalyzer(this);
         List<VirtualFile> layoutFiles = layoutAnalyzer.getLayoutFiles(project.getBaseDir());
-        for(VirtualFile layoutFile: layoutFiles) {
+        for (VirtualFile layoutFile : layoutFiles) {
             List<String> callbackMethodNames = layoutAnalyzer.getCallbackMethodNames(layoutFile);
             showMessage("layout " + layoutFile.getName());
-            for(String callbackMethodName: callbackMethodNames) {
+            VirtualFile relatedJavaFile = layoutAnalyzer.findRelatedJavaFile(project.getBaseDir(), layoutFile);
+            showMessage("relatedJavaFile " + (relatedJavaFile != null ? relatedJavaFile.getName() : " not found"));
+            for (String callbackMethodName : callbackMethodNames) {
                 showMessage("\t" + callbackMethodName);
             }
-
         }
         //VirtualFile baseDirectory = project.getBaseDir();
         psiElement.accept(new JavaFileVisitor(this));

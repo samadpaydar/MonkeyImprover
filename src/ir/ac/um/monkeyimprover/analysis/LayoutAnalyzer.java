@@ -1,11 +1,13 @@
 package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.openapi.vfs.VirtualFile;
+import ir.ac.um.monkeyimprover.utils.Utils;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LayoutAnalyzer {
@@ -44,6 +46,33 @@ public class LayoutAnalyzer {
             }
         }
         return layoutFiles;
+    }
+
+    public VirtualFile findRelatedJavaFile(VirtualFile directory, VirtualFile layoutXMLFile) {
+        String layoutFileName = layoutXMLFile.getName();
+        layoutFileName = layoutFileName.substring(0, layoutFileName.lastIndexOf('.'));
+        String[] parts = layoutFileName.split("_");
+        String relatedJavaFileName = "";
+        for (String part : parts) {
+            relatedJavaFileName = Utils.capitalize(part) + relatedJavaFileName;
+        }
+        relatedJavaFileName += ".java";
+        return findRelatedJavaFile(directory, relatedJavaFileName);
+    }
+
+    private VirtualFile findRelatedJavaFile(VirtualFile directory, String relatedJavaFileName) {
+        VirtualFile[] children = directory.getChildren();
+        for (VirtualFile child : children) {
+            if (child.isDirectory()) {
+                VirtualFile file = findRelatedJavaFile(child, relatedJavaFileName);
+                if (file != null) {
+                    return file;
+                }
+            } else if (child.getName().equals(relatedJavaFileName)) {
+                return child;
+            }
+        }
+        return null;
     }
 
     public List<String> getCallbackMethodNames(VirtualFile layoutXMLFile) {
