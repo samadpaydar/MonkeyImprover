@@ -48,7 +48,7 @@ public class LayoutAnalyzer {
         return layoutFiles;
     }
 
-    public VirtualFile findRelatedJavaFile(VirtualFile directory, VirtualFile layoutXMLFile) {
+    public VirtualFile findRelatedJavaFileBasedOnName(VirtualFile directory, VirtualFile layoutXMLFile) {
         String layoutFileName = layoutXMLFile.getName();
         layoutFileName = layoutFileName.substring(0, layoutFileName.lastIndexOf('.'));
         String[] parts = layoutFileName.split("_");
