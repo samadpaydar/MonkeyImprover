@@ -32,7 +32,8 @@ public class MonkeyImprover implements Runnable {
             for (String callbackMethodName : callbackMethodNames) {
                 showMessage("\tcallbackMethodName: " + callbackMethodName);
             }
-            VirtualFile relatedJavaFile = layoutAnalyzer.findRelatedJavaFileBasedOnName(project.getBaseDir(), layoutFile);
+            ClassFinder classFinder = new ClassFinder(this);
+            VirtualFile relatedJavaFile = classFinder.findRelatedJavaFile(project.getBaseDir(), layoutFile);
             showMessage("relatedJavaFile " + (relatedJavaFile != null ? relatedJavaFile.getName() : " not found"));
             if (relatedJavaFile != null) {
                 PsiFile file = PsiManager.getInstance(project).findFile(relatedJavaFile);

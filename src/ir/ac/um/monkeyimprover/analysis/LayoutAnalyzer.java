@@ -48,33 +48,6 @@ public class LayoutAnalyzer {
         return layoutFiles;
     }
 
-    public VirtualFile findRelatedJavaFileBasedOnName(VirtualFile directory, VirtualFile layoutXMLFile) {
-        String layoutFileName = layoutXMLFile.getName();
-        layoutFileName = layoutFileName.substring(0, layoutFileName.lastIndexOf('.'));
-        String[] parts = layoutFileName.split("_");
-        String relatedJavaFileName = "";
-        for (String part : parts) {
-            relatedJavaFileName = Utils.capitalize(part) + relatedJavaFileName;
-        }
-        relatedJavaFileName += ".java";
-        return findRelatedJavaFile(directory, relatedJavaFileName);
-    }
-
-    private VirtualFile findRelatedJavaFile(VirtualFile directory, String relatedJavaFileName) {
-        VirtualFile[] children = directory.getChildren();
-        for (VirtualFile child : children) {
-            if (child.isDirectory()) {
-                VirtualFile file = findRelatedJavaFile(child, relatedJavaFileName);
-                if (file != null) {
-                    return file;
-                }
-            } else if (child.getName().equals(relatedJavaFileName)) {
-                return child;
-            }
-        }
-        return null;
-    }
-
     public List<String> getCallbackMethodNames(VirtualFile layoutXMLFile) {
         List<String> callbackMethodNames = new ArrayList<>();
         String path = layoutXMLFile.getCanonicalPath();
@@ -93,4 +66,21 @@ public class LayoutAnalyzer {
         return callbackMethodNames;
     }
 
+    public String getContextClassName(VirtualFile layoutXMLFile) {
+        String contextClassName = null;
+        String path = layoutXMLFile.getCanonicalPath();
+        File xmlFile = new File(path);
+        if (xmlFile.exists() && xmlFile.isFile()) {
+            try {
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+                SAXParser saxParser = factory.newSAXParser();
+                LayoutXMLFileHandler handler = new LayoutXMLFileHandler(this.monkeyImprover);
+                saxParser.parse(xmlFile, handler);
+                contextClassName = handler.getContext();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return contextClassName;
+    }
 }

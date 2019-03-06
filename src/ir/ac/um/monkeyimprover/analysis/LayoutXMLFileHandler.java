@@ -10,6 +10,7 @@ import java.util.List;
 public class LayoutXMLFileHandler extends DefaultHandler {
     private List<String> callbackMethodNames;
     private MonkeyImprover monkeyImprover;
+    private String context;
 
     public LayoutXMLFileHandler(MonkeyImprover monkeyImprover) {
         callbackMethodNames = new ArrayList<>();
@@ -31,7 +32,10 @@ public class LayoutXMLFileHandler extends DefaultHandler {
             String attributeQualifiedName = attributes.getQName(i);
             if (attributeQualifiedName != null && attributeQualifiedName.toLowerCase().equalsIgnoreCase("android:onclick")) {
                 callbackMethodNames.add(attributes.getValue(i));
+            } else if (attributeQualifiedName != null && attributeQualifiedName.toLowerCase().equalsIgnoreCase("tools:context")) {
+                context = attributes.getValue(i);
             }
+
         }
     }
 
@@ -41,6 +45,10 @@ public class LayoutXMLFileHandler extends DefaultHandler {
 
     public List<String> getCallbackMethodNames() {
         return callbackMethodNames;
+    }
+
+    public String getContext() {
+        return this.context;
     }
 
 }
