@@ -66,8 +66,8 @@ public class LayoutAnalyzer {
         return callbackMethodNames;
     }
 
-    public String getContextClassName(VirtualFile layoutXMLFile) {
-        String contextClassName = null;
+    public List<String> getContextClassNames(VirtualFile layoutXMLFile) {
+        List<String> contextClassNames = new ArrayList<>();
         String path = layoutXMLFile.getCanonicalPath();
         File xmlFile = new File(path);
         if (xmlFile.exists() && xmlFile.isFile()) {
@@ -76,11 +76,11 @@ public class LayoutAnalyzer {
                 SAXParser saxParser = factory.newSAXParser();
                 LayoutXMLFileHandler handler = new LayoutXMLFileHandler(this.monkeyImprover);
                 saxParser.parse(xmlFile, handler);
-                contextClassName = handler.getContext();
+                contextClassNames.addAll(handler.getContexts());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return contextClassName;
+        return contextClassNames;
     }
 }
