@@ -1,14 +1,6 @@
 package ir.ac.um.monkeyimprover.analysis;
 
-import com.intellij.ide.highlighter.JavaFileType;
-import com.intellij.openapi.fileTypes.impl.JavaFileTypeFactory;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.newvfs.impl.VirtualFileImpl;
 import com.intellij.psi.*;
-import com.intellij.psi.impl.source.PsiJavaFileImpl;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MethodAnalyzer {
     public MethodAnalyzer() {
@@ -27,27 +19,27 @@ public class MethodAnalyzer {
 //        TODO provide a correct implementation
         PsiCodeBlock methodBody = method.getBody();
         int cyclomatic = 1;
-        cyclomatic = getCyclomaticComplexity(methodBody,cyclomatic);
-       // if(methodBody!=null) {
-         //   return methodBody.getStatements().length;
+        cyclomatic = getCyclomaticComplexity(methodBody, cyclomatic);
+        // if(methodBody!=null) {
+        //   return methodBody.getStatements().length;
         //} else {
-           // return 0;
-       // }
+        // return 0;
+        // }
         return cyclomatic;
     }
-    private int getCyclomaticComplexity(PsiCodeBlock methodBody,int cyclomatic){
-        if(methodBody == null || methodBody.getStatementCount()==0) {
+
+    private int getCyclomaticComplexity(PsiCodeBlock codeBlock, int cyclomatic) {
+        if (codeBlock == null || codeBlock.getStatementCount() == 0) {
             // System.out.println(method.getText());
             return cyclomatic;
         }
-        for(PsiStatement statement:methodBody.getStatements()){
-            if(checkStatement(statement)) {
+        for (PsiStatement statement : codeBlock.getStatements()) {
+            if (isBranch(statement)) {
                 for (PsiElement element : statement.getChildren()) {
-                    if(element instanceof PsiBlockStatement){
-                        PsiBlockStatement code = (PsiBlockStatement) element;
-                        PsiCodeBlock met = code.getCodeBlock();
-                        cyclomatic = getCyclomaticComplexity(met,++cyclomatic);
-
+                    if (element instanceof PsiBlockStatement) {
+                        PsiBlockStatement blockStatement = (PsiBlockStatement) element;
+                        PsiCodeBlock childCodeBlock = blockStatement.getCodeBlock();
+                        cyclomatic = getCyclomaticComplexity(childCodeBlock, ++cyclomatic);
                     }
                 }
             }
@@ -55,25 +47,21 @@ public class MethodAnalyzer {
 
         return cyclomatic;
     }
-    private boolean checkStatement(PsiStatement statement){
+
+    private boolean isBranch(PsiStatement statement) {
         boolean branchStatement = false;
-        if(statement instanceof PsiIfStatement){
+        if (statement instanceof PsiIfStatement) {
 
             branchStatement = true;
-        }
-        else if(statement instanceof PsiForStatement){
+        } else if (statement instanceof PsiForStatement) {
             branchStatement = true;
-        }
-        else if(statement instanceof PsiWhileStatement){
+        } else if (statement instanceof PsiWhileStatement) {
             branchStatement = true;
-        }
-        else if(statement instanceof PsiDoWhileStatement){
+        } else if (statement instanceof PsiDoWhileStatement) {
             branchStatement = true;
-        }
-        else if(statement instanceof PsiSwitchStatement){
+        } else if (statement instanceof PsiSwitchStatement) {
 
-        }
-        else if(statement instanceof PsiTryStatement){
+        } else if (statement instanceof PsiTryStatement) {
 
         }
         return branchStatement;
