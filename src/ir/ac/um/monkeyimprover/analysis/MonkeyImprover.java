@@ -25,6 +25,7 @@ public class MonkeyImprover implements Runnable {
         showMessage("started processing project " + project.getName());
         LayoutAnalyzer layoutAnalyzer = new LayoutAnalyzer(this);
         MethodFinder methodFiner = new MethodFinder();
+        MethodAnalyzer methodAnalyzer = new MethodAnalyzer();
         List<VirtualFile> layoutFiles = layoutAnalyzer.getLayoutFiles(project.getBaseDir());
         for (VirtualFile layoutFile : layoutFiles) {
             showMessage("layout " + layoutFile.getName());
@@ -40,7 +41,7 @@ public class MonkeyImprover implements Runnable {
                 if (file != null && file instanceof PsiJavaFile) {
                     for (String callbackMethodName : callbackMethodNames) {
                         PsiMethod relatedMethod = methodFiner.findMethodByName((PsiJavaFile) file, callbackMethodName);
-                        showMessage("\t\tcallbackMethodName: " + callbackMethodName + " relatedMethod: " + relatedMethod.getText());
+                        showMessage("\t\tcallbackMethodName: " + callbackMethodName + " relatedMethod: " + relatedMethod.getText() + " complexity: " + methodAnalyzer.getMethodComplexity(relatedMethod));
                     }
                 }
             }
