@@ -6,6 +6,7 @@ import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,14 +44,11 @@ public class MonkeyImprover implements Runnable {
     }
 
 
-    private void processLayoutFile(VirtualFile layoutFile) {
-        showMessage("=====================================================");
-        showMessage("Layout File: " + layoutFile.getName());
+    private List<CallbackMethodInfo> processLayoutFile(VirtualFile layoutFile) {
+        List<CallbackMethodInfo> infoList = new ArrayList<>();
         List<String> callbackMethodNames = layoutAnalyzer.getCallbackMethodNames(layoutFile);
-        showMessage("\tCallback Methods: " + callbackMethodNames);
         if (!callbackMethodNames.isEmpty()) {
             List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(project.getBaseDir(), layoutFile);
-            showMessage("\tRelated Java Files: " + relatedJavaFiles);
             if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
                 for (String callbackMethodName : callbackMethodNames) {
                     processCallBack(callbackMethodName, relatedJavaFiles);
@@ -62,21 +60,21 @@ public class MonkeyImprover implements Runnable {
         showMessage("=====================================================");
     }
 
-    private void processCallBack(String callbackMethodName, List<VirtualFile> relatedJavaFiles) {
-        showMessage("Callback Method: " + callbackMethodName);
+    private CallbackMethodInfo processCallBack(String callbackMethodName, List<VirtualFile> relatedJavaFiles) {
+        double complexity = -1;
+        PsiMethod method = null;
         for (VirtualFile relatedJavaFile : relatedJavaFiles) {
             PsiFile file = PsiManager.getInstance(project).findFile(relatedJavaFile);
             if (file != null && file instanceof PsiJavaFile) {
                 PsiMethod relatedMethod = methodFinder.findMethodByName((PsiJavaFile) file, callbackMethodName);
                 if (relatedMethod != null) {
-                    showMessage("Related Method");
-                    showMessage(relatedMethod.getText());
-                    showMessage("...................................");
-                    showMessage("\t\tcomplexity: " + methodAnalyzer.getMethodComplexity(relatedMethod));
+                    method = relatedMethod;
+                    complexity = methodAnalyzer.getMethodComplexity(relatedMethod);
                     break;
                 }
             }
         }
+        return new CallbackMethodInfo(callbackMethodName, method, complexity);
     }
 
 

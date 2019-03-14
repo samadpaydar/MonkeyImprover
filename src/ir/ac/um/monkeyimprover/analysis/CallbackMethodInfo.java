@@ -7,7 +7,10 @@ public class CallbackMethodInfo {
     private PsiMethod callbackMethod;
     private double callbackMethodComplexity;
 
-    public CallbackMethodInfo() {
+    public CallbackMethodInfo(String callbackName, PsiMethod callbackMethod, double callbackMethodComplexity) {
+        setCallbackName(callbackName);
+        setCallbackMethod(callbackMethod);
+        setCallbackMethodComplexity(callbackMethodComplexity);
 
     }
 
