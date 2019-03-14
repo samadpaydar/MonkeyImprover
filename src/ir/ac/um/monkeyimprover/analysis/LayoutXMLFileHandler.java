@@ -9,12 +9,10 @@ import java.util.List;
 
 public class LayoutXMLFileHandler extends DefaultHandler {
     private List<String> callbackMethodNames;
-    private MonkeyImprover monkeyImprover;
     private List<String> contexts;
 
-    public LayoutXMLFileHandler(MonkeyImprover monkeyImprover) {
+    public LayoutXMLFileHandler() {
         callbackMethodNames = new ArrayList<>();
-        this.monkeyImprover = monkeyImprover;
         contexts = new ArrayList<>();
     }
 

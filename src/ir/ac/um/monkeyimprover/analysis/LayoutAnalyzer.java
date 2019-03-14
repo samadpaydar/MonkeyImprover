@@ -11,10 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LayoutAnalyzer {
-    private MonkeyImprover monkeyImprover;
 
-    public LayoutAnalyzer(MonkeyImprover monkeyImprover) {
-        this.monkeyImprover = monkeyImprover;
+    public LayoutAnalyzer() {
     }
 
     public List<VirtualFile> getLayoutFiles(VirtualFile directory) {
@@ -56,7 +54,7 @@ public class LayoutAnalyzer {
             try {
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 SAXParser saxParser = factory.newSAXParser();
-                LayoutXMLFileHandler handler = new LayoutXMLFileHandler(this.monkeyImprover);
+                LayoutXMLFileHandler handler = new LayoutXMLFileHandler();
                 saxParser.parse(xmlFile, handler);
                 callbackMethodNames = handler.getCallbackMethodNames();
             } catch (Exception e) {
@@ -74,7 +72,7 @@ public class LayoutAnalyzer {
             try {
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 SAXParser saxParser = factory.newSAXParser();
-                LayoutXMLFileHandler handler = new LayoutXMLFileHandler(this.monkeyImprover);
+                LayoutXMLFileHandler handler = new LayoutXMLFileHandler();
                 saxParser.parse(xmlFile, handler);
                 contextClassNames.addAll(handler.getContexts());
             } catch (Exception e) {

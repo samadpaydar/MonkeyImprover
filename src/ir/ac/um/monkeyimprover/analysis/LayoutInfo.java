@@ -1,22 +1,31 @@
 package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiMethod;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LayoutInfo {
     private VirtualFile layoutFile;
     private List<CallbackMethodInfo> callbackMethodInfoList;
 
-    public LayoutInfo(VirtualFile layoutFile) {
+    public LayoutInfo(VirtualFile layoutFile, List<CallbackMethodInfo> callbackMethodInfoList) {
+        this.setLayoutFile(layoutFile);
+        this.setCallbackMethodInfoList(callbackMethodInfoList);
+    }
+
+    public VirtualFile getLayoutFile() {
+        return layoutFile;
+    }
+
+    public void setLayoutFile(VirtualFile layoutFile) {
         this.layoutFile = layoutFile;
-        callbackMethodInfoList = new ArrayList<>();
     }
 
-    public void addCallbackMethodInfo(CallbackMethodInfo info) {
-        callbackMethodInfoList.add(info);
+    public List<CallbackMethodInfo> getCallbackMethodInfoList() {
+        return callbackMethodInfoList;
     }
 
+    public void setCallbackMethodInfoList(List<CallbackMethodInfo> callbackMethodInfoList) {
+        this.callbackMethodInfoList = callbackMethodInfoList;
+    }
 }

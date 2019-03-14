@@ -9,10 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassFinder {
-    private MonkeyImprover monkeyImprover;
 
-    public ClassFinder(MonkeyImprover monkeyImprover) {
-        this.monkeyImprover = monkeyImprover;
+    public ClassFinder() {
     }
 
     public List<VirtualFile> findRelatedJavaFile(VirtualFile directory, VirtualFile layoutXMLFile) {
@@ -28,9 +26,8 @@ public class ClassFinder {
 
     private List<VirtualFile> findRelatedJavaFileByContext(VirtualFile directory, VirtualFile layoutXMLFile) {
         List<VirtualFile> relatedJavaFiles = null;
-        LayoutAnalyzer layoutAnalyzer = new LayoutAnalyzer(this.monkeyImprover);
+        LayoutAnalyzer layoutAnalyzer = new LayoutAnalyzer();
         List<String> contextClassNames = layoutAnalyzer.getContextClassNames(layoutXMLFile);
-        monkeyImprover.showMessage("contextClassName " + contextClassNames);
         if (contextClassNames != null && !contextClassNames.isEmpty()) {
             relatedJavaFiles = new ArrayList<>();
             for (String contextClassName : contextClassNames) {

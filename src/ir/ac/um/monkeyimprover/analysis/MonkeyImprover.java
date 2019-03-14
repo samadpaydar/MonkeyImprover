@@ -28,15 +28,16 @@ public class MonkeyImprover implements Runnable {
     @Override
     public void run() {
         showMessage("started processing project " + project.getName());
-        layoutAnalyzer = new LayoutAnalyzer(this);
-        classFinder = new ClassFinder(this);
+        layoutAnalyzer = new LayoutAnalyzer();
+        classFinder = new ClassFinder();
         methodFinder = new MethodFinder();
         methodAnalyzer = new MethodAnalyzer();
-
+        LayoutRefactory layoutRefactory = new LayoutRefactory();
         List<VirtualFile> layoutFiles = layoutAnalyzer.getLayoutFiles(project.getBaseDir());
 
         for (VirtualFile layoutFile : layoutFiles) {
-            processLayoutFile(layoutFile);
+            List<CallbackMethodInfo> info = processLayoutFile(layoutFile);
+            layoutRefactory.refactorLayout(new LayoutInfo(layoutFile, info));
         }
         //VirtualFile baseDirectory = project.getBaseDir();
         //psiElement.accept(new JavaFileVisitor(this));
@@ -51,13 +52,12 @@ public class MonkeyImprover implements Runnable {
             List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(project.getBaseDir(), layoutFile);
             if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
                 for (String callbackMethodName : callbackMethodNames) {
-                    processCallBack(callbackMethodName, relatedJavaFiles);
+                    CallbackMethodInfo info = processCallBack(callbackMethodName, relatedJavaFiles);
+                    infoList.add(info);
                 }
-            } else {
-                showMessage("\trelatedJavaFile Not Found");
             }
         }
-        showMessage("=====================================================");
+        return infoList;
     }
 
     private CallbackMethodInfo processCallBack(String callbackMethodName, List<VirtualFile> relatedJavaFiles) {
