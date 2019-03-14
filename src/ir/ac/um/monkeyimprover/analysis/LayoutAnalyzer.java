@@ -1,13 +1,11 @@
 package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import ir.ac.um.monkeyimprover.utils.Utils;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class LayoutAnalyzer {
@@ -54,7 +52,7 @@ public class LayoutAnalyzer {
             try {
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 SAXParser saxParser = factory.newSAXParser();
-                LayoutXMLFileHandler handler = new LayoutXMLFileHandler();
+                LayoutXMLHandler handler = new LayoutXMLHandler();
                 saxParser.parse(xmlFile, handler);
                 callbackMethodNames = handler.getCallbackMethodNames();
             } catch (Exception e) {
@@ -72,7 +70,7 @@ public class LayoutAnalyzer {
             try {
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 SAXParser saxParser = factory.newSAXParser();
-                LayoutXMLFileHandler handler = new LayoutXMLFileHandler();
+                LayoutXMLHandler handler = new LayoutXMLHandler();
                 saxParser.parse(xmlFile, handler);
                 contextClassNames.addAll(handler.getContexts());
             } catch (Exception e) {

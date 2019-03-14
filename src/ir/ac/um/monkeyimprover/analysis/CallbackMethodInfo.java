@@ -3,8 +3,17 @@ package ir.ac.um.monkeyimprover.analysis;
 import com.intellij.psi.PsiMethod;
 
 public class CallbackMethodInfo {
+    /**
+     * the name of the callback as written in onClick attribute of a View in a layout file
+     */
     private String callbackName;
+    /**
+     * the matched callback method in a Java file
+     */
     private PsiMethod callbackMethod;
+    /**
+     * complexity of the callback method
+     */
     private double callbackMethodComplexity;
 
     public CallbackMethodInfo(String callbackName, PsiMethod callbackMethod, double callbackMethodComplexity) {

@@ -45,7 +45,6 @@ public class MonkeyImprover implements Runnable {
         showMessage("Finished");
     }
 
-
     private List<CallbackMethodInfo> processLayoutFile(VirtualFile layoutFile) {
         List<CallbackMethodInfo> infoList = new ArrayList<>();
         List<String> callbackMethodNames = layoutAnalyzer.getCallbackMethodNames(layoutFile);

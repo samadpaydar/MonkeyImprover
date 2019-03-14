@@ -71,4 +71,10 @@ public class MethodAnalyzer {
         return branchStatement;
     }
 
+
+    private boolean invokes(PsiMethod caller, PsiMethod callee) {
+        MethodCallAnalyzer methodCallAnalyzer = new MethodCallAnalyzer(caller, callee);
+        caller.accept(methodCallAnalyzer);
+        return methodCallAnalyzer.hasCalled();
+    }
 }

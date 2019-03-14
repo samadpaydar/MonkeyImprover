@@ -7,11 +7,11 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LayoutXMLFileHandler extends DefaultHandler {
+public class LayoutXMLHandler extends DefaultHandler {
     private List<String> callbackMethodNames;
     private List<String> contexts;
 
-    public LayoutXMLFileHandler() {
+    public LayoutXMLHandler() {
         callbackMethodNames = new ArrayList<>();
         contexts = new ArrayList<>();
     }
