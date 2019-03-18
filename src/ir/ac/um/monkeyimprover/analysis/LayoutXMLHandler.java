@@ -31,7 +31,7 @@ public class LayoutXMLHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName,
                              String qName, Attributes attributes) throws SAXException {
-        if (isViewElement(qName)) {
+        if (AnalysisUtils.isAnAndroidView(qName)) {
             numberOfViews = getNumberOfViews() + 1;
         }
         for (int i = 0; i < attributes.getLength(); i++) {
@@ -60,13 +60,4 @@ public class LayoutXMLHandler extends DefaultHandler {
         return numberOfViews;
     }
 
-    private boolean isViewElement(String elementName) {
-        String[] viewTypes = {"TextView", "EditText", "Button", "ImageView", "ImageButton", "CheckBox", "RadioButton", "RadioGroup", "Spinner", "AutoCompleteTextView"};
-        for (String viewType : viewTypes) {
-            if (viewType.equals(elementName)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

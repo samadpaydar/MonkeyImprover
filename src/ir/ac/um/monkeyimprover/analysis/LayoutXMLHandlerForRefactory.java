@@ -154,6 +154,10 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
                     setAttribute(child, "android:layout_width", "match_parent");
                     setAttribute(child, "android:layout_height", "0dp");
                     setAttribute(child, "android:layout_weight", Integer.toString(weight));
+                } else {
+                    setAttribute(child, "android:layout_width", "match_parent");
+                    setAttribute(child, "android:layout_height", "0dp");
+                    setAttribute(child, "android:layout_weight", "1");
                 }
             }
         }
@@ -186,7 +190,10 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         List<Node> children = new ArrayList<>();
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
-            children.add(childrenNodes.item(i));
+            Node child = childrenNodes.item(i);
+            if(AnalysisUtils.isAnAndroidView(child.getNodeName())) {
+                children.add(child);
+            }
             children.addAll(getAllViews(childrenNodes.item(i)));
         }
         return children;
