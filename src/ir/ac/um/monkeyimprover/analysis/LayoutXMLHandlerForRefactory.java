@@ -1,7 +1,6 @@
 package ir.ac.um.monkeyimprover.analysis;
 
 import org.w3c.dom.*;
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -133,7 +132,7 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         updateViewWeights(document);
 
         addViews(newRootLayout, currentRootLayout);
-        
+
         document.replaceChild(newRootLayout, currentRootLayout);
         return newRootLayout;
     }
