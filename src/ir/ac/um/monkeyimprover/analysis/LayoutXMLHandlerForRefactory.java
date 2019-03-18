@@ -23,11 +23,14 @@ import java.util.List;
  */
 public class LayoutXMLHandlerForRefactory extends DefaultHandler {
     private MonkeyImprover monkeyImprover;
-    File xmlFile;
+    private File xmlFile;
+    private int numberOfViews;
+    private List<CallbackMethodInfo> callbackMethodInfoList;
 
-    public LayoutXMLHandlerForRefactory(MonkeyImprover monkeyImprover, File xmlFile) {
+    public LayoutXMLHandlerForRefactory(MonkeyImprover monkeyImprover, File xmlFile, List<CallbackMethodInfo> callbackMethodInfoList) {
         this.monkeyImprover = monkeyImprover;
         this.xmlFile = xmlFile;
+        this.callbackMethodInfoList = callbackMethodInfoList;
     }
 
 
@@ -39,7 +42,7 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
             Document document = documentBuilder.parse(xmlFile);
             document.getDocumentElement().normalize();
 
-            int numberOfViews = getNumberOfViews();
+            numberOfViews = getNumberOfViews();
             monkeyImprover.showMessage(xmlFile.getName() + " has " + numberOfViews + " views");
             //update attribute value
             //  updateAttributeValue(document);
@@ -138,18 +141,51 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
 
     private void updateViewWeights(Document document) {
         List<Node> children = getAllViews(document.getFirstChild());
-        for(Node child: children) {
+        for (Node child : children) {
             NamedNodeMap attributeMap = child.getAttributes();
-            Node node = attributeMap.getNamedItem("android:onClick");
-            String value = node.toString();
-            monkeyImprover.showMessage("value: " + value);
+            if (attributeMap != null) {
+                Node node = attributeMap.getNamedItem("android:onClick");
+                if (node != null) {
+                    String callbackMethodName = node.toString();
+                    callbackMethodName = callbackMethodName.replace("android:onClick=", "");
+                    callbackMethodName = callbackMethodName.replace("\"", "");
+                    callbackMethodName = callbackMethodName.trim();
+                    int weight = getWeight(callbackMethodName);
+                    setAttribute(child, "android:layout_width", "match_parent");
+                    setAttribute(child, "android:layout_height", "0dp");
+                    setAttribute(child, "android:layout_weight", Integer.toString(weight));
+                }
+            }
         }
+    }
+
+    private void setAttribute(Node node, String attributeName, String attributeValue) {
+        if (node instanceof Element) {
+            Element element = (Element) node;
+            element.setAttribute(attributeName, attributeValue);
+        }
+    }
+
+    private int getWeight(String callbackMethodName) {
+        int weight = 1;
+        double complexitySum = 0.0;
+        for (CallbackMethodInfo info : callbackMethodInfoList) {
+            complexitySum += info.getCallbackMethodComplexity();
+        }
+        for (CallbackMethodInfo info : callbackMethodInfoList) {
+            if (info.getCallbackName().equals(callbackMethodName)) {
+                double complexity = info.getCallbackMethodComplexity();
+                weight = (int) ((100.0 * complexity) / complexitySum);
+                weight = Math.max(weight, 1);
+            }
+        }
+        return weight;
     }
 
     private List<Node> getAllViews(Node parent) {
         List<Node> children = new ArrayList<>();
         NodeList childrenNodes = parent.getChildNodes();
-        for(int i =0; i<childrenNodes.getLength(); i++) {
+        for (int i = 0; i < childrenNodes.getLength(); i++) {
             children.add(childrenNodes.item(i));
             children.addAll(getAllViews(childrenNodes.item(i)));
         }

@@ -21,7 +21,7 @@ public class LayoutRefactory {
         String path = layoutFile.getCanonicalPath();
         File xmlFile = new File(path);
         if (xmlFile.exists() && xmlFile.isFile()) {
-            LayoutXMLHandlerForRefactory handler = new LayoutXMLHandlerForRefactory(monkeyImprover, xmlFile);
+            LayoutXMLHandlerForRefactory handler = new LayoutXMLHandlerForRefactory(monkeyImprover, xmlFile, callbackMethodInfoList);
             handler.run();
         }
     }
