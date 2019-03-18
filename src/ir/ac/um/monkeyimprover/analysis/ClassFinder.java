@@ -4,10 +4,14 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaFile;
 import ir.ac.um.monkeyimprover.utils.Utils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Samad Paydar
+ */
 public class ClassFinder {
 
     public ClassFinder() {

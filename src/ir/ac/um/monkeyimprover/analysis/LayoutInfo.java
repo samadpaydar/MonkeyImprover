@@ -4,6 +4,9 @@ import com.intellij.openapi.vfs.VirtualFile;
 
 import java.util.List;
 
+/**
+ * @author Samad Paydar
+ */
 public class LayoutInfo {
     private VirtualFile layoutFile;
     private List<CallbackMethodInfo> callbackMethodInfoList;

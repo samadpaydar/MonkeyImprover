@@ -7,6 +7,9 @@ import ir.ac.um.monkeyimprover.utils.Constants;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author Samad Paydar
+ */
 public class AnalysisUtils {
 
     public static String getMethodQualifiedName(PsiMethod method) {

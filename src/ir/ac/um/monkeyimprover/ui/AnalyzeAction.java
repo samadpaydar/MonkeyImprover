@@ -18,6 +18,9 @@ import ir.ac.um.monkeyimprover.utils.Constants;
 import org.jetbrains.annotations.NotNull;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 
+/**
+ * @author Samad Paydar
+ */
 public class AnalyzeAction extends AnAction {
     private ConsoleView consoleView;
 

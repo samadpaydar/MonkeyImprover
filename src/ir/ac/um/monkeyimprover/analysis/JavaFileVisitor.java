@@ -5,6 +5,9 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
 
+/**
+ * @author Samad Paydar
+ */
 public class JavaFileVisitor extends JavaRecursiveElementVisitor {
     private MonkeyImprover monkeyImprover;
 

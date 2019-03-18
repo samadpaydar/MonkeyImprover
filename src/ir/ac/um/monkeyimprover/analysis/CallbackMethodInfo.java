@@ -1,7 +1,9 @@
 package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.psi.PsiMethod;
-
+/**
+ * @author Samad Paydar
+ */
 public class CallbackMethodInfo {
     /**
      * the name of the callback as written in onClick attribute of a View in a layout file

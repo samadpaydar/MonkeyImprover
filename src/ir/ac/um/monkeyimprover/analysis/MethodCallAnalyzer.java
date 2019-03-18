@@ -2,6 +2,9 @@ package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.psi.*;
 
+/**
+ * @author Samad Paydar
+ */
 public class MethodCallAnalyzer extends JavaRecursiveElementVisitor {
     private PsiMethod caller;
     private PsiMethod callee;

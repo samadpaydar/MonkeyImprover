@@ -7,6 +7,9 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Samad Paydar
+ */
 public class LayoutXMLHandler extends DefaultHandler {
     private List<String> callbackMethodNames;
     private List<String> contexts;

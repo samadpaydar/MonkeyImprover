@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * @author Samad Paydar
+ */
 public class MonkeyImprover implements Runnable {
     private Project project;
     private PsiElement psiElement;
