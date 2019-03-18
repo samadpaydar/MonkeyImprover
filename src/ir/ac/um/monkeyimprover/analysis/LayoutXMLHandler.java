@@ -13,6 +13,7 @@ import java.util.List;
 public class LayoutXMLHandler extends DefaultHandler {
     private List<String> callbackMethodNames;
     private List<String> contexts;
+    private int numberOfViews;
 
     public LayoutXMLHandler() {
         callbackMethodNames = new ArrayList<>();
@@ -30,6 +31,9 @@ public class LayoutXMLHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName,
                              String qName, Attributes attributes) throws SAXException {
+        if (isViewElement(localName)) {
+            numberOfViews = getNumberOfViews() + 1;
+        }
         for (int i = 0; i < attributes.getLength(); i++) {
             String attributeQualifiedName = attributes.getQName(i);
             if (attributeQualifiedName != null && attributeQualifiedName.toLowerCase().equalsIgnoreCase("android:onclick")) {
@@ -37,7 +41,6 @@ public class LayoutXMLHandler extends DefaultHandler {
             } else if (attributeQualifiedName != null && attributeQualifiedName.toLowerCase().equalsIgnoreCase("tools:context")) {
                 contexts.add(attributes.getValue(i));
             }
-
         }
     }
 
@@ -53,4 +56,17 @@ public class LayoutXMLHandler extends DefaultHandler {
         return this.contexts;
     }
 
+    public int getNumberOfViews() {
+        return numberOfViews;
+    }
+
+    private boolean isViewElement(String elementName) {
+        String[] viewTypes = {"TextView", "EditText", "Button", "ImageView", "ImageButton", "CheckBox", "RadioButton", "RadioGroup", "Spinner", "AutoCompleteTextView"};
+        for (String viewType : viewTypes) {
+            if (viewType.equals(elementName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
