@@ -31,7 +31,7 @@ public class LayoutXMLHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName,
                              String qName, Attributes attributes) throws SAXException {
-        if (isViewElement(localName)) {
+        if (isViewElement(qName)) {
             numberOfViews = getNumberOfViews() + 1;
         }
         for (int i = 0; i < attributes.getLength(); i++) {

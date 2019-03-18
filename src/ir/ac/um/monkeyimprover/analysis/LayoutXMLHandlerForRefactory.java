@@ -1,8 +1,6 @@
 package ir.ac.um.monkeyimprover.analysis;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -47,27 +45,23 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
             //  updateAttributeValue(document);
 
             addRootLayoutToGridLayout(document, numberOfViews);
-
-            //delete element
-            //  deleteElement(document);
-
-            //add new element
-            //  addElement(document);
+            updateViewWeights(document);
 
             //write the updated document to file or console
             document.getDocumentElement().normalize();
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(new File(xmlFile.getParentFile(), "modified" + xmlFile.getName()));
+            StreamResult result = new StreamResult(new File(xmlFile.getParentFile(), "refactored_" + xmlFile.getName()));
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(source, result);
         } catch (SAXException | ParserConfigurationException | IOException | TransformerException e) {
             e.printStackTrace();
         }
     }
 
-   /* private static void addElement(Document doc) {
+   /* private void addElement(Document doc) {
         NodeList employees = doc.getElementsByTagName("Employee");
         Element emp = null;
 
@@ -80,7 +74,7 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         }
     }
 
-    private static void deleteElement(Document doc) {
+    private void deleteElement(Document doc) {
         NodeList employees = doc.getElementsByTagName("Employee");
         Element emp = null;
         //loop for each employee
@@ -92,7 +86,7 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
 
     }
 
-    private static void updateAttributeValue(Document doc) {
+    private void updateAttributeValue(Document doc) {
         NodeList employees = doc.getElementsByTagName("Employee");
         Element emp = null;
         //loop for each employee
@@ -126,24 +120,39 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
     }
 
 
-    private static void addRootLayoutToGridLayout(Document document, int numberOfViews) {
+    private void addRootLayoutToGridLayout(Document document, int numberOfViews) {
+        Node root = document.getFirstChild();
         Element gridLayoutElement = document.createElement("GridLayout");
         gridLayoutElement.setAttribute("xmlns:android", "http://schemas.android.com/apk/res/android");
         gridLayoutElement.setAttribute("android:layout_width", "match_parent");
         gridLayoutElement.setAttribute("android:layout_height", "match_parent");
         gridLayoutElement.setAttribute("android:rowCount", Integer.toString(numberOfViews));
         gridLayoutElement.setAttribute("android:columnCount", "1");
+        NodeList children = root.getChildNodes();
 
-        document.appendChild(gridLayoutElement);
-    }
-    /*private static void updateElementValue(Document doc) {
-        NodeList employees = doc.getElementsByTagName("Employee");
-        Element emp = null;
-        //loop for each employee
-        for(int i=0; i<employees.getLength();i++){
-            emp = (Element) employees.item(i);
-            Node name = emp.getElementsByTagName("name").item(0).getFirstChild();
-            name.setNodeValue(name.getNodeValue().toUpperCase());
+        for (int i = 0; i < children.getLength(); i++) {
+            gridLayoutElement.appendChild(children.item(i).cloneNode(true));
         }
-    }*/
+        document.replaceChild(gridLayoutElement, root);
+    }
+
+    private void updateViewWeights(Document document) {
+        List<Node> children = getAllViews(document.getFirstChild());
+        for(Node child: children) {
+            NamedNodeMap attributeMap = child.getAttributes();
+            Node node = attributeMap.getNamedItem("android:onClick");
+            String value = node.toString();
+            monkeyImprover.showMessage("value: " + value);
+        }
+    }
+
+    private List<Node> getAllViews(Node parent) {
+        List<Node> children = new ArrayList<>();
+        NodeList childrenNodes = parent.getChildNodes();
+        for(int i =0; i<childrenNodes.getLength(); i++) {
+            children.add(childrenNodes.item(i));
+            children.addAll(getAllViews(childrenNodes.item(i)));
+        }
+        return children;
+    }
 }
