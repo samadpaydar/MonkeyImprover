@@ -47,8 +47,7 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
             //update attribute value
             //  updateAttributeValue(document);
 
-            addRootLayoutToGridLayout(document, numberOfViews);
-            updateViewWeights(document);
+            addRootLayout(document);
 
             //write the updated document to file or console
             document.getDocumentElement().normalize();
@@ -123,20 +122,31 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
     }
 
 
-    private void addRootLayoutToGridLayout(Document document, int numberOfViews) {
-        Node root = document.getFirstChild();
-        Element gridLayoutElement = document.createElement("GridLayout");
-        gridLayoutElement.setAttribute("xmlns:android", "http://schemas.android.com/apk/res/android");
-        gridLayoutElement.setAttribute("android:layout_width", "match_parent");
-        gridLayoutElement.setAttribute("android:layout_height", "match_parent");
-        gridLayoutElement.setAttribute("android:rowCount", Integer.toString(numberOfViews));
-        gridLayoutElement.setAttribute("android:columnCount", "1");
-        NodeList children = root.getChildNodes();
+    private Node addRootLayout(Document document) {
+        Node currentRootLayout = document.getFirstChild();
+        Element newRootLayout = document.createElement("LinearLayout");
+        newRootLayout.setAttribute("xmlns:android", "http://schemas.android.com/apk/res/android");
+        newRootLayout.setAttribute("android:layout_width", "match_parent");
+        newRootLayout.setAttribute("android:layout_height", "match_parent");
+        newRootLayout.setAttribute("android:orientation", "vertical");
 
-        for (int i = 0; i < children.getLength(); i++) {
-            gridLayoutElement.appendChild(children.item(i).cloneNode(true));
+        updateViewWeights(document);
+
+        addViews(newRootLayout, currentRootLayout);
+        
+        document.replaceChild(newRootLayout, currentRootLayout);
+        return newRootLayout;
+    }
+
+    private void addViews(Node newRootLayout, Node parent) {
+        NodeList childrenNodes = parent.getChildNodes();
+        for (int i = 0; i < childrenNodes.getLength(); i++) {
+            Node child = childrenNodes.item(i);
+            if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
+                newRootLayout.appendChild(child);
+            }
+            addViews(newRootLayout, child);
         }
-        document.replaceChild(gridLayoutElement, root);
     }
 
     private void updateViewWeights(Document document) {
@@ -191,11 +201,12 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
-            if(AnalysisUtils.isAnAndroidView(child.getNodeName())) {
+            if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
                 children.add(child);
             }
             children.addAll(getAllViews(childrenNodes.item(i)));
         }
         return children;
     }
+
 }
