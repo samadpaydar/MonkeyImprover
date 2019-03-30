@@ -2,17 +2,19 @@ package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.psi.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Samad Paydar
  */
 public class MethodCallAnalyzer extends JavaRecursiveElementVisitor {
     private PsiMethod caller;
-    private PsiMethod callee;
-    private boolean called;
+    private List<PsiMethod> calledMethods;
 
-    public MethodCallAnalyzer(PsiMethod caller, PsiMethod callee) {
+    public MethodCallAnalyzer(PsiMethod caller) {
         this.caller = caller;
-        this.callee = callee;
+        calledMethods = new ArrayList<>();
     }
 
     @Override
@@ -21,29 +23,15 @@ public class MethodCallAnalyzer extends JavaRecursiveElementVisitor {
         try {
             PsiElement element = expression.getMethodExpression().getReference().resolve();
             if (element instanceof PsiMethod) {
-                PsiMethod calledMethod = (PsiMethod) element;
-                String callerMethodQualifiedName = AnalysisUtils.getMethodQualifiedName(caller);
-                String calledMethodQualifiedName = AnalysisUtils.getMethodQualifiedName(calledMethod);
-                String calleeQualifiedName = AnalysisUtils.getMethodQualifiedName(callee);
-                boolean recursiveCall = callerMethodQualifiedName.equalsIgnoreCase(calledMethodQualifiedName);
-                if (calledMethodQualifiedName != null && calledMethodQualifiedName.equals(calleeQualifiedName)) {
-                    this.called = true;
-                } else if (!recursiveCall) {
-                    MethodCallAnalyzer analyzer = new MethodCallAnalyzer(caller, callee);
-                    calledMethod.accept(analyzer);
-                    boolean indirectlyCalled = analyzer.hasCalled();
-                    if (indirectlyCalled) {
-                        called = true;
-                    }
-                }
+                calledMethods.add((PsiMethod) element);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public boolean hasCalled() {
-        return called;
+    public List<PsiMethod> getCalledMethods() {
+        return calledMethods;
     }
 }
 
