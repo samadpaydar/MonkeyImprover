@@ -18,7 +18,7 @@ public class JavaFileVisitor extends JavaRecursiveElementVisitor {
     @Override
     public void visitJavaFile(PsiJavaFile psiJavaFile) {
         super.visitFile(psiJavaFile);
-        MethodAnalyzer methodAnalyzer = new MethodAnalyzer();
+        MethodAnalyzer methodAnalyzer = new MethodAnalyzer(monkeyImprover);
         PsiClass[] psiClasses = psiJavaFile.getClasses();
         for (PsiClass psiClass : psiClasses) {
             PsiMethod[] psiMethods = psiClass.getMethods();

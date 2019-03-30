@@ -34,7 +34,7 @@ public class MonkeyImprover implements Runnable {
         layoutAnalyzer = new LayoutAnalyzer();
         classFinder = new ClassFinder();
         methodFinder = new MethodFinder();
-        methodAnalyzer = new MethodAnalyzer();
+        methodAnalyzer = new MethodAnalyzer(this);
         LayoutRefactory layoutRefactory = new LayoutRefactory(this);
         showMessage("Extracting layout files...");
         List<VirtualFile> layoutFiles = layoutAnalyzer.getLayoutFiles(project.getBaseDir());
