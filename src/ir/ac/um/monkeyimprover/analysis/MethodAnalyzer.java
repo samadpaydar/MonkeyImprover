@@ -21,7 +21,7 @@ public class MethodAnalyzer {
                 complexity += getAPIComplexity(calledMethod);
             }
         }
-        return getMethodCyclomaticComplexity(method);
+        return complexity;
     }
 
     private int getMethodCyclomaticComplexity(PsiMethod method) {
