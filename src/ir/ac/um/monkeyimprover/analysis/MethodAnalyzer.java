@@ -6,8 +6,9 @@ import com.intellij.psi.*;
 import java.util.List;
 
 public class MethodAnalyzer {
-    public MethodAnalyzer() {
-
+    private MonkeyImprover monkeyImprover;
+    public MethodAnalyzer(MonkeyImprover monkeyImprover) {
+        this.monkeyImprover = monkeyImprover;
     }
 
     /**
@@ -18,12 +19,17 @@ public class MethodAnalyzer {
         CyclomaticComplexityAnalyzer cyclomaticComplexityAnalyzer = new CyclomaticComplexityAnalyzer();
         double complexity = cyclomaticComplexityAnalyzer.getComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
+        monkeyImprover.showMessage("Methods called by " + AnalysisUtils.getMethodQualifiedName(method));
         for (PsiMethod calledMethod : calledMethods) {
+            monkeyImprover.showMessage(" >> " + AnalysisUtils.getMethodQualifiedName(calledMethod));
             if (calledMethod.equals(method)) {
+                monkeyImprover.showMessage(" >> RECURSIVE ");
                 //ignore recursive calls
             } else if (isLocalMethod(method, calledMethod)) {
+                monkeyImprover.showMessage(" >> LOCAL ");
                 complexity += getMethodComplexity(calledMethod);
             } else {
+                monkeyImprover.showMessage(" >> NONLocal ");
                 complexity += getAPIComplexity(calledMethod);
             }
         }
