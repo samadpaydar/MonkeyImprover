@@ -1,5 +1,6 @@
 package ir.ac.um.monkeyimprover.analysis;
 
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 
 import java.util.List;
@@ -18,13 +19,21 @@ public class MethodAnalyzer {
         double complexity = cyclomaticComplexityAnalyzer.getComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
         for (PsiMethod calledMethod : calledMethods) {
-            if (isLocalMethod(calledMethod)) {
+            if (calledMethod.equals(method)) {
+                //ignore recursive calls
+            } else if (isLocalMethod(method, calledMethod)) {
                 complexity += getMethodComplexity(calledMethod);
             } else {
                 complexity += getAPIComplexity(calledMethod);
             }
         }
         return complexity;
+    }
+
+    private boolean isLocalMethod(PsiMethod callerMethod, PsiMethod calledMethod) {
+        Project project1 = callerMethod.getContainingClass().getProject();
+        Project project2 = calledMethod.getContainingClass().getProject();
+        return project1.getName().equals(project2.getName());
     }
 
     private List<PsiMethod> getMethodsDirectlyCalledBy(PsiMethod method) {
