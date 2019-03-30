@@ -12,6 +12,15 @@ public class MethodAnalyzer {
      * @return the complexity of the given method
      */
     public double getMethodComplexity(PsiMethod method) {
+        double complexity = getMethodCyclomaticComplexity(method);
+        PsiMethod[] calledMethods = getMethodsDirectlyCalledBy(method);
+        for(PsiMethod calledMethod: calledMethods) {
+            if(isLocalMethod(calledMethod)) {
+                complexity += getMethodComplexity(calledMethod);
+            } else {
+                complexity += getAPIComplexity(calledMethod);
+            }
+        }
         return getMethodCyclomaticComplexity(method);
     }
 
