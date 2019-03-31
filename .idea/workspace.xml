@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/ClassFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/ClassFinder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MonkeyImprover.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MonkeyImprover.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="36" column="44" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
+            <state relative-caret-position="17">
+              <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2599#2600#0" expanded="true" />
@@ -34,18 +28,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LayoutAnalyzer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LayoutAnalyzer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="442">
+              <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
               <folding>
-                <element signature="e#1716#1717#0" expanded="true" />
-                <element signature="e#1758#1759#0" expanded="true" />
-                <element signature="e#1844#1845#0" expanded="true" />
-                <element signature="e#1906#1907#0" expanded="true" />
-                <element signature="e#1844#1845#0" expanded="true" />
-                <element signature="e#1903#1904#0" expanded="true" />
+                <element signature="e#2045#2046#0" expanded="true" />
+                <element signature="e#2103#2104#0" expanded="true" />
+                <element signature="e#2175#2176#0" expanded="true" />
+                <element signature="e#2233#2234#0" expanded="true" />
+                <element signature="e#2302#2303#0" expanded="true" />
+                <element signature="e#2363#2364#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -125,8 +119,8 @@
       <find>type</find>
       <find>java</find>
       <find>showmess</find>
-      <find>layout</find>
       <find>new layoutAna</find>
+      <find>layout</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src\ir\ac\um\monkeyimprover</dir>
@@ -167,8 +161,8 @@
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/JavaClassCollector.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/ClassFinder.java" />
-        <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java" />
+        <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.java" />
       </list>
     </option>
   </component>
@@ -331,12 +325,12 @@
       <workItem from="1553940974341" duration="4687000" />
       <workItem from="1554021157788" duration="763000" />
       <workItem from="1554023290930" duration="641000" />
-      <workItem from="1554027930872" duration="7204000" />
+      <workItem from="1554027930872" duration="7609000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70817000" />
+    <option name="totallyTimeSpent" value="71222000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -344,7 +338,7 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Messages" order="7" visible="true" weight="0.3290938" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3290938" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
@@ -356,7 +350,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -746,29 +740,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#1716#1717#0" expanded="true" />
-            <element signature="e#1758#1759#0" expanded="true" />
-            <element signature="e#1844#1845#0" expanded="true" />
-            <element signature="e#1906#1907#0" expanded="true" />
-            <element signature="e#1844#1845#0" expanded="true" />
-            <element signature="e#1903#1904#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="36" column="44" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
+        <state relative-caret-position="17">
+          <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2599#2600#0" expanded="true" />
             <element signature="e#2645#2646#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="34" column="40" selection-start-line="34" selection-start-column="40" selection-end-line="34" selection-end-column="40" />
+          <folding>
+            <element signature="e#2045#2046#0" expanded="true" />
+            <element signature="e#2103#2104#0" expanded="true" />
+            <element signature="e#2175#2176#0" expanded="true" />
+            <element signature="e#2233#2234#0" expanded="true" />
+            <element signature="e#2302#2303#0" expanded="true" />
+            <element signature="e#2363#2364#0" expanded="true" />
           </folding>
         </state>
       </provider>

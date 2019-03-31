@@ -1,10 +1,12 @@
 package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.openapi.vfs.VirtualFile;
+import org.apache.commons.io.FileUtils;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,23 @@ public class LayoutAnalyzer {
         VirtualFile srcDirectory = getSourceDirectory(projectBaseDirectory);
         VirtualFile resourcesDirectory = getResourcesDirectory(srcDirectory);
         VirtualFile layoutDirectory = getLayoutDirectory(resourcesDirectory);
-        return getLayoutXMLFiles(layoutDirectory);
+        List<VirtualFile> layoutFiles = getLayoutXMLFiles(layoutDirectory);
+
+        File backupDirectory = new File(layoutDirectory.getCanonicalPath(), "backup");
+        backupDirectory.mkdir();
+        if (backupDirectory.exists()) {
+            for (VirtualFile layoutFile : layoutFiles) {
+                File file = new File(layoutFile.getCanonicalPath());
+                try {
+                    FileUtils.copyFile(file, new File(backupDirectory, file.getName()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        return layoutFiles;
     }
 
     private VirtualFile getChildDirectory(String childDirectoryName, VirtualFile parentDirectory) {
