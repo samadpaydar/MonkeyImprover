@@ -5,6 +5,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.file.PsiJavaDirectoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +34,10 @@ public class MonkeyImprover implements Runnable {
     @Override
     public void run() {
         showMessage("Started processing project " + project.getName());
-        JavaClassCollector javaClassCollector= new JavaClassCollector(this);
-        showMessage(psiElement.getClass().toString());
-        psiElement.accept(javaClassCollector);
-        this.projectJavaClasses = javaClassCollector.getProjectJavaClasses();
+        collectProjectJavaClasses();
+        for(PsiClass c: projectJavaClasses) {
+            showMessage(c.getQualifiedName());
+        }
         layoutAnalyzer = new LayoutAnalyzer();
         classFinder = new ClassFinder();
         methodFinder = new MethodFinder();
@@ -52,6 +53,26 @@ public class MonkeyImprover implements Runnable {
 
         showMessage("Finished");
     }
+
+    private void collectProjectJavaClasses() {
+        if (psiElement instanceof PsiJavaDirectoryImpl) {
+            PsiJavaDirectoryImpl javaDirectory = (PsiJavaDirectoryImpl) psiElement;
+            PsiFile[] files = javaDirectory.getFiles();
+            for (PsiFile file : files) {
+                if (file instanceof PsiJavaFile) {
+                    PsiJavaFile javaFile = (PsiJavaFile) file;
+                    if (javaFile.getName().toLowerCase().endsWith(".java") && !javaFile.getName().equalsIgnoreCase("R.java")) {
+                        PsiClass[] classes = javaFile.getClasses();
+                        for (PsiClass cls : classes) {
+                            projectJavaClasses.add(cls);
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
     public List<PsiClass> getProjectJavaClasses() {
         return this.projectJavaClasses;
     }

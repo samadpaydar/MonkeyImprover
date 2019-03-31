@@ -13,6 +13,7 @@ import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.pom.Navigatable;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.impl.file.PsiJavaDirectoryImpl;
 import com.intellij.ui.content.Content;
 import ir.ac.um.monkeyimprover.utils.Constants;
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +55,7 @@ public class AnalyzeAction extends AnAction {
     public void update(AnActionEvent anActionEvent) {
         Project project = anActionEvent.getProject();
         PsiElement psiElement = anActionEvent.getData(LangDataKeys.PSI_ELEMENT);
-        boolean enabled = project != null && (psiElement instanceof PsiDirectory)
+        boolean enabled = project != null && (psiElement instanceof PsiJavaDirectoryImpl)
                 && ((PsiDirectory) psiElement).getVirtualFile().getCanonicalPath().equals(project.getBaseDir().getCanonicalPath());
         anActionEvent.getPresentation().setEnabledAndVisible(enabled);
     }
