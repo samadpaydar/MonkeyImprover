@@ -17,20 +17,28 @@ public class LayoutAnalyzer {
     }
 
     public List<VirtualFile> getLayoutFiles(VirtualFile directory) {
-        List<VirtualFile> layoutFiles = new ArrayList<>();
+        VirtualFile layoutDirectory = getLayoutDirectory(directory);
+        return getLayoutXMLFiles(layoutDirectory);
+    }
+
+    private VirtualFile getLayoutDirectory(VirtualFile directory) {
+        VirtualFile layoutDirectory = null;
         VirtualFile[] children = directory.getChildren();
         for (VirtualFile child : children) {
             if (child.isDirectory()) {
                 if (child.getName().equals("layout")) {
-                    layoutFiles = getLayoutXMLFiles(child);
+                    layoutDirectory = child;
                     break;
                 } else {
-                    List<VirtualFile> innerLayoutFiles = getLayoutFiles(child);
-                    layoutFiles.addAll(innerLayoutFiles);
+                    VirtualFile temp = getLayoutDirectory(child);
+                    if (temp != null) {
+                        layoutDirectory = child;
+                        break;
+                    }
                 }
             }
         }
-        return layoutFiles;
+        return layoutDirectory;
     }
 
     private List<VirtualFile> getLayoutXMLFiles(VirtualFile layoutDirectory) {
