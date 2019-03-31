@@ -13,9 +13,11 @@ import java.util.List;
  */
 public class JavaClassCollector extends JavaRecursiveElementVisitor {
     private List<PsiClass> projectJavaClasses;
+    private MonkeyImprover monkeyImprover;
 
-    public JavaClassCollector() {
+    public JavaClassCollector(MonkeyImprover monkeyImprover) {
         projectJavaClasses = new ArrayList<>();
+        this.monkeyImprover = monkeyImprover;
     }
 
     @Override
@@ -24,6 +26,7 @@ public class JavaClassCollector extends JavaRecursiveElementVisitor {
         PsiClass[] psiClasses = psiJavaFile.getClasses();
         for (PsiClass psiClass : psiClasses) {
             projectJavaClasses.add(psiClass);
+            monkeyImprover.showMessage(psiJavaFile.getName() + " " + psiClass.getQualifiedName());
         }
     }
 

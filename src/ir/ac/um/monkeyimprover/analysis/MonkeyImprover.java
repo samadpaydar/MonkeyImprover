@@ -33,12 +33,10 @@ public class MonkeyImprover implements Runnable {
     @Override
     public void run() {
         showMessage("Started processing project " + project.getName());
-        JavaClassCollector javaClassCollector= new JavaClassCollector();
+        JavaClassCollector javaClassCollector= new JavaClassCollector(this);
+        showMessage(psiElement.getClass().toString());
         psiElement.accept(javaClassCollector);
         this.projectJavaClasses = javaClassCollector.getProjectJavaClasses();
-        for(PsiClass s: projectJavaClasses) {
-            showMessage(s.getQualifiedName());
-        }
         layoutAnalyzer = new LayoutAnalyzer();
         classFinder = new ClassFinder();
         methodFinder = new MethodFinder();
