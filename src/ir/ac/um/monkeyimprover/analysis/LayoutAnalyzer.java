@@ -12,58 +12,49 @@ import java.util.List;
  * @author Samad Paydar
  */
 public class LayoutAnalyzer {
-private MonkeyImprover monkeyImprover;
-    public LayoutAnalyzer(MonkeyImprover monkeyImprover) {
-        this.monkeyImprover = monkeyImprover;
+
+    public LayoutAnalyzer() {
     }
 
     public List<VirtualFile> getLayoutFiles(VirtualFile projectBaseDirectory) {
         VirtualFile srcDirectory = getSourceDirectory(projectBaseDirectory);
-        monkeyImprover.showMessage("srcDirectory " + srcDirectory.getCanonicalPath());
-        VirtualFile layoutDirectory = getLayoutDirectory(srcDirectory);
-        monkeyImprover.showMessage("layoutDirectory " + layoutDirectory.getCanonicalPath());
+        VirtualFile resourcesDirectory = getResourcesDirectory(srcDirectory);
+        VirtualFile layoutDirectory = getLayoutDirectory(resourcesDirectory);
         return getLayoutXMLFiles(layoutDirectory);
     }
 
-    private VirtualFile getSourceDirectory(VirtualFile directory) {
-        VirtualFile srcDirectory = null;
-        VirtualFile[] children = directory.getChildren();
+    private VirtualFile getChildDirectory(String childDirectoryName, VirtualFile parentDirectory) {
+        VirtualFile result = null;
+        VirtualFile[] children = parentDirectory.getChildren();
         for (VirtualFile child : children) {
             if (child.isDirectory()) {
-                if (child.getName().equals("src")) {
-                    srcDirectory = child;
+                if (child.getName().equals(childDirectoryName)) {
+                    result = child;
                     break;
                 } else {
-                    VirtualFile temp = getSourceDirectory(child);
+                    VirtualFile temp = getChildDirectory(childDirectoryName, child);
                     if (temp != null) {
-                        srcDirectory = temp;
+                        result = temp;
                         break;
                     }
                 }
             }
         }
-        return srcDirectory;
+        return result;
+    }
+
+    private VirtualFile getSourceDirectory(VirtualFile directory) {
+        return getChildDirectory("src", directory);
+    }
+
+    private VirtualFile getResourcesDirectory(VirtualFile directory) {
+        return getChildDirectory("res", directory);
     }
 
     private VirtualFile getLayoutDirectory(VirtualFile directory) {
-        VirtualFile layoutDirectory = null;
-        VirtualFile[] children = directory.getChildren();
-        for (VirtualFile child : children) {
-            if (child.isDirectory()) {
-                if (child.getName().equals("layout")) {
-                    layoutDirectory = child;
-                    break;
-                } else {
-                    VirtualFile temp = getLayoutDirectory(child);
-                    if (temp != null) {
-                        layoutDirectory = temp;
-                        break;
-                    }
-                }
-            }
-        }
-        return layoutDirectory;
+        return getChildDirectory("layout", directory);
     }
+
     private List<VirtualFile> getLayoutXMLFiles(VirtualFile layoutDirectory) {
         List<VirtualFile> layoutFiles = new ArrayList<>();
         VirtualFile[] children = layoutDirectory.getChildren();

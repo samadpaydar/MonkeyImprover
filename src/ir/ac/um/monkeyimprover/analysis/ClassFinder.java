@@ -30,7 +30,7 @@ public class ClassFinder {
 
     private List<VirtualFile> findRelatedJavaFileByContext(VirtualFile directory, VirtualFile layoutXMLFile) {
         List<VirtualFile> relatedJavaFiles = null;
-        LayoutAnalyzer layoutAnalyzer = new LayoutAnalyzer(null);
+        LayoutAnalyzer layoutAnalyzer = new LayoutAnalyzer();
         List<String> contextClassNames = layoutAnalyzer.getContextClassNames(layoutXMLFile);
         if (contextClassNames != null && !contextClassNames.isEmpty()) {
             relatedJavaFiles = new ArrayList<>();
