@@ -22,6 +22,9 @@ public class MethodAnalyzer {
         monkeyImprover.showMessage("Methods called by " + AnalysisUtils.getMethodQualifiedName(method));
         for (PsiMethod calledMethod : calledMethods) {
             monkeyImprover.showMessage(" >> " + AnalysisUtils.getMethodQualifiedName(calledMethod));
+        }
+        for (PsiMethod calledMethod : calledMethods) {
+            monkeyImprover.showMessage(" >>>>> " + AnalysisUtils.getMethodQualifiedName(calledMethod));
             if (calledMethod.equals(method)) {
                 monkeyImprover.showMessage(" >> RECURSIVE ");
                 //ignore recursive calls
@@ -37,6 +40,8 @@ public class MethodAnalyzer {
     }
 
     private boolean isLocalMethod(PsiMethod callerMethod, PsiMethod calledMethod) {
+        monkeyImprover.showMessage("callerMethod: "  + callerMethod.getName() +  " project " + callerMethod.getContainingClass().getProject().getName()) ;
+        monkeyImprover.showMessage("calledMethod: "  + calledMethod.getName() +  " project " + calledMethod.getContainingClass().getProject().getName()) ;
         Project project1 = callerMethod.getContainingClass().getProject();
         Project project2 = calledMethod.getContainingClass().getProject();
         return project1.getName().equals(project2.getName());
