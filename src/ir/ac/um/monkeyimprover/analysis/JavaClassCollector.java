@@ -23,10 +23,12 @@ public class JavaClassCollector extends JavaRecursiveElementVisitor {
     @Override
     public void visitJavaFile(PsiJavaFile psiJavaFile) {
         super.visitFile(psiJavaFile);
-        PsiClass[] psiClasses = psiJavaFile.getClasses();
-        for (PsiClass psiClass : psiClasses) {
-            projectJavaClasses.add(psiClass);
-            monkeyImprover.showMessage(psiJavaFile.getName() + " " + psiClass.getQualifiedName());
+        if (psiJavaFile.getName().endsWith(".java") && !psiJavaFile.getName().equals("R.java")) {
+            PsiClass[] psiClasses = psiJavaFile.getClasses();
+            for (PsiClass psiClass : psiClasses) {
+                projectJavaClasses.add(psiClass);
+                monkeyImprover.showMessage(psiJavaFile.getName() + " " + psiClass.getQualifiedName());
+            }
         }
     }
 

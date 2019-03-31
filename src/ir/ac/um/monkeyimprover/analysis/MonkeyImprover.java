@@ -35,9 +35,6 @@ public class MonkeyImprover implements Runnable {
     public void run() {
         showMessage("Started processing project " + project.getName());
         collectProjectJavaClasses();
-        for(PsiClass c: projectJavaClasses) {
-            showMessage(c.getQualifiedName());
-        }
         layoutAnalyzer = new LayoutAnalyzer();
         classFinder = new ClassFinder();
         methodFinder = new MethodFinder();
@@ -55,22 +52,9 @@ public class MonkeyImprover implements Runnable {
     }
 
     private void collectProjectJavaClasses() {
-        if (psiElement instanceof PsiJavaDirectoryImpl) {
-            PsiJavaDirectoryImpl javaDirectory = (PsiJavaDirectoryImpl) psiElement;
-            PsiFile[] files = javaDirectory.getFiles();
-            for (PsiFile file : files) {
-                if (file instanceof PsiJavaFile) {
-                    PsiJavaFile javaFile = (PsiJavaFile) file;
-                    if (javaFile.getName().toLowerCase().endsWith(".java") && !javaFile.getName().equalsIgnoreCase("R.java")) {
-                        PsiClass[] classes = javaFile.getClasses();
-                        for (PsiClass cls : classes) {
-                            projectJavaClasses.add(cls);
-                        }
-                    }
-                }
-            }
-        }
-
+        JavaClassCollector javaClassCollector = new JavaClassCollector(this);
+        psiElement.accept(javaClassCollector);
+        this.projectJavaClasses = javaClassCollector.getProjectJavaClasses();
     }
 
     public List<PsiClass> getProjectJavaClasses() {
