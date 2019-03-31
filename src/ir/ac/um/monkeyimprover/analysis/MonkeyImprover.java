@@ -34,11 +34,12 @@ public class MonkeyImprover implements Runnable {
     @Override
     public void run() {
         showMessage("Started processing project " + project.getName());
-        collectProjectJavaClasses();
         layoutAnalyzer = new LayoutAnalyzer();
         classFinder = new ClassFinder();
         methodFinder = new MethodFinder();
         methodAnalyzer = new MethodAnalyzer(this);
+        showMessage("Collecting project Java classes...");
+        collectProjectJavaClasses();
         LayoutRefactory layoutRefactory = new LayoutRefactory(this);
         showMessage("Extracting layout files...");
         List<VirtualFile> layoutFiles = layoutAnalyzer.getLayoutFiles(project.getBaseDir());
@@ -52,7 +53,7 @@ public class MonkeyImprover implements Runnable {
     }
 
     private void collectProjectJavaClasses() {
-        JavaClassCollector javaClassCollector = new JavaClassCollector(this);
+        JavaClassCollector javaClassCollector = new JavaClassCollector();
         psiElement.accept(javaClassCollector);
         this.projectJavaClasses = javaClassCollector.getProjectJavaClasses();
     }

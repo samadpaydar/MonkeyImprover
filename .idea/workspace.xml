@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/JavaClassCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/JavaClassCollector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodAnalyzer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -15,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MonkeyImprover.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MonkeyImprover.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="54" column="19" lean-forward="true" selection-start-line="54" selection-start-column="19" selection-end-line="54" selection-end-column="19" />
+            <state relative-caret-position="184">
+              <caret line="55" column="71" selection-start-line="55" selection-start-column="71" selection-end-line="55" selection-end-column="71" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2599#2600#0" expanded="true" />
@@ -43,12 +44,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JavaClassCollector.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="JavaClassCollector.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/JavaClassCollector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
+            <state relative-caret-position="187">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
               <folding>
+                <element signature="e#437#438#0" expanded="true" />
                 <element signature="e#1136#1137#0" expanded="true" />
                 <element signature="e#1182#1183#0" expanded="true" />
               </folding>
@@ -65,24 +67,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AnalyzeAction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/ui/AnalyzeAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="57" column="88" selection-start-line="57" selection-start-column="68" selection-end-line="57" selection-end-column="88" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="MethodAnalyzer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="45" column="37" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
+            <state relative-caret-position="68">
+              <caret line="11" column="40" lean-forward="true" selection-start-line="11" selection-end-line="12" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#270#271#0" expanded="true" />
-                <element signature="e#322#323#0" expanded="true" />
+                <element signature="e#271#272#0" expanded="true" />
+                <element signature="e#323#324#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -122,8 +115,9 @@
       <find>JavaFile</find>
       <find>JavaFileV</find>
       <find>new JavaFileVisitor</find>
-      <find>java</find>
       <find>type</find>
+      <find>java</find>
+      <find>showmess</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src\ir\ac\um\monkeyimprover</dir>
@@ -161,10 +155,10 @@
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/CyclomaticComplexityAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodCallAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/JavaFileVisitor.java" />
-        <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/ui/AnalyzeAction.java" />
-        <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/JavaClassCollector.java" />
+        <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodAnalyzer.java" />
+        <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java" />
       </list>
     </option>
   </component>
@@ -352,12 +346,12 @@
       <workItem from="1553940974341" duration="4687000" />
       <workItem from="1554021157788" duration="763000" />
       <workItem from="1554023290930" duration="641000" />
-      <workItem from="1554027930872" duration="4354000" />
+      <workItem from="1554027930872" duration="4734000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67967000" />
+    <option name="totallyTimeSpent" value="68347000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -729,18 +723,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="45" column="37" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#270#271#0" expanded="true" />
-            <element signature="e#322#323#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/java-api.jar!/com/intellij/psi/JavaElementVisitor.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
@@ -762,25 +744,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java">
+    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/JavaClassCollector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="54" column="19" lean-forward="true" selection-start-line="54" selection-start-column="19" selection-end-line="54" selection-end-column="19" />
+        <state relative-caret-position="187">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2599#2600#0" expanded="true" />
-            <element signature="e#2645#2646#0" expanded="true" />
+            <element signature="e#437#438#0" expanded="true" />
+            <element signature="e#1136#1137#0" expanded="true" />
+            <element signature="e#1182#1183#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/JavaClassCollector.java">
+    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
+        <state relative-caret-position="68">
+          <caret line="11" column="40" lean-forward="true" selection-start-line="11" selection-end-line="12" />
           <folding>
-            <element signature="e#1136#1137#0" expanded="true" />
-            <element signature="e#1182#1183#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#271#272#0" expanded="true" />
+            <element signature="e#323#324#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="55" column="71" selection-start-line="55" selection-start-column="71" selection-end-line="55" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2599#2600#0" expanded="true" />
+            <element signature="e#2645#2646#0" expanded="true" />
           </folding>
         </state>
       </provider>

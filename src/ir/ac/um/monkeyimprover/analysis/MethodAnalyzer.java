@@ -20,20 +20,12 @@ public class MethodAnalyzer {
         CyclomaticComplexityAnalyzer cyclomaticComplexityAnalyzer = new CyclomaticComplexityAnalyzer();
         double complexity = cyclomaticComplexityAnalyzer.getComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
-        monkeyImprover.showMessage("Methods called by " + AnalysisUtils.getMethodQualifiedName(method));
         for (PsiMethod calledMethod : calledMethods) {
-            monkeyImprover.showMessage(" >> " + AnalysisUtils.getMethodQualifiedName(calledMethod));
-        }
-        for (PsiMethod calledMethod : calledMethods) {
-            monkeyImprover.showMessage(" >>>>> " + AnalysisUtils.getMethodQualifiedName(calledMethod));
             if (calledMethod.equals(method)) {
-                monkeyImprover.showMessage(" >> RECURSIVE ");
                 //ignore recursive calls
             } else if (isLocalMethod(calledMethod)) {
-                monkeyImprover.showMessage(" >> Local ");
                 complexity += getMethodComplexity(calledMethod);
             } else {
-                monkeyImprover.showMessage(" >> nonLocal ");
                 complexity += getAPIComplexity(calledMethod);
             }
         }
