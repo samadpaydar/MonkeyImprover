@@ -34,7 +34,7 @@ private MonkeyImprover monkeyImprover;
                     srcDirectory = child;
                     break;
                 } else {
-                    VirtualFile temp = getLayoutDirectory(child);
+                    VirtualFile temp = getSourceDirectory(child);
                     if (temp != null) {
                         srcDirectory = temp;
                         break;
