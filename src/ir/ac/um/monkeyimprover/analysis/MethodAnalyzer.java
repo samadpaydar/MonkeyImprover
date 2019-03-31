@@ -33,7 +33,7 @@ public class MethodAnalyzer {
                 monkeyImprover.showMessage(" >> Local ");
                 complexity += getMethodComplexity(calledMethod);
             } else {
-                monkeyImprover.showMessage(" >> ANDROID ");
+                monkeyImprover.showMessage(" >> nonLocal ");
                 complexity += getAPIComplexity(calledMethod);
             }
         }
@@ -42,9 +42,10 @@ public class MethodAnalyzer {
 
     private boolean isLocalMethod(PsiMethod calledMethod) {
         String calledMethodClassName = calledMethod.getContainingClass().getQualifiedName();
-        List<String> projectClassNames = monkeyImprover.getProjectClassNames();
-        for (String projectClassName : projectClassNames) {
-            if (projectClassName.equals(calledMethodClassName)) {
+        List<PsiClass> projectJavaClasses = monkeyImprover.getProjectJavaClasses();
+        for (PsiClass projectJavaClass: projectJavaClasses) {
+            String className = projectJavaClass.getQualifiedName();
+            if (className != null && className.equals(calledMethodClassName)) {
                 return true;
             }
         }

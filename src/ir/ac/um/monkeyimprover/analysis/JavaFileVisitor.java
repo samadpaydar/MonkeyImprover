@@ -13,11 +13,9 @@ import java.util.List;
  */
 public class JavaFileVisitor extends JavaRecursiveElementVisitor {
     private MonkeyImprover monkeyImprover;
-    private List<String> projectClassNames;
 
     public JavaFileVisitor(MonkeyImprover monkeyImprover) {
         this.monkeyImprover = monkeyImprover;
-        projectClassNames = new ArrayList<>();
     }
 
     @Override
@@ -26,7 +24,6 @@ public class JavaFileVisitor extends JavaRecursiveElementVisitor {
         MethodAnalyzer methodAnalyzer = new MethodAnalyzer(monkeyImprover);
         PsiClass[] psiClasses = psiJavaFile.getClasses();
         for (PsiClass psiClass : psiClasses) {
-            projectClassNames.add(psiClass.getQualifiedName());
             PsiMethod[] psiMethods = psiClass.getMethods();
             for (PsiMethod psiMethod : psiMethods) {
                 double complexity = methodAnalyzer.getMethodComplexity(psiMethod);
@@ -34,9 +31,5 @@ public class JavaFileVisitor extends JavaRecursiveElementVisitor {
                         + "\tcomplexity: " + complexity);
             }
         }
-    }
-
-    public List<String> getProjectClassNames() {
-        return this.projectClassNames;
     }
 }
