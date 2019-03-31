@@ -21,16 +21,24 @@ public class MonkeyImprover implements Runnable {
     private ClassFinder classFinder;
     private MethodAnalyzer methodAnalyzer;
     private MethodFinder methodFinder;
+    private List<String> projectClassNames;
 
     public MonkeyImprover(Project project, PsiElement psiElement, ConsoleView consoleView) {
         this.project = project;
         this.psiElement = psiElement;
         this.consoleView = consoleView;
+        projectClassNames = new ArrayList<>();
     }
 
     @Override
     public void run() {
         showMessage("Started processing project " + project.getName());
+        JavaFileVisitor javaFileVisitor = new JavaFileVisitor(this);
+        psiElement.accept(javaFileVisitor);
+        this.projectClassNames = javaFileVisitor.getProjectClassNames();
+        for(String s: projectClassNames) {
+            showMessage(s);
+        }
         layoutAnalyzer = new LayoutAnalyzer();
         classFinder = new ClassFinder();
         methodFinder = new MethodFinder();
@@ -43,9 +51,11 @@ public class MonkeyImprover implements Runnable {
             List<CallbackMethodInfo> info = processLayoutFile(layoutFile);
             layoutRefactory.refactorLayout(new LayoutInfo(layoutFile, info));
         }
-        //VirtualFile baseDirectory = project.getBaseDir();
-        //psiElement.accept(new JavaFileVisitor(this));
+
         showMessage("Finished");
+    }
+    public List<String> getProjectClassNames() {
+        return this.projectClassNames;
     }
 
     private List<CallbackMethodInfo> processLayoutFile(VirtualFile layoutFile) {

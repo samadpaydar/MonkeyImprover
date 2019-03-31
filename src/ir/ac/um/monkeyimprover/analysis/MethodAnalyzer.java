@@ -7,6 +7,7 @@ import java.util.List;
 
 public class MethodAnalyzer {
     private MonkeyImprover monkeyImprover;
+
     public MethodAnalyzer(MonkeyImprover monkeyImprover) {
         this.monkeyImprover = monkeyImprover;
     }
@@ -28,23 +29,26 @@ public class MethodAnalyzer {
             if (calledMethod.equals(method)) {
                 monkeyImprover.showMessage(" >> RECURSIVE ");
                 //ignore recursive calls
-            } else if (isLocalMethod(method, calledMethod)) {
-                monkeyImprover.showMessage(" >> LOCAL ");
+            } else if (isLocalMethod(calledMethod)) {
+                monkeyImprover.showMessage(" >> Local ");
                 complexity += getMethodComplexity(calledMethod);
             } else {
-                monkeyImprover.showMessage(" >> NONLocal ");
+                monkeyImprover.showMessage(" >> ANDROID ");
                 complexity += getAPIComplexity(calledMethod);
             }
         }
         return complexity;
     }
 
-    private boolean isLocalMethod(PsiMethod callerMethod, PsiMethod calledMethod) {
-        monkeyImprover.showMessage("callerMethod: "  + callerMethod.getName() +  " project " + callerMethod.getContainingClass().getProject().getName()) ;
-        monkeyImprover.showMessage("calledMethod: "  + calledMethod.getName() +  " project " + calledMethod.getContainingClass().getProject().getName()) ;
-        Project project1 = callerMethod.getContainingClass().getProject();
-        Project project2 = calledMethod.getContainingClass().getProject();
-        return project1.getName().equals(project2.getName());
+    private boolean isLocalMethod(PsiMethod calledMethod) {
+        String calledMethodClassName = calledMethod.getContainingClass().getQualifiedName();
+        List<String> projectClassNames = monkeyImprover.getProjectClassNames();
+        for (String projectClassName : projectClassNames) {
+            if (projectClassName.equals(calledMethodClassName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private List<PsiMethod> getMethodsDirectlyCalledBy(PsiMethod method) {
