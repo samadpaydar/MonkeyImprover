@@ -12,13 +12,37 @@ import java.util.List;
  * @author Samad Paydar
  */
 public class LayoutAnalyzer {
-
-    public LayoutAnalyzer() {
+private MonkeyImprover monkeyImprover;
+    public LayoutAnalyzer(MonkeyImprover monkeyImprover) {
+        this.monkeyImprover = monkeyImprover;
     }
 
-    public List<VirtualFile> getLayoutFiles(VirtualFile directory) {
-        VirtualFile layoutDirectory = getLayoutDirectory(directory);
+    public List<VirtualFile> getLayoutFiles(VirtualFile projectBaseDirectory) {
+        VirtualFile srcDirectory = getSourceDirectory(projectBaseDirectory);
+        monkeyImprover.showMessage("srcDirectory " + srcDirectory.getCanonicalPath());
+        VirtualFile layoutDirectory = getLayoutDirectory(srcDirectory);
+        monkeyImprover.showMessage("layoutDirectory " + layoutDirectory.getCanonicalPath());
         return getLayoutXMLFiles(layoutDirectory);
+    }
+
+    private VirtualFile getSourceDirectory(VirtualFile directory) {
+        VirtualFile srcDirectory = null;
+        VirtualFile[] children = directory.getChildren();
+        for (VirtualFile child : children) {
+            if (child.isDirectory()) {
+                if (child.getName().equals("src")) {
+                    srcDirectory = child;
+                    break;
+                } else {
+                    VirtualFile temp = getLayoutDirectory(child);
+                    if (temp != null) {
+                        srcDirectory = temp;
+                        break;
+                    }
+                }
+            }
+        }
+        return srcDirectory;
     }
 
     private VirtualFile getLayoutDirectory(VirtualFile directory) {
@@ -32,7 +56,7 @@ public class LayoutAnalyzer {
                 } else {
                     VirtualFile temp = getLayoutDirectory(child);
                     if (temp != null) {
-                        layoutDirectory = child;
+                        layoutDirectory = temp;
                         break;
                     }
                 }
@@ -40,7 +64,6 @@ public class LayoutAnalyzer {
         }
         return layoutDirectory;
     }
-
     private List<VirtualFile> getLayoutXMLFiles(VirtualFile layoutDirectory) {
         List<VirtualFile> layoutFiles = new ArrayList<>();
         VirtualFile[] children = layoutDirectory.getChildren();

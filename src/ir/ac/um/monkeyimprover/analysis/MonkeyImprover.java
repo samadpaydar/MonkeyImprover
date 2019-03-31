@@ -34,7 +34,7 @@ public class MonkeyImprover implements Runnable {
     @Override
     public void run() {
         showMessage("Started processing project " + project.getName());
-        layoutAnalyzer = new LayoutAnalyzer();
+        layoutAnalyzer = new LayoutAnalyzer(this);
         classFinder = new ClassFinder();
         methodFinder = new MethodFinder();
         methodAnalyzer = new MethodAnalyzer(this);
