@@ -23,8 +23,13 @@ public class LayoutAnalyzer {
         VirtualFile resourcesDirectory = getResourcesDirectory(srcDirectory);
         VirtualFile layoutDirectory = getLayoutDirectory(resourcesDirectory);
         List<VirtualFile> layoutFiles = getLayoutXMLFiles(layoutDirectory);
+        createBackup(projectBaseDirectory, layoutFiles);
+        return layoutFiles;
+    }
 
-        File backupDirectory = new File(layoutDirectory.getCanonicalPath(), "backup");
+//    TODO  if it failed to create backup, the process should not continue
+    private void createBackup(VirtualFile directory, List<VirtualFile> layoutFiles) {
+        File backupDirectory = new File(directory.getCanonicalPath(), "backup");
         backupDirectory.mkdir();
         if (backupDirectory.exists()) {
             for (VirtualFile layoutFile : layoutFiles) {
@@ -36,9 +41,6 @@ public class LayoutAnalyzer {
                 }
             }
         }
-
-
-        return layoutFiles;
     }
 
     private VirtualFile getChildDirectory(String childDirectoryName, VirtualFile parentDirectory) {
