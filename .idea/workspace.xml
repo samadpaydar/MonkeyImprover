@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandlerForRefactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandlerForRefactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandlerForRefactory.java" afterDir="false" />
@@ -20,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LayoutXMLHandlerForRefactory.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LayoutXMLHandlerForRefactory.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandlerForRefactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="206" column="49" selection-start-line="206" selection-start-column="49" selection-end-line="206" selection-end-column="49" />
+            <state relative-caret-position="106">
+              <caret line="51" column="46" lean-forward="true" selection-start-line="51" selection-start-column="46" selection-end-line="51" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -35,8 +32,8 @@
       <file leaf-file-name="LayoutXMLHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="41" column="21" lean-forward="true" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+            <state relative-caret-position="115">
+              <caret line="41" column="34" lean-forward="true" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
               <folding>
                 <element signature="e#1789#1790#0" expanded="true" />
                 <element signature="e#1831#1832#0" expanded="true" />
@@ -53,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AnalysisUtils.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AnalysisUtils.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="74" column="45" selection-start-line="74" selection-start-column="34" selection-end-line="74" selection-end-column="45" />
+            <state relative-caret-position="200">
+              <caret line="76" column="101" selection-start-line="76" selection-start-column="101" selection-end-line="76" selection-end-column="101" />
             </state>
           </provider>
         </entry>
@@ -65,8 +62,8 @@
       <file leaf-file-name="LayoutAnalyzer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+            <state relative-caret-position="520">
+              <caret line="52" column="22" lean-forward="true" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -82,8 +79,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>consoleView</find>
-      <find>showMessage</find>
       <find>&quot; relatedMethod</find>
       <find>getcompl</find>
       <find>getContextClassName</find>
@@ -112,6 +107,8 @@
       <find>layout</find>
       <find>&quot;refactor</find>
       <find>dom</find>
+      <find>isanandro</find>
+      <find>addview</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src\ir\ac\um\monkeyimprover</dir>
@@ -153,9 +150,9 @@
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/BackupCreator.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/utils/Utils.java" />
+        <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandlerForRefactory.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandler.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.java" />
-        <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandlerForRefactory.java" />
       </list>
     </option>
   </component>
@@ -345,12 +342,12 @@
       <workItem from="1554023290930" duration="641000" />
       <workItem from="1554027930872" duration="7799000" />
       <workItem from="1554055800445" duration="1875000" />
-      <workItem from="1554100790406" duration="4013000" />
+      <workItem from="1554100790406" duration="6165000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77300000" />
+    <option name="totallyTimeSpent" value="79452000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -741,15 +738,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+        <state relative-caret-position="520">
+          <caret line="52" column="22" lean-forward="true" selection-start-line="52" selection-start-column="22" selection-end-line="52" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandlerForRefactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="51" column="46" lean-forward="true" selection-start-line="51" selection-start-column="46" selection-end-line="51" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="41" column="21" lean-forward="true" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+        <state relative-caret-position="115">
+          <caret line="41" column="34" lean-forward="true" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
           <folding>
             <element signature="e#1789#1790#0" expanded="true" />
             <element signature="e#1831#1832#0" expanded="true" />
@@ -767,18 +774,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="74" column="45" selection-start-line="74" selection-start-column="34" selection-end-line="74" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandlerForRefactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="206" column="49" selection-start-line="206" selection-start-column="49" selection-end-line="206" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="200">
+          <caret line="76" column="101" selection-start-line="76" selection-start-column="101" selection-end-line="76" selection-end-column="101" />
         </state>
       </provider>
     </entry>
