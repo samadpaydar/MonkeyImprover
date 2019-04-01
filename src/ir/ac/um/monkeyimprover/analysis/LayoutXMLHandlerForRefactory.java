@@ -118,40 +118,67 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         }
     }*/
 
+    private Node createLinearLayout(Document document, boolean isRoot) {
+        Element linearLayout = document.createElement("LinearLayout");
+        if (isRoot) {
+            linearLayout.setAttribute("xmlns:android", "http://schemas.android.com/apk/res/android");
+            linearLayout.setAttribute("xmlns:tools", "http://schemas.android.com/tools");
+            if (rootLayoutId != null) {
+                linearLayout.setAttribute("android:id", rootLayoutId);
+            }
+            if (rootLayoutContext != null) {
+                linearLayout.setAttribute("tools:context", rootLayoutContext);
+            }
+        }
+        linearLayout.setAttribute("android:layout_width", "match_parent");
+        linearLayout.setAttribute("android:layout_height", "match_parent");
+        linearLayout.setAttribute("android:orientation", "vertical");
+        return linearLayout;
+    }
+
     private Node addRootLayout(Document document) {
+        Node newRootLayout = createLinearLayout(document, true);
+        Node childLayout1 = createLinearLayout(document, false);
+        Node childLayout2 = createLinearLayout(document, false);
         Node currentRootLayout = document.getFirstChild();
-        Element newRootLayout = document.createElement("LinearLayout");
-        newRootLayout.setAttribute("xmlns:android", "http://schemas.android.com/apk/res/android");
-        newRootLayout.setAttribute("xmlns:tools", "http://schemas.android.com/tools");
-        newRootLayout.setAttribute("android:layout_width", "match_parent");
-        newRootLayout.setAttribute("android:layout_height", "match_parent");
-        newRootLayout.setAttribute("android:orientation", "vertical");
-        if (rootLayoutId != null) {
-            newRootLayout.setAttribute("android:id", rootLayoutId);
-        }
-        if (rootLayoutContext != null) {
-            newRootLayout.setAttribute("tools:context", rootLayoutContext);
-        }
+
+        newRootLayout.appendChild(childLayout1);
+        newRootLayout.appendChild(childLayout2);
 
         updateViewWeights(document);
 
-        addViews(newRootLayout, currentRootLayout);
+        addViews(childLayout1, currentRootLayout);
+        addNonViewElements(childLayout2, currentRootLayout);
 
         document.replaceChild(newRootLayout, currentRootLayout);
         return newRootLayout;
     }
 
-    private void addViews(Node newRootLayout, Node parent) {
+    private void addViews(Node newParent, Node parent) {
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
             if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
-                newRootLayout.appendChild(child);
+                newParent.appendChild(child);
                 if (child instanceof Element) {
                     removeUnnecessaryAttributes((Element) child);
                 }
             }
-            addViews(newRootLayout, child);
+            addViews(newParent, child);
+        }
+    }
+
+    private void addNonViewElements(Node newParent, Node parent) {
+        NodeList childrenNodes = parent.getChildNodes();
+        for (int i = 0; i < childrenNodes.getLength(); i++) {
+            Node child = childrenNodes.item(i);
+            if (!AnalysisUtils.isAnAndroidView(child.getNodeName())) {
+                newParent.appendChild(child);
+                if (child instanceof Element) {
+                    removeUnnecessaryAttributes((Element) child);
+                }
+            }
+            addNonViewElements(newParent, child);
         }
     }
 
