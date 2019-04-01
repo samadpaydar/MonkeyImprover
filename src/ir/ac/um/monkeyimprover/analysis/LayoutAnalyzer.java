@@ -27,21 +27,11 @@ public class LayoutAnalyzer {
         return layoutFiles;
     }
 
-//    TODO  if it failed to create backup, the process should not continue
     private void createBackup(VirtualFile directory, List<VirtualFile> layoutFiles) {
-        File backupDirectory = new File(directory.getCanonicalPath(), "backup");
-        backupDirectory.mkdir();
-        if (backupDirectory.exists()) {
-            for (VirtualFile layoutFile : layoutFiles) {
-                File file = new File(layoutFile.getCanonicalPath());
-                try {
-                    FileUtils.copyFile(file, new File(backupDirectory, file.getName()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        BackupCreator backupCreator = new BackupCreator();
+        backupCreator.createBackup(directory, layoutFiles);
     }
+
 
     private VirtualFile getChildDirectory(String childDirectoryName, VirtualFile parentDirectory) {
         VirtualFile result = null;
