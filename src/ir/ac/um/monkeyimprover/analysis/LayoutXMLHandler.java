@@ -14,6 +14,9 @@ public class LayoutXMLHandler extends DefaultHandler {
     private List<String> callbackMethodNames;
     private List<String> contexts;
     private int numberOfViews;
+    private String rootLayoutId;
+    private String rootLayoutContext;
+    private boolean rootLayoutVisited;
 
     public LayoutXMLHandler() {
         callbackMethodNames = new ArrayList<>();
@@ -31,6 +34,11 @@ public class LayoutXMLHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName,
                              String qName, Attributes attributes) throws SAXException {
+        if(!rootLayoutVisited) {
+            rootLayoutVisited = true;
+            rootLayoutId = attributes.getValue("android:id");
+            rootLayoutContext = attributes.getValue("tools:context");
+        }
         if (AnalysisUtils.isAnAndroidView(qName)) {
             numberOfViews = getNumberOfViews() + 1;
         }
@@ -60,4 +68,11 @@ public class LayoutXMLHandler extends DefaultHandler {
         return numberOfViews;
     }
 
+    public String getRootLayoutId() {
+        return rootLayoutId;
+    }
+
+    public String getRootLayoutContext() {
+        return rootLayoutContext;
+    }
 }

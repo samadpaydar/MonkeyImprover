@@ -24,6 +24,8 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
     private MonkeyImprover monkeyImprover;
     private File xmlFile;
     private int numberOfViews;
+    private String rootLayoutId;
+    private String rootLayoutContext;
     private List<CallbackMethodInfo> callbackMethodInfoList;
 
     public LayoutXMLHandlerForRefactory(MonkeyImprover monkeyImprover, File xmlFile, List<CallbackMethodInfo> callbackMethodInfoList) {
@@ -41,7 +43,19 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
             Document document = documentBuilder.parse(xmlFile);
             document.getDocumentElement().normalize();
 
-            numberOfViews = getNumberOfViews();
+            if (xmlFile.exists() && xmlFile.isFile()) {
+                try {
+                    SAXParserFactory factory = SAXParserFactory.newInstance();
+                    SAXParser saxParser = factory.newSAXParser();
+                    LayoutXMLHandler handler = new LayoutXMLHandler();
+                    saxParser.parse(xmlFile, handler);
+                    numberOfViews = handler.getNumberOfViews();
+                    rootLayoutId = handler.getRootLayoutId();
+                    rootLayoutContext = handler.getRootLayoutContext();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             monkeyImprover.showMessage(xmlFile.getName() + " has " + numberOfViews + " views");
             //update attribute value
             //  updateAttributeValue(document);
@@ -104,30 +118,20 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         }
     }*/
 
-    private int getNumberOfViews() {
-        int viewCount = 0;
-        if (xmlFile.exists() && xmlFile.isFile()) {
-            try {
-                SAXParserFactory factory = SAXParserFactory.newInstance();
-                SAXParser saxParser = factory.newSAXParser();
-                LayoutXMLHandler handler = new LayoutXMLHandler();
-                saxParser.parse(xmlFile, handler);
-                viewCount = handler.getNumberOfViews();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return viewCount;
-    }
-
-
     private Node addRootLayout(Document document) {
         Node currentRootLayout = document.getFirstChild();
         Element newRootLayout = document.createElement("LinearLayout");
         newRootLayout.setAttribute("xmlns:android", "http://schemas.android.com/apk/res/android");
+        newRootLayout.setAttribute("xmlns:tools", "http://schemas.android.com/tools");
         newRootLayout.setAttribute("android:layout_width", "match_parent");
         newRootLayout.setAttribute("android:layout_height", "match_parent");
         newRootLayout.setAttribute("android:orientation", "vertical");
+        if(rootLayoutId != null) {
+            newRootLayout.setAttribute("android:id", rootLayoutId);
+        }
+        if(rootLayoutContext != null) {
+            newRootLayout.setAttribute("tools:context", rootLayoutContext);
+        }
 
         updateViewWeights(document);
 
