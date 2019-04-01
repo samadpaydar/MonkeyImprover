@@ -159,9 +159,10 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
             if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
-                newParent.appendChild(child);
-                if (child instanceof Element) {
-                    removeUnnecessaryAttributes((Element) child);
+                Node childClone = child.cloneNode(false);
+                newParent.appendChild(childClone);
+                if (childClone instanceof Element) {
+                    removeUnnecessaryAttributes((Element) childClone);
                 }
             }
             addViews(newParent, child);
@@ -173,9 +174,10 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
             if (!AnalysisUtils.isAnAndroidView(child.getNodeName())) {
-                newParent.appendChild(child);
-                if (child instanceof Element) {
-                    removeUnnecessaryAttributes((Element) child);
+                Node childClone = child.cloneNode(false);
+                newParent.appendChild(childClone);
+                if (childClone instanceof Element) {
+                    removeUnnecessaryAttributes((Element) childClone);
                 }
             }
             addNonViewElements(newParent, child);
