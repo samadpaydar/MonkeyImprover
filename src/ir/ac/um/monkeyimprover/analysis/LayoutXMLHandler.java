@@ -16,7 +16,8 @@ public class LayoutXMLHandler extends DefaultHandler {
     private int numberOfViews;
     private String rootLayoutId;
     private String rootLayoutContext;
-    private boolean rootLayoutVisited;
+    private boolean rootElementVisited;
+    private boolean isFragment;
 
     public LayoutXMLHandler() {
         callbackMethodNames = new ArrayList<>();
@@ -34,10 +35,11 @@ public class LayoutXMLHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName,
                              String qName, Attributes attributes) throws SAXException {
-        if(!rootLayoutVisited) {
-            rootLayoutVisited = true;
+        if(!rootElementVisited) {
+            rootElementVisited = true;
             rootLayoutId = attributes.getValue("android:id");
             rootLayoutContext = attributes.getValue("tools:context");
+            isFragment = AnalysisUtils.isAnAndroidView(qName);
         }
         if (AnalysisUtils.isAnAndroidView(qName)) {
             numberOfViews++;
@@ -74,5 +76,9 @@ public class LayoutXMLHandler extends DefaultHandler {
 
     public String getRootLayoutContext() {
         return rootLayoutContext;
+    }
+
+    public boolean isFragment() {
+        return isFragment;
     }
 }

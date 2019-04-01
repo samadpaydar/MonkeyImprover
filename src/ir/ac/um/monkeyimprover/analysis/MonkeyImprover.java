@@ -7,6 +7,9 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.file.PsiJavaDirectoryImpl;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +48,29 @@ public class MonkeyImprover implements Runnable {
         List<VirtualFile> layoutFiles = layoutAnalyzer.getLayoutFiles(project.getBaseDir());
         for (VirtualFile layoutFile : layoutFiles) {
             showMessage("Processing layout file " + layoutFile.getName() + "...");
+            if(isFragment(layoutFile)) {
+                showMessage("Ignored");
+                continue;
+            }
             List<CallbackMethodInfo> info = processLayoutFile(layoutFile);
             layoutRefactory.refactorLayout(new LayoutInfo(layoutFile, info));
         }
 
         showMessage("Finished");
+    }
+
+    private boolean isFragment(VirtualFile layoutFile) {
+        try {
+            File xmlFile = new File(layoutFile.getCanonicalPath());
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            LayoutXMLHandler handler = new LayoutXMLHandler();
+            saxParser.parse(xmlFile, handler);
+            return handler.isFragment();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private void collectProjectJavaClasses() {
