@@ -126,10 +126,10 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         newRootLayout.setAttribute("android:layout_width", "match_parent");
         newRootLayout.setAttribute("android:layout_height", "match_parent");
         newRootLayout.setAttribute("android:orientation", "vertical");
-        if(rootLayoutId != null) {
+        if (rootLayoutId != null) {
             newRootLayout.setAttribute("android:id", rootLayoutId);
         }
-        if(rootLayoutContext != null) {
+        if (rootLayoutContext != null) {
             newRootLayout.setAttribute("tools:context", rootLayoutContext);
         }
 
@@ -147,8 +147,36 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
             Node child = childrenNodes.item(i);
             if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
                 newRootLayout.appendChild(child);
+                if (child instanceof Element) {
+                    removeUnnecessaryAttributes((Element) child);
+                }
             }
             addViews(newRootLayout, child);
+        }
+    }
+
+    /**
+     * since intermediate layouts are removed during refactory, it is required to remove some attributes that might
+     * refer to the removed intermediate layouts
+     *
+     * @param element
+     */
+    private void removeUnnecessaryAttributes(Element element) {
+        String[] unnecessaryAttributes = {
+                "android:layout_above", "android:layout_alignBaseline",
+                "android:layout_alignBottom", "android:layout_alignEnd",
+                "android:layout_alignLeft", "android:layout_alignParentBottom",
+                "android:layout_alignParentEnd", "android:layout_alignParentLeft",
+                "android:layout_alignParentRight", "android:layout_alignParentStart",
+                "android:layout_alignParentTop", "android:layout_alignRight",
+                "android:layout_alignStart", "android:layout_alignTop",
+                "android:layout_alignWithParentIfMissing", "android:layout_below",
+                "android:layout_centerHorizontal", "android:layout_centerInParent",
+                "android:layout_centerVertical", "android:layout_toEndOf",
+                "android:layout_toLeftOf", "android:layout_toRightOf", "android:layout_toStartOf"
+        };
+        for (String attribute : unnecessaryAttributes) {
+            element.removeAttribute(attribute);
         }
     }
 
