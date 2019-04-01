@@ -145,7 +145,7 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
-            if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
+            if (!AnalysisUtils.isAnAndroidLayout(child.getNodeName())) {
                 newRootLayout.appendChild(child);
             }
             addViews(newRootLayout, child);
@@ -204,7 +204,7 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
-            if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
+            if (!AnalysisUtils.isAnAndroidLayout(child.getNodeName())) {
                 children.add(child);
             }
             children.addAll(getAllViews(childrenNodes.item(i)));

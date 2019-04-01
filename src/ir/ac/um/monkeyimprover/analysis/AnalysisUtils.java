@@ -69,12 +69,10 @@ public class AnalysisUtils {
         return lines;
     }
 
-    public static boolean isAnAndroidView(String elementType) {
-        String[] viewTypes = {"TextView", "EditText", "Button", "ImageView",
-                "ImageButton", "CheckBox", "RadioButton", "RadioGroup", "Spinner",
-                "AutoCompleteTextView"};
-        for (String viewType : viewTypes) {
-            if (viewType.equals(elementType)) {
+    public static boolean isAnAndroidLayout(String elementType) {
+        String[] layoutTypes = {"LinearLayout", "RelativeLayout", "TableLayout", "AbsoluteLayout", "FrameLayout", ""};
+        for (String layoutType : layoutTypes) {
+            if (layoutType.equals(elementType)) {
                 return true;
             }
         }

@@ -39,8 +39,8 @@ public class LayoutXMLHandler extends DefaultHandler {
             rootLayoutId = attributes.getValue("android:id");
             rootLayoutContext = attributes.getValue("tools:context");
         }
-        if (AnalysisUtils.isAnAndroidView(qName)) {
-            numberOfViews = getNumberOfViews() + 1;
+        if (!AnalysisUtils.isAnAndroidLayout(qName)) {
+            numberOfViews++;
         }
         for (int i = 0; i < attributes.getLength(); i++) {
             String attributeQualifiedName = attributes.getQName(i);
