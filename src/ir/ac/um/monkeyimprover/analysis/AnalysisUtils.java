@@ -70,6 +70,12 @@ public class AnalysisUtils {
     }
 
     public static boolean isAnAndroidView(String elementType) {
+        String[]  nonViewTypes = {"LinearLayout", "ScrollView", "GridLayout"};
+        for (String viewType : nonViewTypes) {
+            if (viewType.equals(elementType)) {
+                return false;
+            }
+        }
         String[] viewTypes = {"TextView", "EditText", "Button", "ImageView",
                 "ImageButton", "CheckBox", "RadioButton", "RadioGroup", "Spinner",
                 "AutoCompleteTextView", "View"};

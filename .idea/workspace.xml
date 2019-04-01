@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -18,8 +18,8 @@
       <file leaf-file-name="LayoutXMLHandlerForRefactory.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandlerForRefactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="174" column="38" selection-start-line="174" selection-start-column="38" selection-end-line="174" selection-end-column="38" />
+            <state relative-caret-position="312">
+              <caret line="174" column="43" selection-start-line="174" selection-start-column="43" selection-end-line="174" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -30,8 +30,8 @@
       <file leaf-file-name="AnalysisUtils.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="74" column="47" selection-start-line="74" selection-start-column="47" selection-end-line="74" selection-end-column="47" />
+            <state relative-caret-position="186">
+              <caret line="72" column="75" selection-start-line="72" selection-start-column="75" selection-end-line="72" selection-end-column="75" />
             </state>
           </provider>
         </entry>
@@ -170,7 +170,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="814" />
     <option name="height" value="867" />
@@ -340,12 +340,12 @@
       <workItem from="1554023290930" duration="641000" />
       <workItem from="1554027930872" duration="7799000" />
       <workItem from="1554055800445" duration="1875000" />
-      <workItem from="1554100790406" duration="12453000" />
+      <workItem from="1554100790406" duration="13101000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85740000" />
+    <option name="totallyTimeSpent" value="86388000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -357,7 +357,7 @@
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="7" side_tool="true" visible="true" weight="0.07154213" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
@@ -365,7 +365,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -762,8 +762,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/LayoutXMLHandlerForRefactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="174" column="38" selection-start-line="174" selection-start-column="38" selection-end-line="174" selection-end-column="38" />
+        <state relative-caret-position="312">
+          <caret line="174" column="43" selection-start-line="174" selection-start-column="43" selection-end-line="174" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -772,8 +772,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/AnalysisUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="74" column="47" selection-start-line="74" selection-start-column="47" selection-end-line="74" selection-end-column="47" />
+        <state relative-caret-position="186">
+          <caret line="72" column="75" selection-start-line="72" selection-start-column="75" selection-end-line="72" selection-end-column="75" />
         </state>
       </provider>
     </entry>
