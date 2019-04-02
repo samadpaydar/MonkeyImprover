@@ -12,7 +12,7 @@ public class IntentComplexityAnalyzer {
     }
 
     public double getComplexity(PsiMethod method) {
-        IntentAnalyzer intentAnalyzer = new IntentAnalyzer(monkeyImprover);
+        IntentAnalyzer intentAnalyzer = new IntentAnalyzer();
         method.accept(intentAnalyzer);
         List<String> intentClassNames = intentAnalyzer.getIntentClassNames();
         List<PsiClass> projectClasses = monkeyImprover.getProjectJavaClasses();

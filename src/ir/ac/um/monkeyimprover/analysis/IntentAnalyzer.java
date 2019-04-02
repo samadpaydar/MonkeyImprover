@@ -9,11 +9,9 @@ import java.util.List;
  * @author Samad Paydar
  */
 public class IntentAnalyzer extends JavaRecursiveElementVisitor {
-    private MonkeyImprover monkeyImprover;
     private List<String> intentClassNames;
 
-    public IntentAnalyzer(MonkeyImprover monkeyImprover) {
-        this.monkeyImprover = monkeyImprover;
+    public IntentAnalyzer() {
         intentClassNames = new ArrayList<>();
     }
 
@@ -23,7 +21,6 @@ public class IntentAnalyzer extends JavaRecursiveElementVisitor {
         try {
             if (expression.getClassReference().getQualifiedName().equals("android.content.Intent")) {
                 PsiExpressionList list = expression.getArgumentList();
-                monkeyImprover.showMessage(">> " +list.getExpressionCount());
                 if(list.getExpressionCount()>1) {
                     PsiExpression secondArgument = list.getExpressions()[1];
                     String typeName = secondArgument.getType().getCanonicalText();
