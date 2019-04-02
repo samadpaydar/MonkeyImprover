@@ -38,7 +38,7 @@ public class MethodAnalyzer {
     }
 
     private double getIntentComplexity(PsiMethod method) {
-        IntentComplexityAnalyzer intentComplexityAnalyzer = new IntentComplexityAnalyzer();
+        IntentComplexityAnalyzer intentComplexityAnalyzer = new IntentComplexityAnalyzer(monkeyImprover);
         return intentComplexityAnalyzer.getComplexity(method);
     }
 
