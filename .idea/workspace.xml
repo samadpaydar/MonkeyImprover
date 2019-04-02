@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/IntentComplexityAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/IntentComplexityAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MethodAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/IntentAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/IntentAnalyzer.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,8 +54,17 @@
       <file leaf-file-name="IntentAnalyzer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/IntentAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
+            <state relative-caret-position="316">
+              <caret line="25" column="59" selection-start-line="25" selection-start-column="59" selection-end-line="25" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JavaElementVisitor.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/lib/java-api.jar!/com/intellij/psi/JavaElementVisitor.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="95" column="34" selection-start-line="95" selection-start-column="16" selection-end-line="95" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -73,7 +80,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>new LayoutXMLHandler</find>
       <find>visitor</find>
       <find>getAllViews</find>
       <find>MethodCallAna</find>
@@ -103,6 +109,7 @@
       <find>weight</find>
       <find>new MethodCall</find>
       <find>creat</find>
+      <find>express</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src\ir\ac\um\monkeyimprover</dir>
@@ -340,12 +347,12 @@
       <workItem from="1554055800445" duration="1875000" />
       <workItem from="1554100790406" duration="15200000" />
       <workItem from="1554186546563" duration="2781000" />
-      <workItem from="1554219734889" duration="1883000" />
+      <workItem from="1554219734889" duration="3067000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93151000" />
+    <option name="totallyTimeSpent" value="94335000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -771,21 +778,21 @@
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/java-api.jar!/com/intellij/psi/JavaRecursiveElementVisitor.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="6" column="79" selection-start-line="6" selection-start-column="79" selection-end-line="6" selection-end-column="79" />
+          <caret line="6" column="83" selection-start-line="6" selection-start-column="83" selection-end-line="6" selection-end-column="83" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/java-api.jar!/com/intellij/psi/JavaElementVisitor.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
+        <state relative-caret-position="396">
+          <caret line="95" column="34" selection-start-line="95" selection-start-column="16" selection-end-line="95" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/IntentAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
+        <state relative-caret-position="316">
+          <caret line="25" column="59" selection-start-line="25" selection-start-column="59" selection-end-line="25" selection-end-column="59" />
         </state>
       </provider>
     </entry>

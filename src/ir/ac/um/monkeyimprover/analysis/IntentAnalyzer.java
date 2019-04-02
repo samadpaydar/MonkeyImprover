@@ -20,10 +20,12 @@ public class IntentAnalyzer extends JavaRecursiveElementVisitor {
     }
 
     @Override
-    public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-        super.visitMethodCallExpression(expression);
+    public void visitNewExpression(PsiNewExpression expression) {
+        super.visitNewExpression(expression);
         try {
-            PsiElement element = expression.getMethodExpression().getReference().resolve();
+            monkeyImprover.showMessage(expression.getText());
+            monkeyImprover.showMessage(expression.getClassReference().getQualifiedName());
+            /*PsiElement element = expression.getMethodExpression().getReference().resolve();
             if (element instanceof PsiMethod) {
                 PsiMethod calledMethod = (PsiMethod) element;
                 if(calledMethod.isConstructor() && calledMethod.getName().equals("Intent")) {
@@ -34,7 +36,7 @@ public class IntentAnalyzer extends JavaRecursiveElementVisitor {
                     }
 
                 }
-            }
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
         }
