@@ -222,31 +222,18 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
     private void updateViewWeights(Document document) {
         List<Node> children = getAllViews(document.getFirstChild());
         for (Node child : children) {
-            NamedNodeMap attributeMap = child.getAttributes();
-            if (attributeMap != null) {
-                Node node = attributeMap.getNamedItem("android:onClick");
-                if (node != null) {
-                    String callbackMethodName = node.toString();
-                    callbackMethodName = callbackMethodName.replace("android:onClick=", "");
-                    callbackMethodName = callbackMethodName.replace("\"", "");
-                    callbackMethodName = callbackMethodName.trim();
-                    int weight = getWeight(callbackMethodName);
-                    setAttribute(child, "android:layout_width", "match_parent");
-                    setAttribute(child, "android:layout_height", "0dp");
-                    setAttribute(child, "android:layout_weight", Integer.toString(weight));
-                } else {
-                    setAttribute(child, "android:layout_width", "match_parent");
-                    setAttribute(child, "android:layout_height", "0dp");
-                    setAttribute(child, "android:layout_weight", "1");
+            if (child instanceof Element) {
+                Element childElement = (Element) child;
+                String onClick = childElement.getAttribute("android:onClick");
+                int weight = 1;
+                if (onClick != null) {
+                    String callbackMethodName = onClick.trim();
+                    weight = getWeight(callbackMethodName);
                 }
+                childElement.setAttribute("android:layout_width", "match_parent");
+                childElement.setAttribute("android:layout_height", "0dp");
+                childElement.setAttribute("android:layout_weight", Integer.toString(weight));
             }
-        }
-    }
-
-    private void setAttribute(Node node, String attributeName, String attributeValue) {
-        if (node instanceof Element) {
-            Element element = (Element) node;
-            element.setAttribute(attributeName, attributeValue);
         }
     }
 
