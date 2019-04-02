@@ -23,20 +23,15 @@ public class IntentAnalyzer extends JavaRecursiveElementVisitor {
     public void visitNewExpression(PsiNewExpression expression) {
         super.visitNewExpression(expression);
         try {
-            monkeyImprover.showMessage(expression.getText());
-            monkeyImprover.showMessage(expression.getClassReference().getQualifiedName());
-            /*PsiElement element = expression.getMethodExpression().getReference().resolve();
-            if (element instanceof PsiMethod) {
-                PsiMethod calledMethod = (PsiMethod) element;
-                if(calledMethod.isConstructor() && calledMethod.getName().equals("Intent")) {
-                    monkeyImprover.showMessage("method: " + method.getName() + " calledMethod " + calledMethod.getName());
-                    PsiExpressionList list = expression.getArgumentList();
-                    for(int i=0;i<list.getExpressionCount(); i++) {
-                        monkeyImprover.showMessage(list.getExpressions()[i].getText());
-                    }
+            if (expression.getClassReference().getQualifiedName().equals("android.content.Intent")) {
+                PsiExpressionList list = expression.getArgumentList();
+                if(list.getExpressionCount()>1) {
+                    PsiExpression secondArgument = list.getExpressions()[1];
+                    monkeyImprover.showMessage(secondArgument.getType().getCanonicalText());
+                    monkeyImprover.showMessage(secondArgument.getText());
 
                 }
-            }*/
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
