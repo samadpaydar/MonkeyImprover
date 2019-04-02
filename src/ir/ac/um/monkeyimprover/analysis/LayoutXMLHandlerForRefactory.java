@@ -118,28 +118,38 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
         }
     }*/
 
-    private Node createLinearLayout(Document document, boolean isRoot) {
-        Element linearLayout = document.createElement("LinearLayout");
-        if (isRoot) {
-            linearLayout.setAttribute("xmlns:android", "http://schemas.android.com/apk/res/android");
-            linearLayout.setAttribute("xmlns:tools", "http://schemas.android.com/tools");
-            if (rootLayoutId != null) {
-                linearLayout.setAttribute("android:id", rootLayoutId);
-            }
-            if (rootLayoutContext != null) {
-                linearLayout.setAttribute("tools:context", rootLayoutContext);
-            }
-        }
-        linearLayout.setAttribute("android:layout_width", "match_parent");
+    private Element createRootLinearLayout(Document document) {
+        Element linearLayout = createLinearLayout(document);
+        linearLayout.setAttribute("xmlns:android", "http://schemas.android.com/apk/res/android");
+        linearLayout.setAttribute("xmlns:tools", "http://schemas.android.com/tools");
         linearLayout.setAttribute("android:layout_height", "match_parent");
+        if (rootLayoutId != null) {
+            linearLayout.setAttribute("android:id", rootLayoutId);
+        }
+        if (rootLayoutContext != null) {
+            linearLayout.setAttribute("tools:context", rootLayoutContext);
+        }
+        return linearLayout;
+    }
+
+    private Element createChildLinearLayout(Document document, int weight) {
+        Element linearLayout = createLinearLayout(document);
+        linearLayout.setAttribute("android:layout_height", "0px");
+        linearLayout.setAttribute("android:layout_weight", Integer.toString(weight));
+        return linearLayout;
+    }
+
+    private Element createLinearLayout(Document document) {
+        Element linearLayout = document.createElement("LinearLayout");
+        linearLayout.setAttribute("android:layout_width", "match_parent");
         linearLayout.setAttribute("android:orientation", "vertical");
         return linearLayout;
     }
 
     private Node addRootLayout(Document document) {
-        Node newRootLayout = createLinearLayout(document, true);
-        Node childLayout1 = createLinearLayout(document, false);
-        Node childLayout2 = createLinearLayout(document, false);
+        Element newRootLayout = createRootLinearLayout(document);
+        Element childLayout1 = createChildLinearLayout(document, 9);
+        Element childLayout2 = createChildLinearLayout(document, 1);
         Node currentRootLayout = document.getFirstChild();
 
         newRootLayout.appendChild(childLayout1);
