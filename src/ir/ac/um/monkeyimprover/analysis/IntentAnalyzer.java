@@ -27,9 +27,12 @@ public class IntentAnalyzer extends JavaRecursiveElementVisitor {
                 PsiExpressionList list = expression.getArgumentList();
                 if(list.getExpressionCount()>1) {
                     PsiExpression secondArgument = list.getExpressions()[1];
-                    monkeyImprover.showMessage(secondArgument.getType().getCanonicalText());
-                    monkeyImprover.showMessage(secondArgument.getText());
-
+                    PsiElement reference = secondArgument.getReference().resolve();
+                    monkeyImprover.showMessage(reference.getClass().toString());
+                    if(reference instanceof PsiClass) {
+                        PsiClass cls = (PsiClass) reference;
+                        monkeyImprover.showMessage(cls.getQualifiedName());
+                    }
                 }
             }
         } catch (Exception e) {
