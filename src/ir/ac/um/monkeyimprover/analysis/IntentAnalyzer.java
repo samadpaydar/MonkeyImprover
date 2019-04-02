@@ -10,13 +10,11 @@ import java.util.List;
  */
 public class IntentAnalyzer extends JavaRecursiveElementVisitor {
     private MonkeyImprover monkeyImprover;
-    private PsiMethod method;
-    private List<PsiClass> intentClasses;
+    private List<String> intentClassNames;
 
-    public IntentAnalyzer(MonkeyImprover monkeyImprover, PsiMethod method) {
+    public IntentAnalyzer(MonkeyImprover monkeyImprover) {
         this.monkeyImprover = monkeyImprover;
-        this.method = method;
-        intentClasses = new ArrayList<>();
+        intentClassNames = new ArrayList<>();
     }
 
     @Override
@@ -25,13 +23,16 @@ public class IntentAnalyzer extends JavaRecursiveElementVisitor {
         try {
             if (expression.getClassReference().getQualifiedName().equals("android.content.Intent")) {
                 PsiExpressionList list = expression.getArgumentList();
+                monkeyImprover.showMessage(">> " +list.getExpressionCount());
                 if(list.getExpressionCount()>1) {
                     PsiExpression secondArgument = list.getExpressions()[1];
-                    PsiElement reference = secondArgument.getReference().resolve();
-                    monkeyImprover.showMessage(reference.getClass().toString());
-                    if(reference instanceof PsiClass) {
-                        PsiClass cls = (PsiClass) reference;
-                        monkeyImprover.showMessage(cls.getQualifiedName());
+                    String typeName = secondArgument.getType().getCanonicalText();
+                    final String CLASS_PREFIX = "java.lang.Class";
+                    if(typeName!= null && typeName.startsWith(CLASS_PREFIX)) {
+                        typeName = typeName.replace(CLASS_PREFIX, "");
+                        typeName = typeName.replace("<", "");
+                        typeName = typeName.replace(">", "");
+                        intentClassNames.add(typeName);
                     }
                 }
             }
@@ -40,5 +41,8 @@ public class IntentAnalyzer extends JavaRecursiveElementVisitor {
         }
     }
 
+    public List<String> getIntentClassNames() {
+        return intentClassNames;
+    }
 }
 
