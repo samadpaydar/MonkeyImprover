@@ -17,8 +17,7 @@ public class MethodAnalyzer {
      * @return the complexity of the given method
      */
     public double getMethodComplexity(PsiMethod method) {
-        CyclomaticComplexityAnalyzer cyclomaticComplexityAnalyzer = new CyclomaticComplexityAnalyzer();
-        double complexity = cyclomaticComplexityAnalyzer.getComplexity(method);
+        double complexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
         for (PsiMethod calledMethod : calledMethods) {
             if (calledMethod.equals(method)) {
@@ -29,7 +28,18 @@ public class MethodAnalyzer {
                 complexity += getAPIComplexity(calledMethod);
             }
         }
+        complexity += getIntentComplexity(method);
         return complexity;
+    }
+
+    private double getCyclomaticComplexity(PsiMethod method) {
+        CyclomaticComplexityAnalyzer cyclomaticComplexityAnalyzer = new CyclomaticComplexityAnalyzer();
+        return cyclomaticComplexityAnalyzer.getComplexity(method);
+    }
+
+    private double getIntentComplexity(PsiMethod method) {
+        IntentComplexityAnalyzer intentComplexityAnalyzer = new IntentComplexityAnalyzer();
+        return intentComplexityAnalyzer.getComplexity(method);
     }
 
     private boolean isLocalMethod(PsiMethod calledMethod) {
