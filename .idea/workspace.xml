@@ -2,6 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/layouts/LayoutInformationExtractor$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/layouts/LayoutInformationExtractor$1FragmentCheckHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/layouts/LayoutInformationExtractor$1ViewCounterHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/layouts/LayoutInformationExtractor$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MonkyImprover/ir/ac/um/monkeyimprover/analysis/layouts/LayoutInformationExtractor.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/LayoutInformationExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/LayoutInformationExtractor.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -53,14 +58,27 @@
       <file leaf-file-name="LayoutInformationExtractor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/LayoutInformationExtractor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="159" column="43" selection-start-line="159" selection-start-column="43" selection-end-line="159" selection-end-column="43" />
+            <state relative-caret-position="153">
+              <caret line="30" column="44" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
               <folding>
-                <element signature="method#getContextClassNames#0;class#LayoutInformationExtractor#0" />
-                <element signature="method#getCallbackMethodNames#0;class#LayoutInformationExtractor#0" />
                 <element signature="method#getNumberOfViews#0;class#LayoutInformationExtractor#0" />
-                <element signature="method#getRootLayoutInfo#0;class#LayoutInformationExtractor#0" />
                 <element signature="method#isFragment#0;class#LayoutInformationExtractor#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassFinder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/classes/ClassFinder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="106">
+              <caret line="37" column="88" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="88" />
+              <folding>
+                <element signature="method#findRelatedJavaFileByName#0;class#ClassFinder#0" />
+                <element signature="method#findRelatedJavaFile#1;class#ClassFinder#0" />
+                <element signature="method#createParentHierarchy#0;class#ClassFinder#0" />
+                <element signature="method#getName#0;class#ClassFinder#0" />
+                <element signature="method#getPackageName#0;class#ClassFinder#0" />
               </folding>
             </state>
           </provider>
@@ -110,8 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>&quot;refactor</find>
-      <find>dom</find>
       <find>isanandro</find>
       <find>addview</find>
       <find>getattribu</find>
@@ -140,6 +156,8 @@
       <find>processC</find>
       <find>createRootLinearLayout</find>
       <find>getwei</find>
+      <find>getCallbackMethodNames</find>
+      <find>getContextClassNames</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src\ir\ac\um\monkeyimprover</dir>
@@ -217,7 +235,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-7" />
     <option name="width" value="814" />
     <option name="height" value="867" />
@@ -407,12 +425,12 @@
       <workItem from="1554100790406" duration="15200000" />
       <workItem from="1554186546563" duration="2781000" />
       <workItem from="1554219734889" duration="7718000" />
-      <workItem from="1554286131456" duration="8085000" />
+      <workItem from="1554286131456" duration="8940000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107071000" />
+    <option name="totallyTimeSpent" value="107926000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -420,7 +438,7 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" sideWeight="0.49853587" weight="0.37201908" />
+      <window_info active="true" anchor="bottom" id="Messages" order="7" sideWeight="0.49853587" visible="true" weight="0.37201908" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
@@ -432,7 +450,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3290938" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -793,22 +811,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/classes/ClassFinder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
-          <folding>
-            <element signature="e#512#513#0" expanded="true" />
-            <element signature="e#564#565#0" expanded="true" />
-            <element signature="method#findRelatedJavaFileByName#0;class#ClassFinder#0" />
-            <element signature="method#findRelatedJavaFile#1;class#ClassFinder#0" />
-            <element signature="method#createParentHierarchy#0;class#ClassFinder#0" />
-            <element signature="method#getName#0;class#ClassFinder#0" />
-            <element signature="method#getPackageName#0;class#ClassFinder#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -866,15 +868,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/classes/ClassFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="37" column="88" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="88" />
+          <folding>
+            <element signature="method#findRelatedJavaFileByName#0;class#ClassFinder#0" />
+            <element signature="method#findRelatedJavaFile#1;class#ClassFinder#0" />
+            <element signature="method#createParentHierarchy#0;class#ClassFinder#0" />
+            <element signature="method#getName#0;class#ClassFinder#0" />
+            <element signature="method#getPackageName#0;class#ClassFinder#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/LayoutInformationExtractor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="159" column="43" selection-start-line="159" selection-start-column="43" selection-end-line="159" selection-end-column="43" />
+        <state relative-caret-position="153">
+          <caret line="30" column="44" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
           <folding>
-            <element signature="method#getContextClassNames#0;class#LayoutInformationExtractor#0" />
-            <element signature="method#getCallbackMethodNames#0;class#LayoutInformationExtractor#0" />
             <element signature="method#getNumberOfViews#0;class#LayoutInformationExtractor#0" />
-            <element signature="method#getRootLayoutInfo#0;class#LayoutInformationExtractor#0" />
             <element signature="method#isFragment#0;class#LayoutInformationExtractor#0" />
           </folding>
         </state>

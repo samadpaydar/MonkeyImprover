@@ -43,7 +43,7 @@ public class LayoutInformationExtractor {
         return null;
     }
 
-    public List<String> getCallbackMethodNames(File xmlFile) {
+    private List<String> getCallbackMethodNames(File xmlFile) {
         if (xmlFile.exists() && xmlFile.isFile()) {
             try {
                 final List<String> callbackMethodNames = new ArrayList<>();
@@ -153,9 +153,8 @@ public class LayoutInformationExtractor {
 
     public List<CallbackMethodInfo> getCallbackMethodInfos(VirtualFile layoutFile, VirtualFile projectBaseDirectory) {
         List<CallbackMethodInfo> infoList = new ArrayList<>();
-        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor(monkeyImprover);
         File xmlFile = new File(layoutFile.getCanonicalPath());
-        List<String> callbackMethodNames = layoutInformationExtractor.getCallbackMethodNames(xmlFile);
+        List<String> callbackMethodNames = getCallbackMethodNames(xmlFile);
         MethodAnalyzer methodAnalyzer = new MethodAnalyzer(monkeyImprover);
         if (callbackMethodNames != null && !callbackMethodNames.isEmpty()) {
             ClassFinder classFinder = new ClassFinder(monkeyImprover);
