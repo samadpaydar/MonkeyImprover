@@ -3,10 +3,6 @@ package ir.ac.um.monkeyimprover.analysis.methods;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
-import ir.ac.um.monkeyimprover.analysis.methods.CyclomaticComplexityAnalyzer;
-import ir.ac.um.monkeyimprover.analysis.methods.IntentComplexityAnalyzer;
-import ir.ac.um.monkeyimprover.analysis.methods.MethodCallAnalyzer;
-import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 
 import java.util.List;
 
@@ -31,6 +27,7 @@ public class MethodAnalyzer {
             }
         }
         complexity += getIntentComplexity(method);
+        complexity += getAsyncTaskComplexity(method);
         return complexity;
     }
 
@@ -60,6 +57,11 @@ public class MethodAnalyzer {
     private double getIntentComplexity(PsiMethod method) {
         IntentComplexityAnalyzer intentComplexityAnalyzer = new IntentComplexityAnalyzer(monkeyImprover);
         return intentComplexityAnalyzer.getComplexity(method);
+    }
+
+    private double getAsyncTaskComplexity(PsiMethod method) {
+        AsyncTaskComplexityAnalyzer asyncTaskComplexityAnalyzer = new AsyncTaskComplexityAnalyzer(monkeyImprover);
+        return asyncTaskComplexityAnalyzer.getComplexity(method);
     }
 
     private boolean isLocalMethod(PsiMethod calledMethod) {
