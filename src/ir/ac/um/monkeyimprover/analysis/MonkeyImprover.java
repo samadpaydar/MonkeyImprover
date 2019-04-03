@@ -5,10 +5,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
-import com.intellij.psi.impl.file.PsiJavaDirectoryImpl;
+import ir.ac.um.monkeyimprover.analysis.layout.LayoutInfo;
+import ir.ac.um.monkeyimprover.analysis.layout.LayoutInformationExtractor;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +66,9 @@ public class MonkeyImprover implements Runnable {
 
     private List<CallbackMethodInfo> processLayoutFile(VirtualFile layoutFile) {
         List<CallbackMethodInfo> infoList = new ArrayList<>();
-        List<String> callbackMethodNames = layoutAnalyzer.getCallbackMethodNames(layoutFile);
+        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor();
+        File xmlFile = new File(layoutFile.getCanonicalPath());
+        List<String> callbackMethodNames = layoutInformationExtractor.getCallbackMethodNames(xmlFile);
         if (!callbackMethodNames.isEmpty()) {
             List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(project.getBaseDir(), layoutFile);
             if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {

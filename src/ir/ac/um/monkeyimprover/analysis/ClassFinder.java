@@ -3,6 +3,7 @@ package ir.ac.um.monkeyimprover.analysis;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaFile;
+import ir.ac.um.monkeyimprover.analysis.layout.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.utils.Utils;
 
 import java.io.File;
@@ -30,8 +31,9 @@ public class ClassFinder {
 
     private List<VirtualFile> findRelatedJavaFileByContext(VirtualFile directory, VirtualFile layoutXMLFile) {
         List<VirtualFile> relatedJavaFiles = null;
-        LayoutAnalyzer layoutAnalyzer = new LayoutAnalyzer();
-        List<String> contextClassNames = layoutAnalyzer.getContextClassNames(layoutXMLFile);
+        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor();
+        File xmlFile = new File(layoutXMLFile.getCanonicalPath());
+        List<String> contextClassNames = layoutInformationExtractor.getContextClassNames(xmlFile);
         if (contextClassNames != null && !contextClassNames.isEmpty()) {
             relatedJavaFiles = new ArrayList<>();
             for (String contextClassName : contextClassNames) {

@@ -1,8 +1,7 @@
-package ir.ac.um.monkeyimprover.analysis;
+package ir.ac.um.monkeyimprover.analysis.layout;
 
-import com.intellij.openapi.vfs.VirtualFile;
+import ir.ac.um.monkeyimprover.analysis.AnalysisUtils;
 import org.xml.sax.Attributes;
-import org.xml.sax.HandlerBase;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -98,7 +97,6 @@ public class LayoutInformationExtractor {
                             rootElementVisited = true;
                             info[0] = attributes.getValue("android:id");
                             info[1] = attributes.getValue("tools:context");
-//                            isFragment = AnalysisUtils.isAnAndroidView(qName);
                         }
                     }
                 });
