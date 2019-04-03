@@ -6,6 +6,7 @@ import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.methods.CyclomaticComplexityAnalyzer;
 import ir.ac.um.monkeyimprover.analysis.methods.IntentComplexityAnalyzer;
 import ir.ac.um.monkeyimprover.analysis.methods.MethodCallAnalyzer;
+import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 
 import java.util.List;
 
@@ -16,13 +17,14 @@ public class MethodAnalyzer {
         this.monkeyImprover = monkeyImprover;
     }
 
-    /**
-     * @param method
-     * @return the complexity of the given method
-     */
     private double getMethodComplexity(PsiMethod method) {
         double complexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
+
+        monkeyImprover.showMessage("\t\t\tMethods Called by: " + method.getName());
+        for(PsiMethod m: calledMethods) {
+            monkeyImprover.showMessage("\t\t\t\t" + AnalysisUtils.getMethodQualifiedName(m));
+        }
         for (PsiMethod calledMethod : calledMethods) {
             if (calledMethod.equals(method)) {
                 //ignore recursive calls
