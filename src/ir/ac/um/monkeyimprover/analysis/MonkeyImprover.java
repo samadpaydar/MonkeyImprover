@@ -47,17 +47,27 @@ public class MonkeyImprover implements Runnable {
         showMessage("Collecting project Java classes...");
         ProjectInformationExtractor projectInformationExtractor = new ProjectInformationExtractor(psiElement);
         this.projectJavaClasses = projectInformationExtractor.getProjectJavaClasses();
-        LayoutRefactory layoutRefactory = new LayoutRefactory(this);
         showMessage("Extracting layouts files...");
         List<VirtualFile> layoutFiles = projectInformationExtractor.getLayoutXMLFiles(project.getBaseDir());
         createBackup(project.getBaseDir(), layoutFiles);
         for (VirtualFile layoutFile : layoutFiles) {
             showMessage("Processing layouts file " + layoutFile.getName() + "...");
             List<CallbackMethodInfo> info = processLayoutFile(layoutFile);
-            layoutRefactory.refactorLayout(new LayoutInfo(layoutFile, info));
+            refactorLayout(new LayoutInfo(layoutFile, info));
         }
 
         showMessage("Finished");
+    }
+
+    private void refactorLayout(LayoutInfo layoutInfo) {
+        VirtualFile layoutFile = layoutInfo.getLayoutFile();
+        List<CallbackMethodInfo> callbackMethodInfoList = layoutInfo.getCallbackMethodInfoList();
+        String path = layoutFile.getCanonicalPath();
+        File xmlFile = new File(path);
+        if (xmlFile.exists() && xmlFile.isFile()) {
+            LayoutXMLHandlerForRefactory handler = new LayoutXMLHandlerForRefactory(this, xmlFile, callbackMethodInfoList);
+            handler.run();
+        }
     }
 
     private void createBackup(VirtualFile directory, List<VirtualFile> layoutFiles) {
