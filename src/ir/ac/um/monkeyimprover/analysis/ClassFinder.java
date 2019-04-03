@@ -1,9 +1,7 @@
 package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiJavaFile;
-import ir.ac.um.monkeyimprover.analysis.layout.LayoutInformationExtractor;
+import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.utils.Utils;
 
 import java.io.File;

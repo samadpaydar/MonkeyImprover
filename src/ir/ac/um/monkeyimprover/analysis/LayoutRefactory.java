@@ -1,7 +1,7 @@
 package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import ir.ac.um.monkeyimprover.analysis.layout.LayoutInfo;
+import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInfo;
 
 import java.io.File;
 import java.util.List;

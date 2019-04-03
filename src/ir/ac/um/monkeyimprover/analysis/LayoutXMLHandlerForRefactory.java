@@ -1,6 +1,6 @@
 package ir.ac.um.monkeyimprover.analysis;
 
-import ir.ac.um.monkeyimprover.analysis.layout.LayoutInformationExtractor;
+import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -193,8 +193,8 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
     }
 
     /**
-     * since intermediate layout are removed during refactory, it is required to remove some attributes that might
-     * refer to the removed intermediate layout
+     * since intermediate layouts are removed during refactory, it is required to remove some attributes that might
+     * refer to the removed intermediate layouts
      *
      * @param element
      */

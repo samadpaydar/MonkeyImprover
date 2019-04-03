@@ -1,11 +1,8 @@
 package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import ir.ac.um.monkeyimprover.analysis.layout.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.analysis.project.ProjectInformationExtractor;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

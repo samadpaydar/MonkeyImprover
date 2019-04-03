@@ -37,7 +37,7 @@ public class ProjectInformationExtractor {
     }
 
     private VirtualFile getLayoutDirectory(VirtualFile directory) {
-        return getChildDirectory("layout", directory);
+        return getChildDirectory("layouts", directory);
     }
 
     private VirtualFile getChildDirectory(String childDirectoryName, VirtualFile parentDirectory) {

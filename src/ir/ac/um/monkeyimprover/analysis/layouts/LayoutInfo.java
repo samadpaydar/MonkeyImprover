@@ -1,4 +1,4 @@
-package ir.ac.um.monkeyimprover.analysis.layout;
+package ir.ac.um.monkeyimprover.analysis.layouts;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import ir.ac.um.monkeyimprover.analysis.CallbackMethodInfo;

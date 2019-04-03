@@ -6,7 +6,7 @@ import com.intellij.psi.PsiMethod;
  */
 public class CallbackMethodInfo {
     /**
-     * the name of the callback as written in onClick attribute of a View in a layout file
+     * the name of the callback as written in onClick attribute of a View in a layouts file
      */
     private String callbackName;
     /**

@@ -1,4 +1,4 @@
-package ir.ac.um.monkeyimprover.analysis.layout;
+package ir.ac.um.monkeyimprover.analysis.layouts;
 
 import ir.ac.um.monkeyimprover.analysis.AnalysisUtils;
 import org.xml.sax.Attributes;

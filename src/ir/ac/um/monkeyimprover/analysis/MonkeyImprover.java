@@ -5,8 +5,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
-import ir.ac.um.monkeyimprover.analysis.layout.LayoutInfo;
-import ir.ac.um.monkeyimprover.analysis.layout.LayoutInformationExtractor;
+import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInfo;
+import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,10 +43,10 @@ public class MonkeyImprover implements Runnable {
         showMessage("Collecting project Java classes...");
         collectProjectJavaClasses();
         LayoutRefactory layoutRefactory = new LayoutRefactory(this);
-        showMessage("Extracting layout files...");
+        showMessage("Extracting layouts files...");
         List<VirtualFile> layoutFiles = layoutAnalyzer.getLayoutFiles(project.getBaseDir());
         for (VirtualFile layoutFile : layoutFiles) {
-            showMessage("Processing layout file " + layoutFile.getName() + "...");
+            showMessage("Processing layouts file " + layoutFile.getName() + "...");
             List<CallbackMethodInfo> info = processLayoutFile(layoutFile);
             layoutRefactory.refactorLayout(new LayoutInfo(layoutFile, info));
         }
