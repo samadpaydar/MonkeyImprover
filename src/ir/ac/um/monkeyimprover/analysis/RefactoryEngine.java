@@ -1,5 +1,6 @@
 package ir.ac.um.monkeyimprover.analysis;
 
+import com.intellij.ide.ui.EditorOptionsTopHitProvider;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
 import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
@@ -23,46 +24,50 @@ import java.util.List;
 /**
  * @author Samad Paydar
  */
-public class RefactoryEngine extends DefaultHandler {
+public class RefactoryEngine {
     private MonkeyImprover monkeyImprover;
-    private File xmlFile;
-    private int numberOfViews;
-    private String rootLayoutId;
-    private String rootLayoutContext;
-    private List<CallbackMethodInfo> callbackMethodInfoList;
 
-    public RefactoryEngine(MonkeyImprover monkeyImprover, File xmlFile, List<CallbackMethodInfo> callbackMethodInfoList) {
+    public RefactoryEngine(MonkeyImprover monkeyImprover) {
         this.monkeyImprover = monkeyImprover;
-        this.xmlFile = xmlFile;
-        this.callbackMethodInfoList = callbackMethodInfoList;
     }
 
-
-    public void run() {
-
-        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor();
+    public void refactorLayout(File xmlFile, List<CallbackMethodInfo> callbackMethodInfos) {
+        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor(monkeyImprover);
         if (layoutInformationExtractor.isFragment(xmlFile)) {
             return;
         }
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder;
         try {
+            Document document = createNewXMLDocument(xmlFile);
+            int numberOfViews = layoutInformationExtractor.getNumberOfViews(xmlFile);
+            String[] rootLayoutInfo = layoutInformationExtractor.getRootLayoutInfo(xmlFile);
+            String rootLayoutId = rootLayoutInfo[0];
+            String rootLayoutContext = rootLayoutInfo[1];
+
+            monkeyImprover.showMessage("\t\t" + xmlFile.getName() + " has " + numberOfViews + " views");
+            refactorElements(document, rootLayoutId, rootLayoutContext, callbackMethodInfos);
+
+            saveXMLDocument(document, xmlFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Document createNewXMLDocument(File xmlFile) {
+        try {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder;
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(xmlFile);
             document.getDocumentElement().normalize();
+            return document;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-            numberOfViews = layoutInformationExtractor.getNumberOfViews(xmlFile);
-            String[] rootLayoutInfo = layoutInformationExtractor.getRootLayoutInfo(xmlFile);
-            rootLayoutId = rootLayoutInfo[0];
-            rootLayoutContext = rootLayoutInfo[1];
-
-            monkeyImprover.showMessage(xmlFile.getName() + " has " + numberOfViews + " views");
-            //update attribute value
-            //  updateAttributeValue(document);
-
-            addRootLayout(document);
-
-            //write the updated document to file or console
+    private void saveXMLDocument(Document document, File xmlFile) {
+        try {
             document.getDocumentElement().normalize();
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -71,12 +76,12 @@ public class RefactoryEngine extends DefaultHandler {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(source, result);
-        } catch (SAXException | ParserConfigurationException | IOException | TransformerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private Element createRootLinearLayout(Document document) {
+    private Element createRootLinearLayout(Document document, String rootLayoutId, String rootLayoutContext) {
         Element linearLayout = createLinearLayout(document);
         linearLayout.setAttribute("xmlns:android", "http://schemas.android.com/apk/res/android");
         linearLayout.setAttribute("xmlns:tools", "http://schemas.android.com/tools");
@@ -104,8 +109,8 @@ public class RefactoryEngine extends DefaultHandler {
         return linearLayout;
     }
 
-    private Node addRootLayout(Document document) {
-        Element newRootLayout = createRootLinearLayout(document);
+    private void refactorElements(Document document, String rootLayoutId, String rootLayoutContext, List<CallbackMethodInfo> callbackMethodInfos) {
+        Element newRootLayout = createRootLinearLayout(document, rootLayoutId, rootLayoutContext);
         Element childLayout1 = createChildLinearLayout(document, 9);
         Element childLayout2 = createChildLinearLayout(document, 1);
         Node currentRootLayout = document.getFirstChild();
@@ -113,13 +118,12 @@ public class RefactoryEngine extends DefaultHandler {
         newRootLayout.appendChild(childLayout1);
         newRootLayout.appendChild(childLayout2);
 
-        updateViewWeights(document);
+        updateViewWeights(document, callbackMethodInfos);
 
         addViews(childLayout1, currentRootLayout);
         addNonViewElements(childLayout2, currentRootLayout);
 
         document.replaceChild(newRootLayout, currentRootLayout);
-        return newRootLayout;
     }
 
     private void addViews(Node newParent, Node parent) {
@@ -177,7 +181,7 @@ public class RefactoryEngine extends DefaultHandler {
         }
     }
 
-    private void updateViewWeights(Document document) {
+    private void updateViewWeights(Document document, List<CallbackMethodInfo> callbackMethodInfos) {
         List<Node> children = getAllViews(document.getFirstChild());
         for (Node child : children) {
             if (child instanceof Element) {
@@ -186,7 +190,7 @@ public class RefactoryEngine extends DefaultHandler {
                 int weight = 1;
                 if (onClick != null) {
                     String callbackMethodName = onClick.trim();
-                    weight = getWeight(callbackMethodName);
+                    weight = getWeight(callbackMethodInfos, callbackMethodName);
                 }
                 childElement.setAttribute("android:layout_width", "match_parent");
                 childElement.setAttribute("android:layout_height", "0dp");
@@ -195,13 +199,13 @@ public class RefactoryEngine extends DefaultHandler {
         }
     }
 
-    private int getWeight(String callbackMethodName) {
+    private int getWeight(List<CallbackMethodInfo> callbackMethodInfos, String callbackMethodName) {
         int weight = 1;
         double complexitySum = 0.0;
-        for (CallbackMethodInfo info : callbackMethodInfoList) {
+        for (CallbackMethodInfo info : callbackMethodInfos) {
             complexitySum += info.getCallbackMethodComplexity();
         }
-        for (CallbackMethodInfo info : callbackMethodInfoList) {
+        for (CallbackMethodInfo info : callbackMethodInfos) {
             if (info.getCallbackName().equals(callbackMethodName)) {
                 double complexity = info.getCallbackMethodComplexity();
                 weight = (int) ((100.0 * complexity) / complexitySum);

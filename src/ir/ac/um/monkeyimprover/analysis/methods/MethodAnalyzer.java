@@ -1,5 +1,6 @@
 package ir.ac.um.monkeyimprover.analysis.methods;
 
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.methods.CyclomaticComplexityAnalyzer;
@@ -35,6 +36,25 @@ public class MethodAnalyzer {
         return complexity;
     }
 
+    public CallbackMethodInfo getCallbackMethodInfo(String callbackMethodName, List<VirtualFile> relatedJavaFiles) {
+        double complexity = -1;
+        PsiMethod method = null;
+        MethodFinder methodFinder = new MethodFinder();
+        MethodAnalyzer methodAnalyzer = new MethodAnalyzer(monkeyImprover);
+        for (VirtualFile relatedJavaFile : relatedJavaFiles) {
+            PsiFile file = PsiManager.getInstance(monkeyImprover.getProject()).findFile(relatedJavaFile);
+            if (file != null && file instanceof PsiJavaFile) {
+                PsiMethod relatedMethod = methodFinder.findMethodByName((PsiJavaFile) file, callbackMethodName);
+                if (relatedMethod != null) {
+                    method = relatedMethod;
+                    complexity = methodAnalyzer.getMethodComplexity(relatedMethod);
+                    break;
+                }
+            }
+        }
+        return new CallbackMethodInfo(callbackMethodName, method, complexity);
+    }
+
     private double getCyclomaticComplexity(PsiMethod method) {
         CyclomaticComplexityAnalyzer cyclomaticComplexityAnalyzer = new CyclomaticComplexityAnalyzer();
         return cyclomaticComplexityAnalyzer.getComplexity(method);
@@ -48,7 +68,7 @@ public class MethodAnalyzer {
     private boolean isLocalMethod(PsiMethod calledMethod) {
         String calledMethodClassName = calledMethod.getContainingClass().getQualifiedName();
         List<PsiClass> projectJavaClasses = monkeyImprover.getProjectJavaClasses();
-        for (PsiClass projectJavaClass: projectJavaClasses) {
+        for (PsiClass projectJavaClass : projectJavaClasses) {
             String className = projectJavaClass.getQualifiedName();
             if (className != null && className.equals(calledMethodClassName)) {
                 return true;

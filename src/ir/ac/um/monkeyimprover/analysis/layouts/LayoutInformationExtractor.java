@@ -1,5 +1,15 @@
 package ir.ac.um.monkeyimprover.analysis.layouts;
 
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiMethod;
+import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
+import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
+import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
+import ir.ac.um.monkeyimprover.analysis.methods.MethodAnalyzer;
+import ir.ac.um.monkeyimprover.analysis.methods.MethodFinder;
 import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -12,6 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LayoutInformationExtractor {
+    private MonkeyImprover monkeyImprover;
+
+    public LayoutInformationExtractor(MonkeyImprover monkeyImprover) {
+        this.monkeyImprover = monkeyImprover;
+    }
 
     public List<String> getContextClassNames(File xmlFile) {
         if (xmlFile.exists() && xmlFile.isFile()) {
@@ -135,4 +150,24 @@ public class LayoutInformationExtractor {
         }
         return false;
     }
+
+    public List<CallbackMethodInfo> getCallbackMethodInfos(VirtualFile layoutFile, VirtualFile projectBaseDirectory) {
+        List<CallbackMethodInfo> infoList = new ArrayList<>();
+        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor(monkeyImprover);
+        File xmlFile = new File(layoutFile.getCanonicalPath());
+        List<String> callbackMethodNames = layoutInformationExtractor.getCallbackMethodNames(xmlFile);
+        MethodAnalyzer methodAnalyzer = new MethodAnalyzer(monkeyImprover);
+        if (!callbackMethodNames.isEmpty()) {
+            ClassFinder classFinder = new ClassFinder(monkeyImprover);
+            List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(projectBaseDirectory, layoutFile);
+            if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
+                for (String callbackMethodName : callbackMethodNames) {
+                    CallbackMethodInfo info = methodAnalyzer.getCallbackMethodInfo(callbackMethodName, relatedJavaFiles);
+                    infoList.add(info);
+                }
+            }
+        }
+        return infoList;
+    }
+
 }
