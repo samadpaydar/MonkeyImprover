@@ -14,19 +14,26 @@ public class MethodComplexityAnalyzer {
     }
 
     public double getComplexity(PsiMethod method) {
+        //false is passed to prevent from infinite loop, when this method is called from ClassComplexityAnalyzer
+        return getComplexity(method, false);
+    }
+
+    private double getComplexity(PsiMethod method, boolean includeCalledLocalMethods) {
         double complexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
 
         for (PsiMethod calledMethod : calledMethods) {
             if (calledMethod.equals(method)) {
                 //ignore recursive calls
-            } else if (isLocalMethod(calledMethod)) {
-                complexity += getComplexity(calledMethod);
+            } else if (isLocalMethod(calledMethod) && includeCalledLocalMethods) {
+                complexity += getComplexity(calledMethod, includeCalledLocalMethods);
             } else {
                 complexity += getAPIComplexity(calledMethod);
             }
         }
-        complexity += getIntentComplexity(method);
+        if (includeCalledLocalMethods) {
+            complexity += getIntentComplexity(method);
+        }
         complexity += getAsyncTaskComplexity(method);
         return complexity;
     }
@@ -41,7 +48,7 @@ public class MethodComplexityAnalyzer {
                 PsiMethod relatedMethod = methodFinder.findMethodByName((PsiJavaFile) file, callbackMethodName);
                 if (relatedMethod != null) {
                     method = relatedMethod;
-                    complexity = getComplexity(relatedMethod);
+                    complexity = getComplexity(relatedMethod, true);
                     break;
                 }
             }
