@@ -1,7 +1,10 @@
-package ir.ac.um.monkeyimprover.analysis;
+package ir.ac.um.monkeyimprover.analysis.methods;
 
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
+import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
+import ir.ac.um.monkeyimprover.analysis.methods.CyclomaticComplexityAnalyzer;
+import ir.ac.um.monkeyimprover.analysis.methods.IntentComplexityAnalyzer;
+import ir.ac.um.monkeyimprover.analysis.methods.MethodCallAnalyzer;
 
 import java.util.List;
 

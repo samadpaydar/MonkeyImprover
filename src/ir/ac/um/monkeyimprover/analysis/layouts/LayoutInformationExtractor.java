@@ -1,6 +1,6 @@
 package ir.ac.um.monkeyimprover.analysis.layouts;
 
-import ir.ac.um.monkeyimprover.analysis.AnalysisUtils;
+import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;

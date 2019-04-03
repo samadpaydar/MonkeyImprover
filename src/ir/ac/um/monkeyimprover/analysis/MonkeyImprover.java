@@ -9,6 +9,8 @@ import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInfo;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
+import ir.ac.um.monkeyimprover.analysis.methods.MethodAnalyzer;
+import ir.ac.um.monkeyimprover.analysis.methods.MethodFinder;
 import ir.ac.um.monkeyimprover.analysis.project.BackupCreator;
 import ir.ac.um.monkeyimprover.analysis.project.ProjectInformationExtractor;
 

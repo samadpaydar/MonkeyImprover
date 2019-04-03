@@ -2,6 +2,7 @@ package ir.ac.um.monkeyimprover.analysis;
 
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
+import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;

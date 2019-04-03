@@ -1,6 +1,7 @@
-package ir.ac.um.monkeyimprover.analysis;
+package ir.ac.um.monkeyimprover.analysis.methods;
 
 import com.intellij.psi.*;
+import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 
 import java.util.List;
 
