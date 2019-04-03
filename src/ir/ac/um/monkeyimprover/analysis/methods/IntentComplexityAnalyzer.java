@@ -13,18 +13,12 @@ public class IntentComplexityAnalyzer {
     }
 
     public double getComplexity(PsiMethod method) {
-        IntentAnalyzer intentAnalyzer = new IntentAnalyzer();
-        method.accept(intentAnalyzer);
-        List<String> intentClassNames = intentAnalyzer.getIntentClassNames();
-        List<PsiClass> projectClasses = monkeyImprover.getProjectJavaClasses();
+        IntentFinder intentFinder = new IntentFinder(monkeyImprover);
+        method.accept(intentFinder);
+        List<PsiClass> intentClasses = intentFinder.getIntentClasses();
         double complexity = 0.0;
-        for (String intentClassName : intentClassNames) {
-            for (PsiClass projectClass : projectClasses) {
-                if (intentClassName.equals(projectClass.getQualifiedName())) {
-                    complexity += getClassComplexity(projectClass);
-                    break;
-                }
-            }
+        for (PsiClass intentClass : intentClasses) {
+                complexity += getClassComplexity(intentClass);
         }
         return complexity;
     }

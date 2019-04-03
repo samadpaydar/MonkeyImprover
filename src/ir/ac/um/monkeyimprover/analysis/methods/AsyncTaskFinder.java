@@ -9,12 +9,12 @@ import java.util.List;
 /**
  * @author Samad Paydar
  */
-public class AsyncTaskAnalyzer extends JavaRecursiveElementVisitor {
+public class AsyncTaskFinder extends JavaRecursiveElementVisitor {
 
     private MonkeyImprover monkeyImprover;
     private List<PsiClass> asyncTaskClasses;
 
-    public AsyncTaskAnalyzer(MonkeyImprover monkeyImprover) {
+    public AsyncTaskFinder(MonkeyImprover monkeyImprover) {
         this.monkeyImprover = monkeyImprover;
         asyncTaskClasses = new ArrayList<>();
     }
@@ -26,7 +26,7 @@ public class AsyncTaskAnalyzer extends JavaRecursiveElementVisitor {
             PsiJavaCodeReferenceElement reference = expression.getClassReference();
             if (reference != null) {
                 String className = reference.getQualifiedName();
-                PsiClass theClass = findRelatedProjecClass(className);
+                PsiClass theClass = monkeyImprover.getProjectClassByName(className);
                 if (theClass != null && isAnAsyncTask(theClass)) {
                     asyncTaskClasses.add(theClass);
                 }
@@ -38,16 +38,6 @@ public class AsyncTaskAnalyzer extends JavaRecursiveElementVisitor {
 
     public List<PsiClass> getAsyncTaskClasses() {
         return asyncTaskClasses;
-    }
-
-    private PsiClass findRelatedProjecClass(String className) {
-        List<PsiClass> projectJavaClasses = monkeyImprover.getProjectJavaClasses();
-        for (PsiClass projectJavaClass : projectJavaClasses) {
-            if (projectJavaClass.getQualifiedName().equals(className)) {
-                return projectJavaClass;
-            }
-        }
-        return null;
     }
 
     private boolean isAnAsyncTask(PsiClass theClass) {

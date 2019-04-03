@@ -82,4 +82,13 @@ public class MonkeyImprover implements Runnable {
         return project;
     }
 
+    public PsiClass getProjectClassByName(String className) {
+        for (PsiClass projectJavaClass : projectJavaClasses) {
+            if (projectJavaClass.getQualifiedName().equals(className)) {
+                return projectJavaClass;
+            }
+        }
+        return null;
+    }
+
 }
