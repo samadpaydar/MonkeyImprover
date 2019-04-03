@@ -5,8 +5,10 @@ import com.intellij.openapi.project.Project;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInfo;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
+import ir.ac.um.monkeyimprover.analysis.project.ProjectInformationExtractor;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,7 +22,6 @@ public class MonkeyImprover implements Runnable {
     private Project project;
     private PsiElement psiElement;
     private ConsoleView consoleView;
-    private LayoutAnalyzer layoutAnalyzer;
     private ClassFinder classFinder;
     private MethodAnalyzer methodAnalyzer;
     private MethodFinder methodFinder;
@@ -36,15 +37,16 @@ public class MonkeyImprover implements Runnable {
     @Override
     public void run() {
         showMessage("Started processing project " + project.getName());
-        layoutAnalyzer = new LayoutAnalyzer();
         classFinder = new ClassFinder();
         methodFinder = new MethodFinder();
         methodAnalyzer = new MethodAnalyzer(this);
         showMessage("Collecting project Java classes...");
-        collectProjectJavaClasses();
+        ProjectInformationExtractor projectInformationExtractor = new ProjectInformationExtractor(psiElement);
+        this.projectJavaClasses = projectInformationExtractor.getProjectJavaClasses();
         LayoutRefactory layoutRefactory = new LayoutRefactory(this);
         showMessage("Extracting layouts files...");
-        List<VirtualFile> layoutFiles = layoutAnalyzer.getLayoutFiles(project.getBaseDir());
+        List<VirtualFile> layoutFiles = projectInformationExtractor.getLayoutXMLFiles(project.getBaseDir());
+        createBackup(project.getBaseDir(), layoutFiles);
         for (VirtualFile layoutFile : layoutFiles) {
             showMessage("Processing layouts file " + layoutFile.getName() + "...");
             List<CallbackMethodInfo> info = processLayoutFile(layoutFile);
@@ -54,10 +56,9 @@ public class MonkeyImprover implements Runnable {
         showMessage("Finished");
     }
 
-    private void collectProjectJavaClasses() {
-        JavaClassCollector javaClassCollector = new JavaClassCollector();
-        psiElement.accept(javaClassCollector);
-        this.projectJavaClasses = javaClassCollector.getProjectJavaClasses();
+    private void createBackup(VirtualFile directory, List<VirtualFile> layoutFiles) {
+        BackupCreator backupCreator = new BackupCreator();
+        backupCreator.createBackup(directory, layoutFiles);
     }
 
     public List<PsiClass> getProjectJavaClasses() {

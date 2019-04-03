@@ -1,4 +1,4 @@
-package ir.ac.um.monkeyimprover.analysis;
+package ir.ac.um.monkeyimprover.analysis.classes;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
@@ -12,9 +12,6 @@ import java.util.List;
  * @author Samad Paydar
  */
 public class ClassFinder {
-
-    public ClassFinder() {
-    }
 
     public List<VirtualFile> findRelatedJavaFile(VirtualFile directory, VirtualFile layoutXMLFile) {
         List<VirtualFile> relatedJavaFiles = findRelatedJavaFileByContext(directory, layoutXMLFile);

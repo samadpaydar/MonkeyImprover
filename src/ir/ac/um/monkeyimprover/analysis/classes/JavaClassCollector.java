@@ -1,9 +1,8 @@
-package ir.ac.um.monkeyimprover.analysis;
+package ir.ac.um.monkeyimprover.analysis.classes;
 
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaFile;
-import com.intellij.psi.PsiMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +11,10 @@ import java.util.List;
  * @author Samad Paydar
  */
 public class JavaClassCollector extends JavaRecursiveElementVisitor {
-    private List<PsiClass> projectJavaClasses;
+    private List<PsiClass> javaClasses;
 
     public JavaClassCollector() {
-        projectJavaClasses = new ArrayList<>();
+        javaClasses = new ArrayList<>();
     }
 
     @Override
@@ -24,12 +23,14 @@ public class JavaClassCollector extends JavaRecursiveElementVisitor {
         if (psiJavaFile.getName().endsWith(".java") && !psiJavaFile.getName().equals("R.java")) {
             PsiClass[] psiClasses = psiJavaFile.getClasses();
             for (PsiClass psiClass : psiClasses) {
-                projectJavaClasses.add(psiClass);
+                javaClasses.add(psiClass);
             }
         }
     }
 
-    public List<PsiClass> getProjectJavaClasses() {
-        return this.projectJavaClasses;
+    public List<PsiClass> getJavaClasses(){
+        return javaClasses;
     }
+
+
 }
