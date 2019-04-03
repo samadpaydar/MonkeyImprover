@@ -65,7 +65,7 @@ public class MonkeyImprover implements Runnable {
         String path = layoutFile.getCanonicalPath();
         File xmlFile = new File(path);
         if (xmlFile.exists() && xmlFile.isFile()) {
-            LayoutXMLHandlerForRefactory handler = new LayoutXMLHandlerForRefactory(this, xmlFile, callbackMethodInfoList);
+            RefactoryEngine handler = new RefactoryEngine(this, xmlFile, callbackMethodInfoList);
             handler.run();
         }
     }
