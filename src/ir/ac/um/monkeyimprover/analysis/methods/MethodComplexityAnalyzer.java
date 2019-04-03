@@ -6,14 +6,14 @@ import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 
 import java.util.List;
 
-public class MethodAnalyzer {
+public class MethodComplexityAnalyzer {
     private MonkeyImprover monkeyImprover;
 
-    public MethodAnalyzer(MonkeyImprover monkeyImprover) {
+    public MethodComplexityAnalyzer(MonkeyImprover monkeyImprover) {
         this.monkeyImprover = monkeyImprover;
     }
 
-    private double getMethodComplexity(PsiMethod method) {
+    public double getComplexity(PsiMethod method) {
         double complexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
 
@@ -21,7 +21,7 @@ public class MethodAnalyzer {
             if (calledMethod.equals(method)) {
                 //ignore recursive calls
             } else if (isLocalMethod(calledMethod)) {
-                complexity += getMethodComplexity(calledMethod);
+                complexity += getComplexity(calledMethod);
             } else {
                 complexity += getAPIComplexity(calledMethod);
             }
@@ -41,7 +41,7 @@ public class MethodAnalyzer {
                 PsiMethod relatedMethod = methodFinder.findMethodByName((PsiJavaFile) file, callbackMethodName);
                 if (relatedMethod != null) {
                     method = relatedMethod;
-                    complexity = getMethodComplexity(relatedMethod);
+                    complexity = getComplexity(relatedMethod);
                     break;
                 }
             }

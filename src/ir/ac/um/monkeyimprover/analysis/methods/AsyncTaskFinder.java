@@ -44,7 +44,6 @@ public class AsyncTaskFinder extends JavaRecursiveElementVisitor {
         PsiClass[] superClasses = theClass.getSupers();
         for (PsiClass superClass : superClasses) {
             if (superClass.getQualifiedName().startsWith("android.os.AsyncTask")) {
-                monkeyImprover.showMessage(superClass.getQualifiedName());
                 return true;
             }
         }

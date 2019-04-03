@@ -5,18 +5,13 @@ import com.intellij.openapi.project.Project;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
-import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInfo;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
-import ir.ac.um.monkeyimprover.analysis.methods.MethodAnalyzer;
-import ir.ac.um.monkeyimprover.analysis.methods.MethodFinder;
 import ir.ac.um.monkeyimprover.analysis.project.BackupCreator;
 import ir.ac.um.monkeyimprover.analysis.project.ProjectInformationExtractor;
-import sun.font.GlyphLayout;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 

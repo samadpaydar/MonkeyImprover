@@ -18,7 +18,7 @@ public class AsyncTaskComplexityAnalyzer {
         AsyncTaskFinder asyncTaskFinder = new AsyncTaskFinder(monkeyImprover);
         method.accept(asyncTaskFinder);
         List<PsiClass> asyncTaskClasses = asyncTaskFinder.getAsyncTaskClasses();
-        ClassComplexityAnalyzer classComplexityAnalyzer = new ClassComplexityAnalyzer();
+        ClassComplexityAnalyzer classComplexityAnalyzer = new ClassComplexityAnalyzer(monkeyImprover);
         double complexity = 0.0;
         for (PsiClass asyncTaskClass : asyncTaskClasses) {
             complexity += classComplexityAnalyzer.getComplexity(asyncTaskClass);

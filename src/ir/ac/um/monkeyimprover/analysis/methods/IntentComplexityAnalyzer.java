@@ -17,7 +17,7 @@ public class IntentComplexityAnalyzer {
         IntentFinder intentFinder = new IntentFinder(monkeyImprover);
         method.accept(intentFinder);
         List<PsiClass> intentClasses = intentFinder.getIntentClasses();
-        ClassComplexityAnalyzer classComplexityAnalyzer = new ClassComplexityAnalyzer();
+        ClassComplexityAnalyzer classComplexityAnalyzer = new ClassComplexityAnalyzer(monkeyImprover);
         double complexity = 0.0;
         for (PsiClass intentClass : intentClasses) {
                 complexity += classComplexityAnalyzer.getComplexity(intentClass);
