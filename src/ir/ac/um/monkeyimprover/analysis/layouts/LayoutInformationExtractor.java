@@ -34,7 +34,24 @@ public class LayoutInformationExtractor {
                 List<String> contextClassNames = new ArrayList<>();
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 SAXParser saxParser = factory.newSAXParser();
+                saxParser.parse(xmlFile, new DefaultHandler() {
+                    private boolean rootElementVisited = false;
 
+                    @Override
+                    public void startElement(String uri, String localName,
+                                             String qName, Attributes attributes) throws SAXException {
+                        if (!rootElementVisited) {
+                            rootElementVisited = true;
+                            for (int i = 0; i < attributes.getLength(); i++) {
+                                String attributeQualifiedName = attributes.getQName(i);
+                                if (attributeQualifiedName != null
+                                        && attributeQualifiedName.toLowerCase().equalsIgnoreCase("tools:context")) {
+                                    contextClassNames.add(attributes.getValue(i));
+                                }
+                            }
+                        }
+                    }
+                });
                 return contextClassNames;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -55,7 +72,8 @@ public class LayoutInformationExtractor {
                                              String qName, Attributes attributes) throws SAXException {
                         for (int i = 0; i < attributes.getLength(); i++) {
                             String attributeQualifiedName = attributes.getQName(i);
-                            if (attributeQualifiedName != null && attributeQualifiedName.toLowerCase().equalsIgnoreCase("android:onclick")) {
+                            if (attributeQualifiedName != null
+                                    && attributeQualifiedName.toLowerCase().equalsIgnoreCase("android:onclick")) {
                                 callbackMethodNames.add(attributes.getValue(i));
                             }
                         }
@@ -151,7 +169,7 @@ public class LayoutInformationExtractor {
         return false;
     }
 
-    public List<CallbackMethodInfo> getCallbackMethodInfos(VirtualFile layoutFile, VirtualFile projectBaseDirectory) {
+    public List<CallbackMethodInfo> getCallbackMethodInfos(VirtualFile projectBaseDirectory, VirtualFile layoutFile) {
         List<CallbackMethodInfo> infoList = new ArrayList<>();
         File xmlFile = new File(layoutFile.getCanonicalPath());
         List<String> callbackMethodNames = getCallbackMethodNames(xmlFile);

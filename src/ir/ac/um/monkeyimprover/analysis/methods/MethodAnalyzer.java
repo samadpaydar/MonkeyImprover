@@ -20,7 +20,7 @@ public class MethodAnalyzer {
      * @param method
      * @return the complexity of the given method
      */
-    public double getMethodComplexity(PsiMethod method) {
+    private double getMethodComplexity(PsiMethod method) {
         double complexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
         for (PsiMethod calledMethod : calledMethods) {
@@ -40,14 +40,13 @@ public class MethodAnalyzer {
         double complexity = -1;
         PsiMethod method = null;
         MethodFinder methodFinder = new MethodFinder();
-        MethodAnalyzer methodAnalyzer = new MethodAnalyzer(monkeyImprover);
         for (VirtualFile relatedJavaFile : relatedJavaFiles) {
             PsiFile file = PsiManager.getInstance(monkeyImprover.getProject()).findFile(relatedJavaFile);
             if (file != null && file instanceof PsiJavaFile) {
                 PsiMethod relatedMethod = methodFinder.findMethodByName((PsiJavaFile) file, callbackMethodName);
                 if (relatedMethod != null) {
                     method = relatedMethod;
-                    complexity = methodAnalyzer.getMethodComplexity(relatedMethod);
+                    complexity = getMethodComplexity(relatedMethod);
                     break;
                 }
             }
