@@ -1,4 +1,4 @@
-package ir.ac.um.monkeyimprover.analysis;
+package ir.ac.um.monkeyimprover.analysis.methods;
 
 import com.intellij.psi.PsiMethod;
 /**

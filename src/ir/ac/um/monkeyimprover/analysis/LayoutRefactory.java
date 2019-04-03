@@ -2,6 +2,7 @@ package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInfo;
+import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
 
 import java.io.File;
 import java.util.List;

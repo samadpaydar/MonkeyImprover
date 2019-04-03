@@ -1,7 +1,7 @@
 package ir.ac.um.monkeyimprover.analysis.layouts;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import ir.ac.um.monkeyimprover.analysis.CallbackMethodInfo;
+import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
 
 import java.util.List;
 

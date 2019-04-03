@@ -1,4 +1,4 @@
-package ir.ac.um.monkeyimprover.analysis;
+package ir.ac.um.monkeyimprover.analysis.project;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import ir.ac.um.monkeyimprover.utils.Utils;
