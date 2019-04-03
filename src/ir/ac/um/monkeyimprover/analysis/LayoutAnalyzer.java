@@ -80,38 +80,14 @@ public class LayoutAnalyzer {
     }
 
     public List<String> getCallbackMethodNames(VirtualFile layoutXMLFile) {
-        List<String> callbackMethodNames = new ArrayList<>();
-        String path = layoutXMLFile.getCanonicalPath();
-        File xmlFile = new File(path);
-        if (xmlFile.exists() && xmlFile.isFile()) {
-            try {
-                SAXParserFactory factory = SAXParserFactory.newInstance();
-                SAXParser saxParser = factory.newSAXParser();
-                LayoutXMLHandler handler = new LayoutXMLHandler();
-                saxParser.parse(xmlFile, handler);
-                callbackMethodNames = handler.getCallbackMethodNames();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return callbackMethodNames;
+        File xmlFile = new File(layoutXMLFile.getCanonicalPath());
+        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor();
+        return layoutInformationExtractor.getCallbackMethodNames(xmlFile);
     }
 
     public List<String> getContextClassNames(VirtualFile layoutXMLFile) {
-        List<String> contextClassNames = new ArrayList<>();
-        String path = layoutXMLFile.getCanonicalPath();
-        File xmlFile = new File(path);
-        if (xmlFile.exists() && xmlFile.isFile()) {
-            try {
-                SAXParserFactory factory = SAXParserFactory.newInstance();
-                SAXParser saxParser = factory.newSAXParser();
-                LayoutXMLHandler handler = new LayoutXMLHandler();
-                saxParser.parse(xmlFile, handler);
-                contextClassNames.addAll(handler.getContexts());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return contextClassNames;
+        File xmlFile = new File(layoutXMLFile.getCanonicalPath());
+        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor();
+        return layoutInformationExtractor.getContextClassNames(xmlFile);
     }
 }

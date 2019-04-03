@@ -36,6 +36,11 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
 
 
     public void run() {
+
+        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor();
+        if (layoutInformationExtractor.isFragment(xmlFile)) {
+            return;
+        }
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder;
         try {
@@ -43,19 +48,11 @@ public class LayoutXMLHandlerForRefactory extends DefaultHandler {
             Document document = documentBuilder.parse(xmlFile);
             document.getDocumentElement().normalize();
 
-            if (xmlFile.exists() && xmlFile.isFile()) {
-                try {
-                    SAXParserFactory factory = SAXParserFactory.newInstance();
-                    SAXParser saxParser = factory.newSAXParser();
-                    LayoutXMLHandler handler = new LayoutXMLHandler();
-                    saxParser.parse(xmlFile, handler);
-                    numberOfViews = handler.getNumberOfViews();
-                    rootLayoutId = handler.getRootLayoutId();
-                    rootLayoutContext = handler.getRootLayoutContext();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            numberOfViews = layoutInformationExtractor.getNumberOfViews(xmlFile);
+            String[] rootLayoutInfo = layoutInformationExtractor.getRootLayoutInfo(xmlFile);
+            rootLayoutId = rootLayoutInfo[0];
+            rootLayoutContext = rootLayoutInfo[1];
+
             monkeyImprover.showMessage(xmlFile.getName() + " has " + numberOfViews + " views");
             //update attribute value
             //  updateAttributeValue(document);
