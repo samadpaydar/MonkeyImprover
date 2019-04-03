@@ -15,22 +15,16 @@ public class AsyncTaskComplexityAnalyzer {
     }
 
     public double getComplexity(PsiMethod method) {
-        AsyncTaskAnalyzer asyncTaskAnalyzer = new AsyncTaskAnalyzer();
+        AsyncTaskAnalyzer asyncTaskAnalyzer = new AsyncTaskAnalyzer(monkeyImprover);
         method.accept(asyncTaskAnalyzer);
-        List<String> asyncTaskClassNames = asyncTaskAnalyzer.getAsyncTaskClassNames();
+        List<PsiClass> asyncTaskClasses = asyncTaskAnalyzer.getAsyncTaskClasses();
         monkeyImprover.showMessage("\t\t\tmethod " + AnalysisUtils.getMethodQualifiedName(method));
-        for(String s: asyncTaskClassNames) {
-            monkeyImprover.showMessage("\t\t\t\t" + s );
+        for(PsiClass ss: asyncTaskClasses) {
+            monkeyImprover.showMessage("\t\t\t\t" + ss.getQualifiedName() );
         }
-        List<PsiClass> projectClasses = monkeyImprover.getProjectJavaClasses();
         double complexity = 0.0;
-        for (String asyncTaskClassName : asyncTaskClassNames) {
-            for (PsiClass projectClass : projectClasses) {
-                if (asyncTaskClassName.equals(projectClass.getQualifiedName())) {
-                    complexity += getClassComplexity(projectClass);
-                    break;
-                }
-            }
+        for (PsiClass aa : asyncTaskClasses) {
+                    complexity += getClassComplexity(aa);
         }
         return complexity;
     }

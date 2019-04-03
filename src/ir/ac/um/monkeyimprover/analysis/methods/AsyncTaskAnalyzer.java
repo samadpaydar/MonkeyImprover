@@ -1,6 +1,7 @@
 package ir.ac.um.monkeyimprover.analysis.methods;
 
 import com.intellij.psi.*;
+import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,13 @@ import java.util.List;
  * @author Samad Paydar
  */
 public class AsyncTaskAnalyzer extends JavaRecursiveElementVisitor {
-    private List<String> asyncTaskClassNames;
 
-    public AsyncTaskAnalyzer() {
-        asyncTaskClassNames = new ArrayList<>();
+    private MonkeyImprover monkeyImprover;
+    private List<PsiClass> asyncTaskClasses;
+
+    public AsyncTaskAnalyzer(MonkeyImprover monkeyImprover) {
+        this.monkeyImprover = monkeyImprover;
+        asyncTaskClasses = new ArrayList<>();
     }
 
     @Override
@@ -20,32 +24,41 @@ public class AsyncTaskAnalyzer extends JavaRecursiveElementVisitor {
         super.visitNewExpression(expression);
         try {
             PsiJavaCodeReferenceElement reference = expression.getClassReference();
-            asyncTaskClassNames.add(reference.getClass().toString() + " " + reference.getQualifiedName());
-            if(reference instanceof PsiClass){
-                PsiClass theClass = (PsiClass) reference;
-
-            }
-            /*if (expression.getClassReference().getQualifiedName().equals("android.content.Intent")) {
-                PsiExpressionList list = expression.getArgumentList();
-                if(list.getExpressionCount()>1) {
-                    PsiExpression secondArgument = list.getExpressions()[1];
-                    String typeName = secondArgument.getType().getCanonicalText();
-                    final String CLASS_PREFIX = "java.lang.Class";
-                    if(typeName!= null && typeName.startsWith(CLASS_PREFIX)) {
-                        typeName = typeName.replace(CLASS_PREFIX, "");
-                        typeName = typeName.replace("<", "");
-                        typeName = typeName.replace(">", "");
-                        intentClassNames.add(typeName);
-                    }
+            if (reference != null) {
+                String className = reference.getQualifiedName();
+                PsiClass theClass = findRelatedProjecClass(className);
+                if (theClass != null && isAnAsyncTask(theClass)) {
+                    asyncTaskClasses.add(theClass);
                 }
-            }*/
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public List<String> getAsyncTaskClassNames() {
-        return asyncTaskClassNames;
+    public List<PsiClass> getAsyncTaskClasses() {
+        return asyncTaskClasses;
+    }
+
+    private PsiClass findRelatedProjecClass(String className) {
+        List<PsiClass> projectJavaClasses = monkeyImprover.getProjectJavaClasses();
+        for (PsiClass projectJavaClass : projectJavaClasses) {
+            if (projectJavaClass.getQualifiedName().equals(className)) {
+                return projectJavaClass;
+            }
+        }
+        return null;
+    }
+
+    private boolean isAnAsyncTask(PsiClass theClass) {
+        PsiClass[] superClasses = theClass.getSupers();
+        for (PsiClass superClass : superClasses) {
+            if (superClass.getQualifiedName().startsWith("android.os.AsyncTask")) {
+                monkeyImprover.showMessage(superClass.getQualifiedName());
+                return true;
+            }
+        }
+        return false;
     }
 }
 
