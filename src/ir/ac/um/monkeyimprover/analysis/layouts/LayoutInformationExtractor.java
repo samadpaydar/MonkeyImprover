@@ -157,7 +157,7 @@ public class LayoutInformationExtractor {
         File xmlFile = new File(layoutFile.getCanonicalPath());
         List<String> callbackMethodNames = layoutInformationExtractor.getCallbackMethodNames(xmlFile);
         MethodAnalyzer methodAnalyzer = new MethodAnalyzer(monkeyImprover);
-        if (!callbackMethodNames.isEmpty()) {
+        if (callbackMethodNames != null && !callbackMethodNames.isEmpty()) {
             ClassFinder classFinder = new ClassFinder(monkeyImprover);
             List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(projectBaseDirectory, layoutFile);
             if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
