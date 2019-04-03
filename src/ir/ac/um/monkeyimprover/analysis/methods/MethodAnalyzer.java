@@ -21,10 +21,6 @@ public class MethodAnalyzer {
         double complexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
 
-        monkeyImprover.showMessage("\t\t\tMethods Called by: " + method.getName());
-        for(PsiMethod m: calledMethods) {
-            monkeyImprover.showMessage("\t\t\t\t" + AnalysisUtils.getMethodQualifiedName(m));
-        }
         for (PsiMethod calledMethod : calledMethods) {
             if (calledMethod.equals(method)) {
                 //ignore recursive calls

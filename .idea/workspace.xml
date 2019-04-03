@@ -17,8 +17,8 @@
       <file leaf-file-name="MethodAnalyzer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/MethodAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="25" column="52" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
+            <state relative-caret-position="340">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -334,12 +334,12 @@
       <workItem from="1554100790406" duration="15200000" />
       <workItem from="1554186546563" duration="2781000" />
       <workItem from="1554219734889" duration="7718000" />
-      <workItem from="1554286131456" duration="11944000" />
+      <workItem from="1554286131456" duration="12405000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="110930000" />
+    <option name="totallyTimeSpent" value="111391000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -790,8 +790,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/MethodAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="25" column="52" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
+        <state relative-caret-position="340">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
