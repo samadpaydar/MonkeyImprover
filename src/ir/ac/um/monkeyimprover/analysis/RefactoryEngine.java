@@ -200,7 +200,7 @@ public class RefactoryEngine {
     }
 
     private int getWeight(List<CallbackMethodInfo> callbackMethodInfos, String callbackMethodName) {
-        int weight = 1;
+        int weight = 0;
         double complexitySum = 0.0;
         for (CallbackMethodInfo info : callbackMethodInfos) {
             complexitySum += info.getCallbackMethodComplexity();
