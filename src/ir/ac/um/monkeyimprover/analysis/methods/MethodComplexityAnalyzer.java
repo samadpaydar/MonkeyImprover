@@ -119,6 +119,8 @@ public class MethodComplexityAnalyzer {
         for (int i = 0; i < classNames.length; i++) {
             String className = classNames[i];
             if (className.equals(calledMethodClassName)) {
+                monkeyImprover.showMessage("calledMethod " + AnalysisUtils.getMethodQualifiedName(calledMethod)
+                + " class " + className );
                 return weights[i];
             }
         }
@@ -135,22 +137,23 @@ public class MethodComplexityAnalyzer {
      * @return
      */
     private List<PsiMethod> replaceAbstractsWithConcretes(List<PsiMethod> methods) {
-        for (PsiMethod method : methods) {
+        for (int i = 0; i < methods.size(); i++) {
+            PsiMethod method = methods.get(i);
             PsiClass theClass = method.getContainingClass();
             if (theClass.isInterface()) {
                 List<PsiClass> implementingClasses = getImplementingClasses(theClass);
                 if (!implementingClasses.isEmpty()) {
                     for (PsiClass implementingClass : implementingClasses) {
                         PsiMethod concreteMethod = getConcreteMethod(implementingClass, method);
-                        if(concreteMethod != null) {
-                            monkeyImprover.showMessage("method: " + AnalysisUtils.getMethodQualifiedName(concreteMethod)
-                            + " " + AnalysisUtils.getMethodQualifiedName(method));
+                        if (concreteMethod != null) {
+                            monkeyImprover.showMessage(AnalysisUtils.getMethodQualifiedName(concreteMethod)
+                             + " instead of " + AnalysisUtils.getMethodQualifiedName(method));
+                            methods.set(i, concreteMethod);
                         }
                     }
                 }
             } else if (isAbstract(method)) {
             }
-
         }
         return methods;
     }
