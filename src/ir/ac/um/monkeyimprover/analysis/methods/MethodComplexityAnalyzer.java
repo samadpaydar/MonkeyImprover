@@ -26,9 +26,6 @@ public class MethodComplexityAnalyzer {
     private double getComplexity(PsiMethod method, boolean includeCalledLocalMethods) {
         double cyclomaticComplexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
-        if(method.getName().equals("isUserEnabled")) {
-            monkeyImprover.showMessage(calledMethods.toString());
-        }
 
         calledMethods = replaceAbstractsWithConcretes(calledMethods);
 
@@ -37,28 +34,26 @@ public class MethodComplexityAnalyzer {
             if (calledMethod.equals(method)) {
                 //ignore recursive calls
             } else if (isLocalMethod(calledMethod)) {
-                if (includeCalledLocalMethods) {
-                    calledMethodComplexity += getComplexity(calledMethod, includeCalledLocalMethods);
-                }
+                calledMethodComplexity += getComplexity(calledMethod, includeCalledLocalMethods);
             } else {
                 calledMethodComplexity += getAPIComplexity(calledMethod);
             }
         }
         double intentComplexity = 0.0;
+        double asyncComplexity = 0.0;
         if (includeCalledLocalMethods) {
             intentComplexity = getIntentComplexity(method);
+            asyncComplexity = getAsyncTaskComplexity(method);
         }
-        double asyncComplexity = getAsyncTaskComplexity(method);
-
         double complexity = cyclomaticComplexity + calledMethodComplexity + intentComplexity + asyncComplexity;
-//        if (AnalysisUtils.getMethodQualifiedName(method).startsWith("ir.ac.um.pardisban.MainActivity_")) {
-//            monkeyImprover.showMessage("\tmethod " + AnalysisUtils.getMethodQualifiedName(method)
-//                    + " cyclomaticComplexity: " + cyclomaticComplexity
-//                    + " calledMethodComplexity: " + calledMethodComplexity
-//                    + " intentComplexity: " + intentComplexity
-//                    + " asyncComplexity: " + asyncComplexity
-//                    + " complexity: " + complexity);
-//        }
+        if (AnalysisUtils.getMethodQualifiedName(method).startsWith("ir.ac.um.pardisban.MainActivity_")) {
+            monkeyImprover.showMessage("\tmethod " + AnalysisUtils.getMethodQualifiedName(method)
+                    + " cyclomaticComplexity: " + cyclomaticComplexity
+                    + " calledMethodComplexity: " + calledMethodComplexity
+                    + " intentComplexity: " + intentComplexity
+                    + " asyncComplexity: " + asyncComplexity
+                    + " complexity: " + complexity);
+        }
         return complexity;
     }
 
@@ -117,16 +112,17 @@ public class MethodComplexityAnalyzer {
 //    hence, this method does not match anything
     private double getAPIComplexity(PsiMethod calledMethod) {
         String calledMethodClassName = calledMethod.getContainingClass().getQualifiedName();
-
-
-        monkeyImprover.showMessage(AnalysisUtils.getMethodQualifiedName(calledMethod) + " ### " + calledMethodClassName);
-        String[] classNames = {"android.database.sqlite.SQLiteDatabase", "android.database.sqlite.SQLiteStatement"};
-        double[] weights = {3.0, 0.5};
+        String[] classNames = {
+                "android.database.sqlite.SQLiteDatabase",
+                "android.database.sqlite.SQLiteStatement",
+                "android.database.Cursor",
+                "java.net.URLConnection",
+                "java.net.HttpURLConnection",
+        };
+        double[] weights = {3.0, 3.0, 3.0, 5.0, 5.0};
         for (int i = 0; i < classNames.length; i++) {
             String className = classNames[i];
             if (className.equals(calledMethodClassName)) {
-                monkeyImprover.showMessage("calledMethod " + AnalysisUtils.getMethodQualifiedName(calledMethod)
-                + " class " + className );
                 return weights[i];
             }
         }
@@ -145,6 +141,9 @@ public class MethodComplexityAnalyzer {
     private List<PsiMethod> replaceAbstractsWithConcretes(List<PsiMethod> methods) {
         for (int i = 0; i < methods.size(); i++) {
             PsiMethod method = methods.get(i);
+            if (!isLocalMethod(method)) {
+                continue;
+            }
             PsiClass theClass = method.getContainingClass();
             if (theClass.isInterface()) {
                 List<PsiClass> implementingClasses = getImplementingClasses(theClass);
@@ -152,18 +151,12 @@ public class MethodComplexityAnalyzer {
                     for (PsiClass implementingClass : implementingClasses) {
                         PsiMethod concreteMethod = getConcreteMethod(implementingClass, method);
                         if (concreteMethod != null) {
-                            monkeyImprover.showMessage(AnalysisUtils.getMethodQualifiedName(concreteMethod)
-                             + " instead of " + AnalysisUtils.getMethodQualifiedName(method));
                             methods.set(i, concreteMethod);
-                        } else {
-                            monkeyImprover.showMessage("no method found for " + AnalysisUtils.getMethodQualifiedName(method));
                         }
-
                     }
-                } else {
-                    monkeyImprover.showMessage("No class found for " + theClass.getQualifiedName() );
                 }
             } else if (isAbstract(method)) {
+//                TODO complete code
             }
         }
         return methods;
@@ -214,7 +207,7 @@ public class MethodComplexityAnalyzer {
                     for (int i = 0; i < parameters1.length; i++) {
                         JvmParameter parameter1 = parameters1[i];
                         JvmParameter parameter2 = parameters2[i];
-                        if (parameter1.getType() != parameter2.getType()) {
+                        if (!parameter1.getType().equals(parameter2.getType())) {
                             match = false;
                             break;
                         }
