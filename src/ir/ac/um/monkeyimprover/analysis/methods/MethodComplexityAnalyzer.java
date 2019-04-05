@@ -1,5 +1,6 @@
 package ir.ac.um.monkeyimprover.analysis.methods;
 
+import com.intellij.lang.jvm.JvmModifier;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
@@ -22,6 +23,9 @@ public class MethodComplexityAnalyzer {
     private double getComplexity(PsiMethod method, boolean includeCalledLocalMethods) {
         double cyclomaticComplexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
+
+        calledMethods = replaceAbstractsWithConcretes(calledMethods);
+
         double calledMethodComplexity = 0.0;
         for (PsiMethod calledMethod : calledMethods) {
             if (calledMethod.equals(method)) {
@@ -118,4 +122,30 @@ public class MethodComplexityAnalyzer {
         return 0.0;
     }
 
+    /**
+     * this method addresses the problem caused by interfaces and abstract classes.
+     * When a method calls a method which belongs to an interface, it is required to look for
+     * the concrete implementation of the abstract method.
+     * If this is not considered, then using API Complexity concept is not effective
+     * @param methods
+     * @return
+     */
+    private List<PsiMethod> replaceAbstractsWithConcretes(List<PsiMethod> methods) {
+        for(PsiMethod method: methods) {
+            PsiClass theClass = method.getContainingClass();
+            if(theClass.isInterface() || isAbstract(method)) {
+               // monkeyImprover.showMessage("\tcallMethod: " + AnalysisUtils.getMethodQualifiedName(callMethod) + " class: " + theClass.getQualifiedName() );
+            }
+
+        }
+        return methods;
+    }
+
+    private boolean isAbstract(PsiMethod method) {
+        JvmModifier[] modifiers = method.getModifiers();
+        for(JvmModifier modifier: modifiers) {
+            monkeyImprover.showMessage("modifier: " + modifier.toString());
+        }
+        return false;
+    }
 }
