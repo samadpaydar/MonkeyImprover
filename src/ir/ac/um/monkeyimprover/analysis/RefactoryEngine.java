@@ -195,6 +195,17 @@ public class RefactoryEngine {
                 childElement.setAttribute("android:layout_width", "match_parent");
                 childElement.setAttribute("android:layout_height", "0dp");
                 childElement.setAttribute("android:layout_weight", Integer.toString(weight));
+
+                childElement.setAttribute("android:layout_margin", "0dp");
+                childElement.setAttribute("android:layout_marginLeft", "0dp");
+                childElement.setAttribute("android:layout_marginTop", "0dp");
+                childElement.setAttribute("android:layout_marginRight", "0dp");
+                childElement.setAttribute("android:layout_marginBottom", "0dp");
+                childElement.setAttribute("android:padding", "0dp");
+                childElement.setAttribute("android:paddingLeft", "0dp");
+                childElement.setAttribute("android:paddingTop", "0dp");
+                childElement.setAttribute("android:paddingRight", "0dp");
+                childElement.setAttribute("android:paddingBottom", "0dp");
             }
         }
     }
