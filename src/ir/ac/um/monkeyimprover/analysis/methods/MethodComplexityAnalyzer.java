@@ -30,8 +30,8 @@ public class MethodComplexityAnalyzer {
         for (PsiMethod calledMethod : calledMethods) {
             if (calledMethod.equals(method)) {
                 //ignore recursive calls
-            } else if (isLocalMethod(calledMethod)){
-                if(includeCalledLocalMethods) {
+            } else if (isLocalMethod(calledMethod)) {
+                if (includeCalledLocalMethods) {
                     calledMethodComplexity += getComplexity(calledMethod, includeCalledLocalMethods);
                 }
             } else {
@@ -107,7 +107,7 @@ public class MethodComplexityAnalyzer {
         return methodCallAnalyzer.getCalledMethods();
     }
 
-//    TODO Since polymorphism is used in the database-related methods, the Android database API methods are not directly called
+    //    TODO Since polymorphism is used in the database-related methods, the Android database API methods are not directly called
 //    hence, this method does not match anything
     private double getAPIComplexity(PsiMethod calledMethod) {
         String calledMethodClassName = calledMethod.getContainingClass().getQualifiedName();
@@ -127,14 +127,16 @@ public class MethodComplexityAnalyzer {
      * When a method calls a method which belongs to an interface, it is required to look for
      * the concrete implementation of the abstract method.
      * If this is not considered, then using API Complexity concept is not effective
+     *
      * @param methods
      * @return
      */
     private List<PsiMethod> replaceAbstractsWithConcretes(List<PsiMethod> methods) {
-        for(PsiMethod method: methods) {
+        for (PsiMethod method : methods) {
             PsiClass theClass = method.getContainingClass();
-            if(theClass.isInterface() || isAbstract(method)) {
-               // monkeyImprover.showMessage("\tcallMethod: " + AnalysisUtils.getMethodQualifiedName(callMethod) + " class: " + theClass.getQualifiedName() );
+            if (theClass.isInterface()) {
+                List<PsiClass> implementingClasses = getImplementingClasses(theClass);
+            } else if (isAbstract(method)) {
             }
 
         }
@@ -143,9 +145,24 @@ public class MethodComplexityAnalyzer {
 
     private boolean isAbstract(PsiMethod method) {
         JvmModifier[] modifiers = method.getModifiers();
-        for(JvmModifier modifier: modifiers) {
-            monkeyImprover.showMessage("modifier: " + modifier.toString());
+        for (JvmModifier modifier : modifiers) {
+            if (modifier.toString().equalsIgnoreCase("abstract")) {
+                return true;
+            }
         }
         return false;
+    }
+
+    private List<PsiClass> getImplementingClasses(PsiClass theInterface) {
+        List<PsiClass> projectClasses = monkeyImprover.getProjectJavaClasses();
+        for(PsiClass projectClass: projectClasses) {
+            PsiClassType[] types=projectClass.getImplementsListTypes();
+            for(PsiClassType type: types) {
+                if(type.getClassName().equals(theInterface.getName())) {
+                    monkeyImprover.showMessage(projectClass.getQualifiedName() + " " + theInterface.getQualifiedName());
+                }
+            }
+        }
+        return null;
     }
 }
