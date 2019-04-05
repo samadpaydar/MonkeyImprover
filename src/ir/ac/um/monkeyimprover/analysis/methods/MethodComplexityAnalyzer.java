@@ -26,6 +26,9 @@ public class MethodComplexityAnalyzer {
     private double getComplexity(PsiMethod method, boolean includeCalledLocalMethods) {
         double cyclomaticComplexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
+        if(method.getName().equals("isUserEnabled")) {
+            monkeyImprover.showMessage(calledMethods.toString());
+        }
 
         calledMethods = replaceAbstractsWithConcretes(calledMethods);
 
@@ -114,6 +117,9 @@ public class MethodComplexityAnalyzer {
 //    hence, this method does not match anything
     private double getAPIComplexity(PsiMethod calledMethod) {
         String calledMethodClassName = calledMethod.getContainingClass().getQualifiedName();
+
+
+        monkeyImprover.showMessage(AnalysisUtils.getMethodQualifiedName(calledMethod) + " ### " + calledMethodClassName);
         String[] classNames = {"android.database.sqlite.SQLiteDatabase", "android.database.sqlite.SQLiteStatement"};
         double[] weights = {3.0, 0.5};
         for (int i = 0; i < classNames.length; i++) {
@@ -149,8 +155,13 @@ public class MethodComplexityAnalyzer {
                             monkeyImprover.showMessage(AnalysisUtils.getMethodQualifiedName(concreteMethod)
                              + " instead of " + AnalysisUtils.getMethodQualifiedName(method));
                             methods.set(i, concreteMethod);
+                        } else {
+                            monkeyImprover.showMessage("no method found for " + AnalysisUtils.getMethodQualifiedName(method));
                         }
+
                     }
+                } else {
+                    monkeyImprover.showMessage("No class found for " + theClass.getQualifiedName() );
                 }
             } else if (isAbstract(method)) {
             }
