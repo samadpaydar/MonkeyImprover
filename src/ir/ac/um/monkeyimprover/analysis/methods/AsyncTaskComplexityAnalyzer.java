@@ -4,6 +4,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.classes.ClassComplexityAnalyzer;
+import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 
 import java.util.List;
 
@@ -21,7 +22,8 @@ public class AsyncTaskComplexityAnalyzer {
         ClassComplexityAnalyzer classComplexityAnalyzer = new ClassComplexityAnalyzer(monkeyImprover);
         double complexity = 0.0;
         for (PsiClass asyncTaskClass : asyncTaskClasses) {
-            complexity += classComplexityAnalyzer.getComplexity(asyncTaskClass);
+            double asyncTaskComplexity =classComplexityAnalyzer.getComplexity(asyncTaskClass);;
+            complexity += asyncTaskComplexity;
         }
         return complexity;
     }

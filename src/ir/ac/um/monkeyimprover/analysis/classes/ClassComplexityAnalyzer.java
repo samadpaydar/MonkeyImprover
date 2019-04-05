@@ -16,9 +16,11 @@ public class ClassComplexityAnalyzer {
     public double getComplexity(PsiClass theClass) {
         double complexity = 0.0;
         MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
-        for (PsiMethod method : theClass.getMethods()) {
+        PsiMethod[] methods = theClass.getMethods();
+        for (PsiMethod method : methods) {
             complexity += methodComplexityAnalyzer.getComplexity(method);
         }
+
         return complexity;
     }
 

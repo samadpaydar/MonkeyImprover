@@ -3,6 +3,7 @@ package ir.ac.um.monkeyimprover.analysis.methods;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
+import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 
 import java.util.List;
 
@@ -19,22 +20,35 @@ public class MethodComplexityAnalyzer {
     }
 
     private double getComplexity(PsiMethod method, boolean includeCalledLocalMethods) {
-        double complexity = getCyclomaticComplexity(method);
+        double cyclomaticComplexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
-
+        double calledMethodComplexity = 0.0;
         for (PsiMethod calledMethod : calledMethods) {
             if (calledMethod.equals(method)) {
                 //ignore recursive calls
-            } else if (isLocalMethod(calledMethod) && includeCalledLocalMethods) {
-                complexity += getComplexity(calledMethod, includeCalledLocalMethods);
+            } else if (isLocalMethod(calledMethod)){
+                if(includeCalledLocalMethods) {
+                    calledMethodComplexity += getComplexity(calledMethod, includeCalledLocalMethods);
+                }
             } else {
-                complexity += getAPIComplexity(calledMethod);
+                calledMethodComplexity += getAPIComplexity(calledMethod);
             }
         }
+        double intentComplexity = 0.0;
         if (includeCalledLocalMethods) {
-            complexity += getIntentComplexity(method);
+            intentComplexity = getIntentComplexity(method);
         }
-        complexity += getAsyncTaskComplexity(method);
+        double asyncComplexity = getAsyncTaskComplexity(method);
+
+        double complexity = cyclomaticComplexity + calledMethodComplexity + intentComplexity + asyncComplexity;
+//        if (AnalysisUtils.getMethodQualifiedName(method).startsWith("ir.ac.um.pardisban.MainActivity_")) {
+//            monkeyImprover.showMessage("\tmethod " + AnalysisUtils.getMethodQualifiedName(method)
+//                    + " cyclomaticComplexity: " + cyclomaticComplexity
+//                    + " calledMethodComplexity: " + calledMethodComplexity
+//                    + " intentComplexity: " + intentComplexity
+//                    + " asyncComplexity: " + asyncComplexity
+//                    + " complexity: " + complexity);
+//        }
         return complexity;
     }
 
@@ -89,6 +103,8 @@ public class MethodComplexityAnalyzer {
         return methodCallAnalyzer.getCalledMethods();
     }
 
+//    TODO Since polymorphism is used in the database-related methods, the Android database API methods are not directly called
+//    hence, this method does not match anything
     private double getAPIComplexity(PsiMethod calledMethod) {
         String calledMethodClassName = calledMethod.getContainingClass().getQualifiedName();
         String[] classNames = {"android.database.sqlite.SQLiteDatabase", "android.database.sqlite.SQLiteStatement"};
@@ -99,7 +115,7 @@ public class MethodComplexityAnalyzer {
                 return weights[i];
             }
         }
-        return 1.0;
+        return 0.0;
     }
 
 }
