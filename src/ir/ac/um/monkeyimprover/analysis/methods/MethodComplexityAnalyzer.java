@@ -1,11 +1,14 @@
 package ir.ac.um.monkeyimprover.analysis.methods;
 
 import com.intellij.lang.jvm.JvmModifier;
+import com.intellij.lang.jvm.JvmParameter;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import com.sun.deploy.util.JVMParameters;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MethodComplexityAnalyzer {
@@ -136,6 +139,15 @@ public class MethodComplexityAnalyzer {
             PsiClass theClass = method.getContainingClass();
             if (theClass.isInterface()) {
                 List<PsiClass> implementingClasses = getImplementingClasses(theClass);
+                if (!implementingClasses.isEmpty()) {
+                    for (PsiClass implementingClass : implementingClasses) {
+                        PsiMethod concreteMethod = getConcreteMethod(implementingClass, method);
+                        if(concreteMethod != null) {
+                            monkeyImprover.showMessage("method: " + AnalysisUtils.getMethodQualifiedName(concreteMethod)
+                            + " " + AnalysisUtils.getMethodQualifiedName(method));
+                        }
+                    }
+                }
             } else if (isAbstract(method)) {
             }
 
@@ -154,15 +166,49 @@ public class MethodComplexityAnalyzer {
     }
 
     private List<PsiClass> getImplementingClasses(PsiClass theInterface) {
+        List<PsiClass> implementingClasses = new ArrayList<>();
         List<PsiClass> projectClasses = monkeyImprover.getProjectJavaClasses();
-        for(PsiClass projectClass: projectClasses) {
-            PsiClassType[] types=projectClass.getImplementsListTypes();
-            for(PsiClassType type: types) {
-                if(type.getClassName().equals(theInterface.getName())) {
-                    monkeyImprover.showMessage(projectClass.getQualifiedName() + " " + theInterface.getQualifiedName());
+        for (PsiClass projectClass : projectClasses) {
+            PsiClassType[] types = projectClass.getImplementsListTypes();
+            for (PsiClassType type : types) {
+                if (type.getClassName().equals(theInterface.getName())) {
+                    implementingClasses.add(projectClass);
                 }
             }
         }
+        return implementingClasses;
+    }
+
+    private PsiMethod getConcreteMethod(PsiClass theClass, PsiMethod method) {
+        PsiMethod[] concreteClassMethods = theClass.getMethods();
+        for (PsiMethod concreteMethod : concreteClassMethods) {
+            if (matches(concreteMethod, method)) {
+                return concreteMethod;
+            }
+        }
         return null;
+    }
+
+    private boolean matches(PsiMethod method1, PsiMethod method2) {
+        if (method1.getName().equals(method2.getName())) {
+            JvmParameter[] parameters1 = method1.getParameters();
+            JvmParameter[] parameters2 = method2.getParameters();
+            boolean match = true;
+            if (parameters1 != null && parameters2 != null) {
+                match = parameters1.length == parameters2.length;
+                if (match) {
+                    for (int i = 0; i < parameters1.length; i++) {
+                        JvmParameter parameter1 = parameters1[i];
+                        JvmParameter parameter2 = parameters2[i];
+                        if (parameter1.getType() != parameter2.getType()) {
+                            match = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            return match;
+        }
+        return false;
     }
 }
