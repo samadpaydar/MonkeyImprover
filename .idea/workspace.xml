@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/classes/ClassComplexityAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/classes/ClassComplexityAnalyzer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/MethodComplexityAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/MethodComplexityAnalyzer.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -18,8 +19,8 @@
       <file leaf-file-name="MethodComplexityAnalyzer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/MethodComplexityAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="48" selection-start-line="48" selection-end-line="48" />
+            <state relative-caret-position="493">
+              <caret line="56" selection-start-line="48" selection-end-line="56" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -32,6 +33,18 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
               <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IntentComplexityAnalyzer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/IntentComplexityAnalyzer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="333">
+              <caret line="22" column="63" selection-start-line="22" selection-start-column="63" selection-end-line="22" selection-end-column="63" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -171,8 +184,8 @@
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/AsyncTaskComplexityAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/MonkeyImprover.java" />
-        <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/classes/ClassComplexityAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/MethodCallAnalyzer.java" />
+        <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/classes/ClassComplexityAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/MethodComplexityAnalyzer.java" />
       </list>
     </option>
@@ -228,6 +241,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="monkeyimprover" type="462c0819:PsiDirectoryNode" />
               <item name="analysis" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="monkey-improver" type="b2602c69:ProjectViewProjectNode" />
+              <item name="monkey-improver" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="monkeyimprover" type="462c0819:PsiDirectoryNode" />
+              <item name="analysis" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="monkey-improver" type="b2602c69:ProjectViewProjectNode" />
@@ -386,12 +407,12 @@
       <workItem from="1554219734889" duration="7718000" />
       <workItem from="1554286131456" duration="17622000" />
       <workItem from="1554378903865" duration="596000" />
-      <workItem from="1554444668245" duration="13154000" />
+      <workItem from="1554444668245" duration="13929000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130358000" />
+    <option name="totallyTimeSpent" value="131133000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -713,16 +734,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/IntentComplexityAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/AsyncTaskComplexityAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -766,6 +777,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/IntentComplexityAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="22" column="63" selection-start-line="22" selection-start-column="63" selection-end-line="22" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/classes/ClassComplexityAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -778,8 +799,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/MethodComplexityAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
+        <state relative-caret-position="493">
+          <caret line="56" selection-start-line="48" selection-end-line="56" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

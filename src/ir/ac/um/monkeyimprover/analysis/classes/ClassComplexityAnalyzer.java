@@ -20,6 +20,9 @@ public class ClassComplexityAnalyzer {
         for (PsiMethod method : methods) {
             complexity += methodComplexityAnalyzer.getComplexity(method);
         }
+        if(methods.length > 0) {
+            complexity = complexity / methods.length;
+        }
 
         return complexity;
     }

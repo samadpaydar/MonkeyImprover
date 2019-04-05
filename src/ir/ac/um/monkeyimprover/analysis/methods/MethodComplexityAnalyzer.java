@@ -46,14 +46,14 @@ public class MethodComplexityAnalyzer {
             asyncComplexity = getAsyncTaskComplexity(method);
         }
         double complexity = cyclomaticComplexity + calledMethodComplexity + intentComplexity + asyncComplexity;
-        if (AnalysisUtils.getMethodQualifiedName(method).startsWith("ir.ac.um.pardisban.MainActivity_")) {
-            monkeyImprover.showMessage("\tmethod " + AnalysisUtils.getMethodQualifiedName(method)
-                    + " cyclomaticComplexity: " + cyclomaticComplexity
-                    + " calledMethodComplexity: " + calledMethodComplexity
-                    + " intentComplexity: " + intentComplexity
-                    + " asyncComplexity: " + asyncComplexity
-                    + " complexity: " + complexity);
-        }
+//        if (AnalysisUtils.getMethodQualifiedName(method).startsWith("ir.ac.um.pardisban.MainActivity_")) {
+//            monkeyImprover.showMessage("\tmethod " + AnalysisUtils.getMethodQualifiedName(method)
+//                    + " cyclomaticComplexity: " + cyclomaticComplexity
+//                    + " calledMethodComplexity: " + calledMethodComplexity
+//                    + " intentComplexity: " + intentComplexity
+//                    + " asyncComplexity: " + asyncComplexity
+//                    + " complexity: " + complexity);
+//        }
         return complexity;
     }
 
