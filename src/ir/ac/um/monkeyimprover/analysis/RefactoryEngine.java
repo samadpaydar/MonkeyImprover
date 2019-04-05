@@ -111,8 +111,8 @@ public class RefactoryEngine {
 
     private void refactorElements(Document document, String rootLayoutId, String rootLayoutContext, List<CallbackMethodInfo> callbackMethodInfos) {
         Element newRootLayout = createRootLinearLayout(document, rootLayoutId, rootLayoutContext);
-        Element childLayout1 = createChildLinearLayout(document, 9);
-        Element childLayout2 = createChildLinearLayout(document, 1);
+        Element childLayout1 = createChildLinearLayout(document, 1);
+        Element childLayout2 = createChildLinearLayout(document, 0);
         Node currentRootLayout = document.getFirstChild();
 
         newRootLayout.appendChild(childLayout1);
