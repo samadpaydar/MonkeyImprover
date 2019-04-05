@@ -187,7 +187,7 @@ public class RefactoryEngine {
             if (child instanceof Element) {
                 Element childElement = (Element) child;
                 String onClick = childElement.getAttribute("android:onClick");
-                int weight = 1;
+                int weight = 0;
                 if (onClick != null) {
                     String callbackMethodName = onClick.trim();
                     weight = getWeight(callbackMethodInfos, callbackMethodName);

@@ -50,8 +50,8 @@
       <file leaf-file-name="RefactoryEngine.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="114" column="66" selection-start-line="114" selection-start-column="66" selection-end-line="114" selection-end-column="66" />
+            <state relative-caret-position="277">
+              <caret line="189" column="30" selection-start-line="189" selection-start-column="30" selection-end-line="189" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -88,7 +88,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>methodAna</find>
       <find>new refa</find>
       <find>processC</find>
       <find>createRootLinearLayout</find>
@@ -118,6 +117,7 @@
       <find>.show</find>
       <find>showMess</find>
       <find>showme</find>
+      <find>weight</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src\ir\ac\um\monkeyimprover</dir>
@@ -405,12 +405,12 @@
       <workItem from="1554219734889" duration="7718000" />
       <workItem from="1554286131456" duration="17622000" />
       <workItem from="1554378903865" duration="596000" />
-      <workItem from="1554444668245" duration="14553000" />
+      <workItem from="1554444668245" duration="15397000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131757000" />
+    <option name="totallyTimeSpent" value="132601000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -800,8 +800,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="114" column="66" selection-start-line="114" selection-start-column="66" selection-end-line="114" selection-end-column="66" />
+        <state relative-caret-position="277">
+          <caret line="189" column="30" selection-start-line="189" selection-start-column="30" selection-end-line="189" selection-end-column="30" />
         </state>
       </provider>
     </entry>
