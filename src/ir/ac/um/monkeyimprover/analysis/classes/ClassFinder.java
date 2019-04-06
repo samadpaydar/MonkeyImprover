@@ -1,8 +1,8 @@
-package ir.ac.um.monkeyimprover.analysis;
+package ir.ac.um.monkeyimprover.analysis.classes;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiJavaFile;
+import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
+import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.utils.Utils;
 
 import java.io.File;
@@ -14,7 +14,10 @@ import java.util.List;
  */
 public class ClassFinder {
 
-    public ClassFinder() {
+    private MonkeyImprover monkeyImprover;
+
+    public ClassFinder(MonkeyImprover monkeyImprover) {
+        this.monkeyImprover = monkeyImprover;
     }
 
     public List<VirtualFile> findRelatedJavaFile(VirtualFile directory, VirtualFile layoutXMLFile) {
@@ -30,8 +33,9 @@ public class ClassFinder {
 
     private List<VirtualFile> findRelatedJavaFileByContext(VirtualFile directory, VirtualFile layoutXMLFile) {
         List<VirtualFile> relatedJavaFiles = null;
-        LayoutAnalyzer layoutAnalyzer = new LayoutAnalyzer();
-        List<String> contextClassNames = layoutAnalyzer.getContextClassNames(layoutXMLFile);
+        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor(monkeyImprover);
+        File xmlFile = new File(layoutXMLFile.getCanonicalPath());
+        List<String> contextClassNames = layoutInformationExtractor.getContextClassNames(xmlFile);
         if (contextClassNames != null && !contextClassNames.isEmpty()) {
             relatedJavaFiles = new ArrayList<>();
             for (String contextClassName : contextClassNames) {

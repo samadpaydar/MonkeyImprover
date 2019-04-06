@@ -5,8 +5,14 @@ import com.intellij.openapi.project.Project;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInfo;
+import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
+import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
+import ir.ac.um.monkeyimprover.analysis.project.BackupCreator;
+import ir.ac.um.monkeyimprover.analysis.project.ProjectInformationExtractor;
+import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 
 
@@ -17,10 +23,7 @@ public class MonkeyImprover implements Runnable {
     private Project project;
     private PsiElement psiElement;
     private ConsoleView consoleView;
-    private LayoutAnalyzer layoutAnalyzer;
-    private ClassFinder classFinder;
-    private MethodAnalyzer methodAnalyzer;
-    private MethodFinder methodFinder;
+    private List<PsiClass> projectJavaClasses;
 
     public MonkeyImprover(Project project, PsiElement psiElement, ConsoleView consoleView) {
         this.project = project;
@@ -31,58 +34,58 @@ public class MonkeyImprover implements Runnable {
     @Override
     public void run() {
         showMessage("Started processing project " + project.getName());
-        layoutAnalyzer = new LayoutAnalyzer();
-        classFinder = new ClassFinder();
-        methodFinder = new MethodFinder();
-        methodAnalyzer = new MethodAnalyzer();
-        LayoutRefactory layoutRefactory = new LayoutRefactory(this);
-        showMessage("Extracting layout files...");
-        List<VirtualFile> layoutFiles = layoutAnalyzer.getLayoutFiles(project.getBaseDir());
+        showMessage("Collecting project Java classes...");
+        ProjectInformationExtractor projectInformationExtractor = new ProjectInformationExtractor(psiElement);
+        this.projectJavaClasses = projectInformationExtractor.getProjectJavaClasses();
+        showMessage("Extracting layouts files...");
+        List<VirtualFile> layoutFiles = projectInformationExtractor.getLayoutXMLFiles(project.getBaseDir());
+        showMessage("Creating backup for layout files...");
+        createBackup(project.getBaseDir(), layoutFiles);
+        showMessage("Refactorying layout files...");
+        LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor(this);
         for (VirtualFile layoutFile : layoutFiles) {
-            showMessage("Processing layout file " + layoutFile.getName() + "...");
-            List<CallbackMethodInfo> info = processLayoutFile(layoutFile);
-            layoutRefactory.refactorLayout(new LayoutInfo(layoutFile, info));
+            showMessage("\tLayout " + layoutFile.getName());
+            List<CallbackMethodInfo> info = layoutInformationExtractor.getCallbackMethodInfos(project.getBaseDir(), layoutFile);
+
+            refactorLayout(new LayoutInfo(layoutFile, info));
         }
-        //VirtualFile baseDirectory = project.getBaseDir();
-        //psiElement.accept(new JavaFileVisitor(this));
+
         showMessage("Finished");
     }
 
-    private List<CallbackMethodInfo> processLayoutFile(VirtualFile layoutFile) {
-        List<CallbackMethodInfo> infoList = new ArrayList<>();
-        List<String> callbackMethodNames = layoutAnalyzer.getCallbackMethodNames(layoutFile);
-        if (!callbackMethodNames.isEmpty()) {
-            List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(project.getBaseDir(), layoutFile);
-            if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
-                for (String callbackMethodName : callbackMethodNames) {
-                    CallbackMethodInfo info = processCallBack(callbackMethodName, relatedJavaFiles);
-                    infoList.add(info);
-                }
-            }
-        }
-        return infoList;
+    public List<PsiClass> getProjectJavaClasses() {
+        return this.projectJavaClasses;
     }
 
-    private CallbackMethodInfo processCallBack(String callbackMethodName, List<VirtualFile> relatedJavaFiles) {
-        double complexity = -1;
-        PsiMethod method = null;
-        for (VirtualFile relatedJavaFile : relatedJavaFiles) {
-            PsiFile file = PsiManager.getInstance(project).findFile(relatedJavaFile);
-            if (file != null && file instanceof PsiJavaFile) {
-                PsiMethod relatedMethod = methodFinder.findMethodByName((PsiJavaFile) file, callbackMethodName);
-                if (relatedMethod != null) {
-                    method = relatedMethod;
-                    complexity = methodAnalyzer.getMethodComplexity(relatedMethod);
-                    break;
-                }
-            }
-        }
-        return new CallbackMethodInfo(callbackMethodName, method, complexity);
+    private void refactorLayout(LayoutInfo layoutInfo) {
+        VirtualFile layoutFile = layoutInfo.getLayoutFile();
+        List<CallbackMethodInfo> callbackMethodInfos = layoutInfo.getCallbackMethodInfoList();
+        File xmlFile = new File(layoutFile.getCanonicalPath());
+        RefactoryEngine refactoryEngine = new RefactoryEngine(this);
+        refactoryEngine.refactorLayout(xmlFile, callbackMethodInfos);
     }
 
+    private void createBackup(VirtualFile directory, List<VirtualFile> layoutFiles) {
+        BackupCreator backupCreator = new BackupCreator();
+        backupCreator.createBackup(directory, layoutFiles);
+    }
 
     public void showMessage(String message) {
         consoleView.print(String.format("%s%n", message),
                 ConsoleViewContentType.NORMAL_OUTPUT);
     }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public PsiClass getProjectClassByName(String className) {
+        for (PsiClass projectJavaClass : projectJavaClasses) {
+            if (projectJavaClass.getQualifiedName().equals(className)) {
+                return projectJavaClass;
+            }
+        }
+        return null;
+    }
+
 }

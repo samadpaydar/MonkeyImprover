@@ -1,21 +1,9 @@
-package ir.ac.um.monkeyimprover.analysis;
+package ir.ac.um.monkeyimprover.analysis.methods;
 
 import com.intellij.psi.*;
 
-public class ComplexityAnalyzer {
-    public ComplexityAnalyzer() {
-
-    }
-
-    /**
-     * @param method
-     * @return the complexity of the given method
-     */
-    public double getMethodComplexity(PsiMethod method) {
-        return getMethodCyclomaticComplexity(method);
-    }
-
-    private int getMethodCyclomaticComplexity(PsiMethod method) {
+public class CyclomaticComplexityAnalyzer {
+    public int getComplexity(PsiMethod method) {
         PsiCodeBlock methodBody = method.getBody();
         //TODO modify the implementation
         /* for a simple method that has if-then-else statement, complexity should be 2, but 3 is returned.
@@ -71,10 +59,4 @@ public class ComplexityAnalyzer {
         return branchStatement;
     }
 
-
-    private boolean invokes(PsiMethod caller, PsiMethod callee) {
-        MethodCallAnalyzer methodCallAnalyzer = new MethodCallAnalyzer(caller, callee);
-        caller.accept(methodCallAnalyzer);
-        return methodCallAnalyzer.hasCalled();
-    }
 }
