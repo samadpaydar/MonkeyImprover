@@ -25,7 +25,52 @@ public class CyclomaticComplexityAnalyzer {
             // System.out.println(method.getText());
             return cyclomatic;
         }
-        for (PsiStatement statement : codeBlock.getStatements()) {
+        PsiStatement [] statements = codeBlock.getStatements();
+        int length = statements.length;
+        for(int i=0;i<length;i++){
+
+            if(isBranch(statements[i])) {
+                for (PsiElement element : statements[i].getChildren()) {
+                    if(element instanceof PsiBlockStatement){
+                        PsiBlockStatement code = (PsiBlockStatement) element;
+                        PsiCodeBlock met = code.getCodeBlock();
+                        if (element.getChildren()[0].getChildren().length>3) {
+                            cyclomatic = getCyclomaticComplexity(met, ++cyclomatic);
+                            if(element.getParent().getPrevSibling().getPrevSibling() instanceof  PsiSwitchLabelStatement) {
+                                cyclomatic--;
+                            }
+                        }
+                    }
+                    if(element instanceof PsiCodeBlock){
+                        PsiCodeBlock code = (PsiCodeBlock) element;
+                        for(PsiStatement switchStatement:code.getStatements()){
+                            if(isBranch(switchStatement)){
+                                    ++cyclomatic;
+                            }
+                        }
+
+                         cyclomatic = getCyclomaticComplexity(code,++cyclomatic);
+
+                    }
+                    
+                    if(element instanceof PsiIfStatement){
+                        if((statements[i] instanceof PsiIfStatement) && (i < codeBlock.getStatementCount())){
+                            ++cyclomatic;
+                        }
+                        PsiIfStatement ifStatement = (PsiIfStatement) element;
+                        PsiStatement [] stmt = new PsiStatement[statements.length+1];
+                        System.arraycopy(statements,0,stmt,0,statements.length);
+                        stmt[stmt.length-1]=ifStatement;
+                        length = stmt.length;
+                        statements = stmt;
+                        ++cyclomatic;
+                        
+                    }
+
+                   
+                }
+            }
+        }
             if (isBranch(statement)) {
                 for (PsiElement element : statement.getChildren()) {
                     if (element instanceof PsiBlockStatement) {
@@ -42,20 +87,27 @@ public class CyclomaticComplexityAnalyzer {
 
     private boolean isBranch(PsiStatement statement) {
         boolean branchStatement = false;
-        if (statement instanceof PsiIfStatement) {
+        if(statement instanceof PsiIfStatement){
 
             branchStatement = true;
-        } else if (statement instanceof PsiForStatement) {
-            branchStatement = true;
-        } else if (statement instanceof PsiWhileStatement) {
-            branchStatement = true;
-        } else if (statement instanceof PsiDoWhileStatement) {
-            branchStatement = true;
-        } else if (statement instanceof PsiSwitchStatement) {
-
-        } else if (statement instanceof PsiTryStatement) {
-
         }
+        else if(statement instanceof PsiForStatement){
+            branchStatement = true;
+        }
+        else if(statement instanceof PsiWhileStatement){
+            branchStatement = true;
+        }
+        else if(statement instanceof PsiDoWhileStatement){
+            branchStatement = true;
+        }
+        else if(statement instanceof PsiSwitchStatement){
+            System.out.println(statement.getText());
+            branchStatement = true;
+        }
+        else if(statement instanceof  PsiSwitchLabelStatement){
+            branchStatement = true;
+        }
+        
         return branchStatement;
     }
 
