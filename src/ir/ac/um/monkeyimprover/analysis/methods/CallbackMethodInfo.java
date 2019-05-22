@@ -1,6 +1,8 @@
 package ir.ac.um.monkeyimprover.analysis.methods;
 
 import com.intellij.psi.PsiMethod;
+import ir.ac.um.monkeyimprover.analysis.utils.Utils;
+
 /**
  * @author Samad Paydar
  */
@@ -47,5 +49,12 @@ public class CallbackMethodInfo {
 
     private void setCallbackMethodComplexity(double callbackMethodComplexity) {
         this.callbackMethodComplexity = callbackMethodComplexity;
+    }
+
+    @Override
+    public String toString() {
+        return "[callbackName: " + callbackName
+                + ", callbackMethod: " + (callbackMethod!= null ? Utils.getMethodQualifiedName(callbackMethod) : "N/A")
+                + ", callbackMethodComplexity: " + callbackMethodComplexity + "]";
     }
 }
