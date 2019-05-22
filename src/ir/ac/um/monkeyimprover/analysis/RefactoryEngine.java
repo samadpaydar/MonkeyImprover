@@ -2,7 +2,8 @@ package ir.ac.um.monkeyimprover.analysis;
 
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
-import ir.ac.um.monkeyimprover.analysis.utils.Utils;
+import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
+import ir.ac.um.monkeyimprover.utils.Utils;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.*;
@@ -127,7 +128,7 @@ public class RefactoryEngine {
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
-            if (Utils.isAnAndroidView(child.getNodeName())) {
+            if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
                 Node childClone = child.cloneNode(false);
                 newParent.appendChild(childClone);
                 if (childClone instanceof Element) {
@@ -142,7 +143,7 @@ public class RefactoryEngine {
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
-            if (!Utils.isAnAndroidView(child.getNodeName())) {
+            if (!AnalysisUtils.isAnAndroidView(child.getNodeName())) {
                 Node childClone = child.cloneNode(false);
                 newParent.appendChild(childClone);
                 if (childClone instanceof Element) {
@@ -228,7 +229,7 @@ public class RefactoryEngine {
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
-            if (Utils.isAnAndroidView(child.getNodeName())) {
+            if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
                 children.add(child);
             }
             children.addAll(getAllViews(childrenNodes.item(i)));

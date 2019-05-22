@@ -8,7 +8,8 @@ import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
 import ir.ac.um.monkeyimprover.analysis.project.BackupCreator;
 import ir.ac.um.monkeyimprover.analysis.project.ProjectInformationExtractor;
-import ir.ac.um.monkeyimprover.analysis.utils.Utils;
+import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
+import ir.ac.um.monkeyimprover.utils.Utils;
 
 import java.io.File;
 import java.util.List;

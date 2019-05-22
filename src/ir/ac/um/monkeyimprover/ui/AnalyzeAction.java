@@ -15,8 +15,9 @@ import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.file.PsiJavaDirectoryImpl;
 import com.intellij.ui.content.Content;
-import ir.ac.um.monkeyimprover.analysis.utils.Utils;
+import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 import ir.ac.um.monkeyimprover.utils.Constants;
+import ir.ac.um.monkeyimprover.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 

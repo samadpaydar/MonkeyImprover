@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
 /**
  * @author Samad Paydar
  */
-public class Utils {
+public class AnalysisUtils {
 
-    private static ConsoleView consoleView;
+
 
     public static String getMethodQualifiedName(PsiMethod method) {
         String result = null;
@@ -52,7 +52,7 @@ public class Utils {
             if (method.getParameters().length > 0) {
                 for (PsiParameter parameter : method.getParameterList().getParameters()) {
                     String parameterType = parameter.getTypeElement().getType().getCanonicalText();
-                    parameterType = Utils.prepareName(parameterType);
+                    parameterType = AnalysisUtils.prepareName(parameterType);
                     methodName += Constants.UNDERLINE_CHAR + parameterType;
                 }
             } else {
@@ -89,21 +89,6 @@ public class Utils {
             }
         }
         return false;
-    }
-
-    public static ConsoleView getConsoleView() {
-        return Utils.consoleView;
-    }
-
-    public static void setConsoleView(ConsoleView consoleView) {
-        Utils.consoleView = consoleView;
-    }
-
-    public static void showMessage(String message) {
-        if (consoleView != null) {
-            consoleView.print(String.format("%s%n", message),
-                    ConsoleViewContentType.NORMAL_OUTPUT);
-        }
     }
 }
 
