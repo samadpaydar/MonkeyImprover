@@ -29,6 +29,7 @@ public class RefactoryEngine {
     public void refactorLayout(File xmlFile, List<CallbackMethodInfo> callbackMethodInfos) {
         LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor(monkeyImprover);
         if (layoutInformationExtractor.isFragment(xmlFile)) {
+            Utils.showMessage("\t\tLayout is Fragment: " + xmlFile.getName());
             return;
         }
         try {
@@ -71,6 +72,7 @@ public class RefactoryEngine {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(source, result);
+            Utils.showMessage("\t\tSaved successfully.");
         } catch (Exception e) {
             e.printStackTrace();
         }
