@@ -1,5 +1,7 @@
 package ir.ac.um.monkeyimprover.analysis.utils;
 
+import com.intellij.execution.ui.ConsoleView;
+import com.intellij.execution.ui.ConsoleViewContentType;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiParameter;
 import ir.ac.um.monkeyimprover.utils.Constants;
@@ -10,7 +12,9 @@ import java.util.regex.Pattern;
 /**
  * @author Samad Paydar
  */
-public class AnalysisUtils {
+public class Utils {
+
+    private static ConsoleView consoleView;
 
     public static String getMethodQualifiedName(PsiMethod method) {
         String result = null;
@@ -48,7 +52,7 @@ public class AnalysisUtils {
             if (method.getParameters().length > 0) {
                 for (PsiParameter parameter : method.getParameterList().getParameters()) {
                     String parameterType = parameter.getTypeElement().getType().getCanonicalText();
-                    parameterType = AnalysisUtils.prepareName(parameterType);
+                    parameterType = Utils.prepareName(parameterType);
                     methodName += Constants.UNDERLINE_CHAR + parameterType;
                 }
             } else {
@@ -70,7 +74,7 @@ public class AnalysisUtils {
     }
 
     public static boolean isAnAndroidView(String elementType) {
-        String[] nonViewTypes = {"LinearLayout", "ScrollView", "GridLayout" };
+        String[] nonViewTypes = {"LinearLayout", "ScrollView", "GridLayout"};
         for (String viewType : nonViewTypes) {
             if (viewType.equals(elementType) || (elementType != null && elementType.endsWith(viewType))) {
                 return false;
@@ -78,7 +82,7 @@ public class AnalysisUtils {
         }
         String[] viewTypes = {"TextView", "EditText", "Button", "ImageView",
                 "ImageButton", "CheckBox", "RadioButton", "RadioGroup", "Spinner",
-                "AutoCompleteTextView", "View" };
+                "AutoCompleteTextView", "View"};
         for (String viewType : viewTypes) {
             if (viewType.equals(elementType) || (elementType != null && elementType.endsWith(viewType))) {
                 return true;
@@ -87,6 +91,19 @@ public class AnalysisUtils {
         return false;
     }
 
+    public static ConsoleView getConsoleView() {
+        return Utils.consoleView;
+    }
 
+    public static void setConsoleView(ConsoleView consoleView) {
+        Utils.consoleView = consoleView;
+    }
+
+    public static void showMessage(String message) {
+        if (consoleView != null) {
+            consoleView.print(String.format("%s%n", message),
+                    ConsoleViewContentType.NORMAL_OUTPUT);
+        }
+    }
 }
 

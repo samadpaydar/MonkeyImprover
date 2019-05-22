@@ -4,9 +4,7 @@ import com.intellij.lang.jvm.JvmModifier;
 import com.intellij.lang.jvm.JvmParameter;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
-import com.sun.deploy.util.JVMParameters;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
-import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +44,8 @@ public class MethodComplexityAnalyzer {
             asyncComplexity = getAsyncTaskComplexity(method);
         }
         double complexity = cyclomaticComplexity + calledMethodComplexity + intentComplexity + asyncComplexity;
-//        if (AnalysisUtils.getMethodQualifiedName(method).startsWith("ir.ac.um.pardisban.MainActivity_")) {
-//            monkeyImprover.showMessage("\tmethod " + AnalysisUtils.getMethodQualifiedName(method)
+//        if (Utils.getMethodQualifiedName(method).startsWith("ir.ac.um.pardisban.MainActivity_")) {
+//            monkeyImprover.showMessage("\tmethod " + Utils.getMethodQualifiedName(method)
 //                    + " cyclomaticComplexity: " + cyclomaticComplexity
 //                    + " calledMethodComplexity: " + calledMethodComplexity
 //                    + " intentComplexity: " + intentComplexity

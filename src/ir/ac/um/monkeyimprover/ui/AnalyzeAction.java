@@ -15,6 +15,7 @@ import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.file.PsiJavaDirectoryImpl;
 import com.intellij.ui.content.Content;
+import ir.ac.um.monkeyimprover.analysis.utils.Utils;
 import ir.ac.um.monkeyimprover.utils.Constants;
 import org.jetbrains.annotations.NotNull;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
@@ -23,7 +24,6 @@ import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
  * @author Samad Paydar
  */
 public class AnalyzeAction extends AnAction {
-    private ConsoleView consoleView;
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
@@ -37,15 +37,17 @@ public class AnalyzeAction extends AnAction {
 
     private void processProject(Project project, PsiElement psiElement) {
         ToolWindow toolWindow = ToolWindowManager.getInstance(project).getToolWindow(Constants.PLUGIN_NAME);
+        ConsoleView consoleView = Utils.getConsoleView();
         if (consoleView == null) {
             consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).getConsole();
+            Utils.setConsoleView(consoleView);
             Content content = toolWindow.getContentManager().getFactory().createContent(consoleView.getComponent(), Constants.PLUGIN_NAME, true);
             toolWindow.getContentManager().addContent(content);
         }
         toolWindow.show(null);
         ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
             public void run() {
-                ApplicationManager.getApplication().runReadAction(new MonkeyImprover(project, psiElement, consoleView));
+                ApplicationManager.getApplication().runReadAction(new MonkeyImprover(project, psiElement));
             }
         });
 

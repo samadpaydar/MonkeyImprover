@@ -5,7 +5,7 @@ import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
 import ir.ac.um.monkeyimprover.analysis.methods.MethodComplexityAnalyzer;
-import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
+import ir.ac.um.monkeyimprover.analysis.utils.Utils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -91,7 +91,7 @@ public class LayoutInformationExtractor {
                     @Override
                     public void startElement(String uri, String localName,
                                              String qName, Attributes attributes) throws SAXException {
-                        if (AnalysisUtils.isAnAndroidView(qName)) {
+                        if (Utils.isAnAndroidView(qName)) {
                             count++;
                         }
                     }
@@ -148,7 +148,7 @@ public class LayoutInformationExtractor {
                                              String qName, Attributes attributes) throws SAXException {
                         if (!rootElementVisited) {
                             rootElementVisited = true;
-                            isFragment = AnalysisUtils.isAnAndroidView(qName);
+                            isFragment = Utils.isAnAndroidView(qName);
                         }
                     }
                 }

@@ -1,22 +1,17 @@
 package ir.ac.um.monkeyimprover.analysis;
 
-import com.intellij.ide.ui.EditorOptionsTopHitProvider;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
-import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
+import ir.ac.um.monkeyimprover.analysis.utils.Utils;
 import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.*;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +38,7 @@ public class RefactoryEngine {
             String rootLayoutId = rootLayoutInfo[0];
             String rootLayoutContext = rootLayoutInfo[1];
 
-            monkeyImprover.showMessage("\t\t" + xmlFile.getName() + " has " + numberOfViews + " views");
+            Utils.showMessage("\t\t" + xmlFile.getName() + " has " + numberOfViews + " views");
             refactorElements(document, rootLayoutId, rootLayoutContext, callbackMethodInfos);
 
             saveXMLDocument(document, xmlFile);
@@ -130,7 +125,7 @@ public class RefactoryEngine {
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
-            if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
+            if (Utils.isAnAndroidView(child.getNodeName())) {
                 Node childClone = child.cloneNode(false);
                 newParent.appendChild(childClone);
                 if (childClone instanceof Element) {
@@ -145,7 +140,7 @@ public class RefactoryEngine {
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
-            if (!AnalysisUtils.isAnAndroidView(child.getNodeName())) {
+            if (!Utils.isAnAndroidView(child.getNodeName())) {
                 Node childClone = child.cloneNode(false);
                 newParent.appendChild(childClone);
                 if (childClone instanceof Element) {
@@ -231,7 +226,7 @@ public class RefactoryEngine {
         NodeList childrenNodes = parent.getChildNodes();
         for (int i = 0; i < childrenNodes.getLength(); i++) {
             Node child = childrenNodes.item(i);
-            if (AnalysisUtils.isAnAndroidView(child.getNodeName())) {
+            if (Utils.isAnAndroidView(child.getNodeName())) {
                 children.add(child);
             }
             children.addAll(getAllViews(childrenNodes.item(i)));
