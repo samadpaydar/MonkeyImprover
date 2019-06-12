@@ -68,7 +68,8 @@ public class LayoutInformationExtractor {
                         for (int i = 0; i < attributes.getLength(); i++) {
                             String attributeQualifiedName = attributes.getQName(i);
                             if (attributeQualifiedName != null
-                                    && attributeQualifiedName.toLowerCase().equalsIgnoreCase("android:onclick")) {
+                                    && attributeQualifiedName.toLowerCase()
+                                    .equalsIgnoreCase("android:onclick")) {
                                 callbackMethodNames.add(attributes.getValue(i));
                             }
                         }
@@ -165,6 +166,34 @@ public class LayoutInformationExtractor {
     }
 
     public List<CallbackMethodInfo> getCallbackMethodInfos(VirtualFile projectBaseDirectory, VirtualFile layoutFile) {
+        List<CallbackMethodInfo> list1 = getCallbackMethodInfosByMethod1(projectBaseDirectory, layoutFile);
+        List<CallbackMethodInfo> list2 = getCallbackMethodInfosByMethod2(projectBaseDirectory, layoutFile);
+        list1.addAll(list2);
+        return list1;
+    }
+
+    /**
+     * This method collects information about the onclick event handlers by
+     * searching for @OnClick(R.id.view_id) in the java file that is mentioned
+     * as the context of the layout file
+     * @param projectBaseDirectory
+     * @param layoutFile
+     * @return
+     */
+    private List<CallbackMethodInfo> getCallbackMethodInfosByMethod2(VirtualFile projectBaseDirectory, VirtualFile layoutFile) {
+        List<CallbackMethodInfo> infoList = new ArrayList<>();
+
+        return infoList;
+    }
+
+    /**
+     * This method collects information about onclick event handlers by
+     * searching for onclick attribute of the view elements in the layout file
+     * @param projectBaseDirectory
+     * @param layoutFile
+     * @return
+     */
+    private List<CallbackMethodInfo> getCallbackMethodInfosByMethod1(VirtualFile projectBaseDirectory, VirtualFile layoutFile) {
         List<CallbackMethodInfo> infoList = new ArrayList<>();
         File xmlFile = new File(layoutFile.getCanonicalPath());
         List<String> callbackMethodNames = getCallbackMethodNames(xmlFile);
