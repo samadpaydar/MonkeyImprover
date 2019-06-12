@@ -191,7 +191,7 @@ public class LayoutInformationExtractor {
                                 //it is needed to remove prefixes android:id="@+id/btn_modulo"
                                 int index = viewId.lastIndexOf('/');
                                 if(index != -1) {
-                                    viewId = viewId.substring(index);
+                                    viewId = viewId.substring(index + 1).trim();
                                 }
                                 viewIds.add(viewId);
                             }
