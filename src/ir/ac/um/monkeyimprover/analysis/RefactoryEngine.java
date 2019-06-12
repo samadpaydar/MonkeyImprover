@@ -191,6 +191,10 @@ public class RefactoryEngine {
                     weight = getWeight(callbackMethodInfos, callbackMethodName);
                 } else {
                     String viewId = childElement.getAttribute("android:id");
+                    int index = viewId.lastIndexOf('/');
+                    if (index != -1) {
+                        viewId = viewId.substring(index + 1).trim();
+                    }
                     if (viewId != null) {
                         weight = getWeightForAnnotatedView(callbackMethodInfos, viewId);
                     }
