@@ -4,6 +4,7 @@ import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
+import ir.ac.um.monkeyimprover.utils.Utils;
 
 /**
  * @author Samad Paydar
@@ -30,8 +31,8 @@ public class MethodFinder {
             for(PsiMethod method: methods) {
                 PsiAnnotation[] annotations = method.getAnnotations();
                 for(PsiAnnotation annotation: annotations) {
-                    System.out.println("annotation.getQualifiedName() : " + annotation.getQualifiedName());
-                    System.out.println("annotation.getText() : " + annotation.getText());
+                    Utils.showMessage("annotation.getQualifiedName() : " + annotation.getQualifiedName());
+                    Utils.showMessage("annotation.getText() : " + annotation.getText());
                 }
                 //if(method.getName().equals(methodName)) {
                 //    return method;
