@@ -191,6 +191,7 @@ public class RefactoryEngine {
                     weight = getWeight(callbackMethodInfos, callbackMethodName);
                 } else {
                     String viewId = childElement.getAttribute("android:id");
+                    Utils.showMessage("###### viewId: " + viewId);
                     int index = viewId.lastIndexOf('/');
                     if (index != -1) {
                         viewId = viewId.substring(index + 1).trim();
@@ -224,10 +225,14 @@ public class RefactoryEngine {
             complexitySum += info.getCallbackMethodComplexity();
         }
         for (CallbackMethodInfo info : callbackMethodInfos) {
+            Utils.showMessage("\t\t\tinfo.getViewId " + info.getViewId());
             if (info.getViewId() != null && info.getViewId().equals(viewId) && info.isBoundByAnnotation()) {
                 double complexity = info.getCallbackMethodComplexity();
+                Utils.showMessage("\t\t\t\tComplexity " + complexity);
                 weight = (int) ((100.0 * complexity) / complexitySum);
                 weight = Math.max(weight, 1);
+                Utils.showMessage("\t\t\t\tweight " + weight);
+                break;
             }
         }
         return weight;
@@ -244,6 +249,7 @@ public class RefactoryEngine {
                 double complexity = info.getCallbackMethodComplexity();
                 weight = (int) ((100.0 * complexity) / complexitySum);
                 weight = Math.max(weight, 1);
+                break;
             }
         }
         return weight;
