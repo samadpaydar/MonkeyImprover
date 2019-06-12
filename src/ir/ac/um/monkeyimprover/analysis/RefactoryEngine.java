@@ -189,6 +189,11 @@ public class RefactoryEngine {
                 if (onClick != null) {
                     String callbackMethodName = onClick.trim();
                     weight = getWeight(callbackMethodInfos, callbackMethodName);
+                } else {
+                    String viewId = childElement.getAttribute("android:id");
+                    if (viewId != null) {
+                        weight = getWeightForAnnotatedView(callbackMethodInfos, viewId);
+                    }
                 }
                 childElement.setAttribute("android:layout_width", "match_parent");
                 childElement.setAttribute("android:layout_height", "0dp");
@@ -206,6 +211,22 @@ public class RefactoryEngine {
                 childElement.setAttribute("android:paddingBottom", "0dp");
             }
         }
+    }
+
+    private int getWeightForAnnotatedView(List<CallbackMethodInfo> callbackMethodInfos, String viewId) {
+        int weight = 0;
+        double complexitySum = 0.0;
+        for (CallbackMethodInfo info : callbackMethodInfos) {
+            complexitySum += info.getCallbackMethodComplexity();
+        }
+        for (CallbackMethodInfo info : callbackMethodInfos) {
+            if (info.getViewId() != null && info.getViewId().equals(viewId) && info.isBoundByAnnotation()) {
+                double complexity = info.getCallbackMethodComplexity();
+                weight = (int) ((100.0 * complexity) / complexitySum);
+                weight = Math.max(weight, 1);
+            }
+        }
+        return weight;
     }
 
     private int getWeight(List<CallbackMethodInfo> callbackMethodInfos, String callbackMethodName) {

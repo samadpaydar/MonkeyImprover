@@ -66,7 +66,8 @@ public class MethodComplexityAnalyzer {
                 PsiMethod relatedMethod = methodFinder.findMethodByOnClickAnnotation((PsiJavaFile) file, viewId);
                 if (relatedMethod != null) {
                     complexity = getComplexity(relatedMethod, true);
-                    info = new CallbackMethodInfo(relatedMethod.getName(), relatedMethod, complexity);
+                    info = new CallbackMethodInfo(viewId, relatedMethod.getName(), relatedMethod, complexity);
+                    info.setBoundByAnnotation(true);
                     break;
                 }
             }
@@ -89,7 +90,7 @@ public class MethodComplexityAnalyzer {
                 }
             }
         }
-        return new CallbackMethodInfo(callbackMethodName, method, complexity);
+        return new CallbackMethodInfo(null, callbackMethodName, method, complexity);
     }
 
     private double getCyclomaticComplexity(PsiMethod method) {

@@ -7,6 +7,7 @@ import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
  * @author Samad Paydar
  */
 public class CallbackMethodInfo {
+    private String viewId;
     /**
      * the name of the callback as written in onClick attribute of a View in a layouts file
      */
@@ -20,11 +21,13 @@ public class CallbackMethodInfo {
      */
     private double callbackMethodComplexity;
 
-    public CallbackMethodInfo(String callbackName, PsiMethod callbackMethod, double callbackMethodComplexity) {
+    private boolean isBoundByAnnotation;
+
+    public CallbackMethodInfo(String viewId, String callbackName, PsiMethod callbackMethod, double callbackMethodComplexity) {
+        setViewId(viewId);
         setCallbackName(callbackName);
         setCallbackMethod(callbackMethod);
         setCallbackMethodComplexity(callbackMethodComplexity);
-
     }
 
     public String getCallbackName() {
@@ -56,5 +59,28 @@ public class CallbackMethodInfo {
         return "[callbackName: " + callbackName
                 + ", callbackMethod: " + (callbackMethod!= null ? AnalysisUtils.getMethodQualifiedName(callbackMethod) : "N/A")
                 + ", callbackMethodComplexity: " + callbackMethodComplexity + "]";
+    }
+
+    /**
+     * the id of the view that has an onClick
+     */
+    public String getViewId() {
+        return viewId;
+    }
+
+    private void setViewId(String viewId) {
+        this.viewId = viewId;
+    }
+
+    /**
+     * determines whether the onclick handler is bound in the Java code
+     * using @OnClick annotation
+     */
+    public boolean isBoundByAnnotation() {
+        return isBoundByAnnotation;
+    }
+
+    public void setBoundByAnnotation(boolean boundByAnnotation) {
+        isBoundByAnnotation = boundByAnnotation;
     }
 }
