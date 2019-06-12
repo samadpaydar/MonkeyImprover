@@ -4,7 +4,6 @@
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/CallbackMethodInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/CallbackMethodInfo.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,8 +59,8 @@
       <file leaf-file-name="RefactoryEngine.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="193" column="46" selection-start-line="193" selection-start-column="46" selection-end-line="193" selection-end-column="46" />
+            <state relative-caret-position="119">
+              <caret line="188" selection-start-line="188" selection-end-line="188" />
               <folding>
                 <element signature="method#removeUnnecessaryAttributes#0;class#RefactoryEngine#0" />
               </folding>
@@ -421,12 +420,12 @@
       <workItem from="1559206941176" duration="26000" />
       <workItem from="1560074683096" duration="648000" />
       <workItem from="1560316175941" duration="5569000" />
-      <workItem from="1560329175693" duration="5152000" />
+      <workItem from="1560329175693" duration="6068000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78026000" />
+    <option name="totallyTimeSpent" value="78942000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -654,8 +653,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="193" column="46" selection-start-line="193" selection-start-column="46" selection-end-line="193" selection-end-column="46" />
+        <state relative-caret-position="119">
+          <caret line="188" selection-start-line="188" selection-end-line="188" />
           <folding>
             <element signature="method#removeUnnecessaryAttributes#0;class#RefactoryEngine#0" />
           </folding>

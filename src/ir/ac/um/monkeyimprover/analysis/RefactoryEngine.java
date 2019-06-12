@@ -185,13 +185,13 @@ public class RefactoryEngine {
             if (child instanceof Element) {
                 Element childElement = (Element) child;
                 String onClick = childElement.getAttribute("android:onClick");
+                String viewId = childElement.getAttribute("android:id");
                 int weight = 0;
-                if (onClick != null) {
+                //NOTE: even when a view has no onclick, the value returned by childElement.getAttribute("android:onClick"); is not null
+                if (onClick != null && !onClick.isEmpty()) {
                     String callbackMethodName = onClick.trim();
                     weight = getWeight(callbackMethodInfos, callbackMethodName);
                 } else {
-                    String viewId = childElement.getAttribute("android:id");
-                    Utils.showMessage("###### viewId: " + viewId);
                     int index = viewId.lastIndexOf('/');
                     if (index != -1) {
                         viewId = viewId.substring(index + 1).trim();
@@ -225,13 +225,10 @@ public class RefactoryEngine {
             complexitySum += info.getCallbackMethodComplexity();
         }
         for (CallbackMethodInfo info : callbackMethodInfos) {
-            Utils.showMessage("\t\t\tinfo.getViewId " + info.getViewId());
             if (info.getViewId() != null && info.getViewId().equals(viewId) && info.isBoundByAnnotation()) {
                 double complexity = info.getCallbackMethodComplexity();
-                Utils.showMessage("\t\t\t\tComplexity " + complexity);
                 weight = (int) ((100.0 * complexity) / complexitySum);
                 weight = Math.max(weight, 1);
-                Utils.showMessage("\t\t\t\tweight " + weight);
                 break;
             }
         }
