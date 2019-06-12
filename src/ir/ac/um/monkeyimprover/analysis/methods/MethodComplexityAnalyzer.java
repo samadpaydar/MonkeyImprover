@@ -56,6 +56,26 @@ public class MethodComplexityAnalyzer {
         return complexity;
     }
 
+    public CallbackMethodInfo getCallbackMethodInfoByViewId(String viewId, List<VirtualFile> relatedJavaFiles) {
+        double complexity = -1;
+        PsiMethod method = null;
+        MethodFinder methodFinder = new MethodFinder();
+        String callbackMethodName = null;
+        for (VirtualFile relatedJavaFile : relatedJavaFiles) {
+            PsiFile file = PsiManager.getInstance(monkeyImprover.getProject()).findFile(relatedJavaFile);
+            if (file != null && file instanceof PsiJavaFile) {
+                PsiMethod relatedMethod = methodFinder.findMethodByOnClickAnnotation((PsiJavaFile) file, viewId);
+                if (relatedMethod != null) {
+                    method = relatedMethod;
+                    complexity = getComplexity(relatedMethod, true);
+                    callbackMethodName = method.getName();
+                    break;
+                }
+            }
+        }
+        return new CallbackMethodInfo(callbackMethodName, method, complexity);
+    }
+
     public CallbackMethodInfo getCallbackMethodInfo(String callbackMethodName, List<VirtualFile> relatedJavaFiles) {
         double complexity = -1;
         PsiMethod method = null;

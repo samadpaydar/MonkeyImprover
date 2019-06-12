@@ -1,5 +1,6 @@
 package ir.ac.um.monkeyimprover.analysis.methods;
 
+import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
@@ -21,4 +22,23 @@ public class MethodFinder {
         }
         return null;
     }
+
+    public PsiMethod findMethodByOnClickAnnotation(PsiJavaFile javaFile, String viewId) {
+        PsiClass[] classes = javaFile.getClasses();
+        for(PsiClass cls: classes) {
+            PsiMethod[] methods = cls.getAllMethods();
+            for(PsiMethod method: methods) {
+                PsiAnnotation[] annotations = method.getAnnotations();
+                for(PsiAnnotation annotation: annotations) {
+                    System.out.println("annotation.getQualifiedName() : " + annotation.getQualifiedName());
+                    System.out.println("annotation.getText() : " + annotation.getText());
+                }
+                //if(method.getName().equals(methodName)) {
+                //    return method;
+                //}
+            }
+        }
+        return null;
+    }
+
 }
