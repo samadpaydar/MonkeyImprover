@@ -187,10 +187,10 @@ public class LayoutInformationExtractor {
                             if (attributeQualifiedName != null
                                     && attributeQualifiedName.toLowerCase()
                                     .equalsIgnoreCase("android:id")) {
-                                String viewId =attributes.getValue(i);
+                                String viewId = attributes.getValue(i);
                                 //it is needed to remove prefixes android:id="@+id/btn_modulo"
                                 int index = viewId.lastIndexOf('/');
-                                if(index != -1) {
+                                if (index != -1) {
                                     viewId = viewId.substring(index + 1).trim();
                                 }
                                 viewIds.add(viewId);
@@ -210,6 +210,7 @@ public class LayoutInformationExtractor {
      * This method collects information about the onclick event handlers by
      * searching for @OnClick(R.id.view_id) in the java file that is mentioned
      * as the context of the layout file
+     *
      * @param projectBaseDirectory
      * @param layoutFile
      * @return
@@ -224,7 +225,9 @@ public class LayoutInformationExtractor {
         if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
             for (String viewId : viewIds) {
                 CallbackMethodInfo info = methodComplexityAnalyzer.getCallbackMethodInfoByViewId(viewId, relatedJavaFiles);
-                infoList.add(info);
+                if(info != null) {
+                    infoList.add(info);
+                }
             }
         }
 
@@ -234,6 +237,7 @@ public class LayoutInformationExtractor {
     /**
      * This method collects information about onclick event handlers by
      * searching for onclick attribute of the view elements in the layout file
+     *
      * @param projectBaseDirectory
      * @param layoutFile
      * @return

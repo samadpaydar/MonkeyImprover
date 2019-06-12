@@ -30,11 +30,9 @@ public class MethodFinder {
         for (PsiClass cls : classes) {
             PsiMethod[] methods = cls.getAllMethods();
             for (PsiMethod method : methods) {
-                Utils.showMessage("method: " + method.getName());
                 PsiAnnotation[] annotations = method.getAnnotations();
                 for (PsiAnnotation annotation : annotations) {
                     String text = annotation.getText();
-                    Utils.showMessage("\ttext: " + text);
                     if (text.startsWith(TOKEN1)) {
                         int index = text.lastIndexOf(')');
                         if (index != -1) {
@@ -48,7 +46,6 @@ public class MethodFinder {
                             }
                             String[] ids = text.split(",");
                             for(String id: ids) {
-                                Utils.showMessage("\t\tid: " + id + " viewId: " + viewId);
                                 if(id.equals("R.id." + viewId)) {
                                     return method;
                                 }
