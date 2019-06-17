@@ -193,11 +193,15 @@ public class RefactoryEngine {
                     elementsWithNonZeroWeight.add(childElement);
                     nonZeroWeights.add(weight);
                 }
+                Utils.showMessage("NonZeroWeights: " + nonZeroWeights.toString());
                 if (isAnyWidgetTooSmall(nonZeroWeights)) {
                     redistributeWeights(nonZeroWeights);
                 }
-                setAttributes(childElement, weight);
+                Utils.showMessage("NonZeroWeights after redistribution: " + nonZeroWeights.toString());
             }
+        }
+        for (int i = 0; i < elementsWithNonZeroWeight.size(); i++) {
+            setAttributes(elementsWithNonZeroWeight.get(i), nonZeroWeights.get(i));
         }
     }
 

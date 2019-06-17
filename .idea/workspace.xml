@@ -18,8 +18,8 @@
       <file leaf-file-name="RefactoryEngine.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="215" selection-start-line="215" selection-end-line="215" />
+            <state relative-caret-position="433">
+              <caret line="199" column="70" selection-start-line="199" selection-start-column="70" selection-end-line="199" selection-end-column="70" />
             </state>
           </provider>
         </entry>
@@ -321,12 +321,12 @@
       <workItem from="1560329175693" duration="6338000" />
       <workItem from="1560595665180" duration="891000" />
       <workItem from="1560684952200" duration="127000" />
-      <workItem from="1560757822473" duration="2626000" />
+      <workItem from="1560757822473" duration="3350000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="82856000" />
+    <option name="totallyTimeSpent" value="83580000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -334,6 +334,7 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="7" sideWeight="0.498125" weight="0.32985657" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
@@ -360,7 +361,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.499375" weight="0.32985657" />
-      <window_info anchor="bottom" id="Messages" order="7" sideWeight="0.498125" weight="0.32985657" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -372,8 +372,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="215" selection-start-line="215" selection-end-line="215" />
+        <state relative-caret-position="433">
+          <caret line="199" column="70" selection-start-line="199" selection-start-column="70" selection-end-line="199" selection-end-column="70" />
         </state>
       </provider>
     </entry>
