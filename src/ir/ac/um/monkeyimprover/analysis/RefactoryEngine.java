@@ -184,6 +184,7 @@ public class RefactoryEngine {
     private void updateViewWeights(Document document, List<CallbackMethodInfo> callbackMethodInfos) {
         List<Node> children = getAllViews(document.getFirstChild());
         List<Element> elementsWithNonZeroWeight = new ArrayList<>();
+        List<Element> elementsWithZeroWeight = new ArrayList<>();
         List<Integer> nonZeroWeights = new ArrayList<>();
         for (Node child : children) {
             if (child instanceof Element) {
@@ -192,16 +193,21 @@ public class RefactoryEngine {
                 if (weight > 0) {
                     elementsWithNonZeroWeight.add(childElement);
                     nonZeroWeights.add(weight);
+                } else {
+                    elementsWithZeroWeight.add(childElement);
                 }
-                Utils.showMessage("NonZeroWeights: " + nonZeroWeights.toString());
-                if (isAnyWidgetTooSmall(nonZeroWeights)) {
-                    redistributeWeights(nonZeroWeights);
-                }
-                Utils.showMessage("NonZeroWeights after redistribution: " + nonZeroWeights.toString());
             }
         }
+        Utils.showMessage("NonZeroWeights: " + nonZeroWeights.toString());
+        if (isAnyWidgetTooSmall(nonZeroWeights)) {
+            redistributeWeights(nonZeroWeights);
+        }
+        Utils.showMessage("NonZeroWeights after redistribution: " + nonZeroWeights.toString());
         for (int i = 0; i < elementsWithNonZeroWeight.size(); i++) {
             setAttributes(elementsWithNonZeroWeight.get(i), nonZeroWeights.get(i));
+        }
+        for(Element childElement: elementsWithZeroWeight) {
+            setAttributes(childElement, 0);
         }
     }
 
