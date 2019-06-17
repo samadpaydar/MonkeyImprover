@@ -198,11 +198,9 @@ public class RefactoryEngine {
                 }
             }
         }
-        Utils.showMessage("NonZeroWeights: " + nonZeroWeights.toString());
         if (isAnyWidgetTooSmall(nonZeroWeights)) {
             redistributeWeights(nonZeroWeights);
         }
-        Utils.showMessage("NonZeroWeights after redistribution: " + nonZeroWeights.toString());
         for (int i = 0; i < elementsWithNonZeroWeight.size(); i++) {
             setAttributes(elementsWithNonZeroWeight.get(i), nonZeroWeights.get(i));
         }
@@ -219,10 +217,16 @@ public class RefactoryEngine {
      * @param weights
      */
     private void redistributeWeights(List<Integer> weights) {
+        Utils.showMessage("Weights before redistribution: " + weights.toString());
         int requiredWeight = 0;
         int sumOfGoodWeights = 0;
         for (Integer weight : weights) {
-            if (weight < RefactoryEngine.MIN_WEIGHT_IN_100_SCALE) {
+            /**
+             * in the following statement <= is used instead of <
+             * This is to prevent from a widget weight increase to MIN and then decrease
+             * by the else block in the next iteration
+             */
+            if (weight <= RefactoryEngine.MIN_WEIGHT_IN_100_SCALE) {
                 requiredWeight += (RefactoryEngine.MIN_WEIGHT_IN_100_SCALE - weight);
             } else {
                 sumOfGoodWeights += weight;
@@ -231,12 +235,21 @@ public class RefactoryEngine {
         int newScale = sumOfGoodWeights - requiredWeight;
         for (int i = 0; i < weights.size(); i++) {
             int weight = weights.get(i);
-            if (weight < RefactoryEngine.MIN_WEIGHT_IN_100_SCALE) {
+            /**
+             * in the following statement <= is used instead of <
+             * This is to prevent from a widget weight increase to MIN and then decrease
+             * by the else block in the next iteration
+             */
+            if (weight <= RefactoryEngine.MIN_WEIGHT_IN_100_SCALE) {
                 weights.set(i, RefactoryEngine.MIN_WEIGHT_IN_100_SCALE);
             } else {
                 int newWeight = (int) (weight * 1.0 / sumOfGoodWeights * newScale);
                 weights.set(i, newWeight);
             }
+        }
+        Utils.showMessage("Weights after redistribution: " + weights.toString());
+        if(isAnyWidgetTooSmall(weights)) {
+            redistributeWeights(weights);
         }
     }
 
