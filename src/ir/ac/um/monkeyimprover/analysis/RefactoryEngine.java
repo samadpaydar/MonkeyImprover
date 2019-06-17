@@ -22,6 +22,8 @@ import java.util.List;
  */
 public class RefactoryEngine {
     private MonkeyImprover monkeyImprover;
+    //no interactable widget should have less than 5% of the space
+    private final static int MIN_WEIGHT_IN_100_SCALE = 5;
 
     public RefactoryEngine(MonkeyImprover monkeyImprover) {
         this.monkeyImprover = monkeyImprover;
@@ -181,41 +183,99 @@ public class RefactoryEngine {
 
     private void updateViewWeights(Document document, List<CallbackMethodInfo> callbackMethodInfos) {
         List<Node> children = getAllViews(document.getFirstChild());
+        List<Element> elementsWithNonZeroWeight = new ArrayList<>();
+        List<Integer> nonZeroWeights = new ArrayList<>();
         for (Node child : children) {
             if (child instanceof Element) {
                 Element childElement = (Element) child;
-                String onClick = childElement.getAttribute("android:onClick");
-                String viewId = childElement.getAttribute("android:id");
-                int weight = 0;
-                //NOTE: even when a view has no onclick, the value returned by childElement.getAttribute("android:onClick"); is not null
-                if (onClick != null && !onClick.isEmpty()) {
-                    String callbackMethodName = onClick.trim();
-                    weight = getWeight(callbackMethodInfos, callbackMethodName);
-                } else {
-                    int index = viewId.lastIndexOf('/');
-                    if (index != -1) {
-                        viewId = viewId.substring(index + 1).trim();
-                    }
-                    if (viewId != null) {
-                        weight = getWeightForAnnotatedView(callbackMethodInfos, viewId);
-                    }
+                int weight = computeWeight(childElement, callbackMethodInfos);
+                if (weight > 0) {
+                    elementsWithNonZeroWeight.add(childElement);
+                    nonZeroWeights.add(weight);
                 }
-                childElement.setAttribute("android:layout_width", "match_parent");
-                childElement.setAttribute("android:layout_height", "0dp");
-                childElement.setAttribute("android:layout_weight", Integer.toString(weight));
-
-                childElement.setAttribute("android:layout_margin", "0dp");
-                childElement.setAttribute("android:layout_marginLeft", "0dp");
-                childElement.setAttribute("android:layout_marginTop", "0dp");
-                childElement.setAttribute("android:layout_marginRight", "0dp");
-                childElement.setAttribute("android:layout_marginBottom", "0dp");
-                childElement.setAttribute("android:padding", "0dp");
-                childElement.setAttribute("android:paddingLeft", "0dp");
-                childElement.setAttribute("android:paddingTop", "0dp");
-                childElement.setAttribute("android:paddingRight", "0dp");
-                childElement.setAttribute("android:paddingBottom", "0dp");
+                if (isAnyWidgetTooSmall(nonZeroWeights)) {
+                    redistributeWeights(nonZeroWeights);
+                }
+                setAttributes(childElement, weight);
             }
         }
+    }
+
+    /**
+     * This method is used to make sure that no interactable widget is too small.
+     * It find the weights that are less than the minimum weight,
+     * then borrows weight from other elements
+     *
+     * @param weights
+     */
+    private void redistributeWeights(List<Integer> weights) {
+        int requiredWeight = 0;
+        int sumOfGoodWeights = 0;
+        for (Integer weight : weights) {
+            if (weight < RefactoryEngine.MIN_WEIGHT_IN_100_SCALE) {
+                requiredWeight += (RefactoryEngine.MIN_WEIGHT_IN_100_SCALE - weight);
+            } else {
+                sumOfGoodWeights += weight;
+            }
+        }
+        int newScale = sumOfGoodWeights - requiredWeight;
+        for (int i = 0; i < weights.size(); i++) {
+            int weight = weights.get(i);
+            if (weight < RefactoryEngine.MIN_WEIGHT_IN_100_SCALE) {
+                weights.set(i, RefactoryEngine.MIN_WEIGHT_IN_100_SCALE);
+            } else {
+                int newWeight = (int) (weight * 1.0 / sumOfGoodWeights * newScale);
+                weights.set(i, newWeight);
+            }
+        }
+    }
+
+    private boolean isAnyWidgetTooSmall(List<Integer> weights) {
+        boolean result = false;
+        for (Integer weight : weights) {
+            if (weight < RefactoryEngine.MIN_WEIGHT_IN_100_SCALE) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private int computeWeight(Element childElement, List<CallbackMethodInfo> callbackMethodInfos) {
+        int weight = 0;
+        String onClick = childElement.getAttribute("android:onClick");
+        String viewId = childElement.getAttribute("android:id");
+        //NOTE: even when a view has no onclick, the value returned by childElement.getAttribute("android:onClick"); is not null
+        if (onClick != null && !onClick.isEmpty()) {
+            String callbackMethodName = onClick.trim();
+            weight = getWeight(callbackMethodInfos, callbackMethodName);
+        } else {
+            int index = viewId.lastIndexOf('/');
+            if (index != -1) {
+                viewId = viewId.substring(index + 1).trim();
+            }
+            if (viewId != null) {
+                weight = getWeightForAnnotatedView(callbackMethodInfos, viewId);
+            }
+        }
+        return weight;
+    }
+
+    private void setAttributes(Element childElement, int weight) {
+        childElement.setAttribute("android:layout_width", "match_parent");
+        childElement.setAttribute("android:layout_height", "0dp");
+        childElement.setAttribute("android:layout_weight", Integer.toString(weight));
+
+        childElement.setAttribute("android:layout_margin", "0dp");
+        childElement.setAttribute("android:layout_marginLeft", "0dp");
+        childElement.setAttribute("android:layout_marginTop", "0dp");
+        childElement.setAttribute("android:layout_marginRight", "0dp");
+        childElement.setAttribute("android:layout_marginBottom", "0dp");
+        childElement.setAttribute("android:padding", "0dp");
+        childElement.setAttribute("android:paddingLeft", "0dp");
+        childElement.setAttribute("android:paddingTop", "0dp");
+        childElement.setAttribute("android:paddingRight", "0dp");
+        childElement.setAttribute("android:paddingBottom", "0dp");
     }
 
     private int getWeightForAnnotatedView(List<CallbackMethodInfo> callbackMethodInfos, String viewId) {
