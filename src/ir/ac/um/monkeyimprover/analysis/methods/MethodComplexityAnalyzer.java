@@ -47,12 +47,12 @@ public class MethodComplexityAnalyzer {
         }
         double complexity = cyclomaticComplexity + calledMethodComplexity + intentComplexity + asyncComplexity;
 
-        Utils.showMessage("\tmethod " + AnalysisUtils.getMethodQualifiedName(method)
-                + " cyclomaticComplexity: " + cyclomaticComplexity
-                + " calledMethodComplexity: " + calledMethodComplexity
-                + " intentComplexity: " + intentComplexity
-                + " asyncComplexity: " + asyncComplexity
-                + " complexity: " + complexity);
+//        Utils.showMessage("\tmethod " + AnalysisUtils.getMethodQualifiedName(method)
+//                + " cyclomaticComplexity: " + cyclomaticComplexity
+//                + " calledMethodComplexity: " + calledMethodComplexity
+//                + " intentComplexity: " + intentComplexity
+//                + " asyncComplexity: " + asyncComplexity
+//                + " complexity: " + complexity);
         return complexity;
     }
 
