@@ -198,13 +198,13 @@ public class RefactoryEngine {
                 }
             }
         }
-        if (isAnyWidgetTooSmall(nonZeroWeights)) {
+        if (isAnyWidgetTooSmall(nonZeroWeights) && hasAnyWidgetExtraWeight(nonZeroWeights)) {
             redistributeWeights(nonZeroWeights);
         }
         for (int i = 0; i < elementsWithNonZeroWeight.size(); i++) {
             setAttributes(elementsWithNonZeroWeight.get(i), nonZeroWeights.get(i));
         }
-        for(Element childElement: elementsWithZeroWeight) {
+        for (Element childElement : elementsWithZeroWeight) {
             setAttributes(childElement, 0);
         }
     }
@@ -248,9 +248,20 @@ public class RefactoryEngine {
             }
         }
         Utils.showMessage("Weights after redistribution: " + weights.toString());
-        if(isAnyWidgetTooSmall(weights)) {
+        if (isAnyWidgetTooSmall(weights) && hasAnyWidgetExtraWeight(weights)) {
             redistributeWeights(weights);
         }
+    }
+
+    private boolean hasAnyWidgetExtraWeight(List<Integer> weights) {
+        boolean result = false;
+        for (Integer weight : weights) {
+            if (weight > RefactoryEngine.MIN_WEIGHT_IN_100_SCALE) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     private boolean isAnyWidgetTooSmall(List<Integer> weights) {
