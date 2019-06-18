@@ -28,7 +28,6 @@ public class MethodComplexityAnalyzer {
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
 
         calledMethods = replaceAbstractsWithConcretes(calledMethods);
-Utils.showMessage("\t\t\t\t" + method.getName());
         double calledMethodComplexity = 0.0;
         for (PsiMethod calledMethod : calledMethods) {
             if (calledMethod.equals(method)) {
@@ -37,7 +36,6 @@ Utils.showMessage("\t\t\t\t" + method.getName());
                 calledMethodComplexity += getComplexity(calledMethod, includeCalledLocalMethods);
             } else {
                 calledMethodComplexity += getAPIComplexity(calledMethod);
-                Utils.showMessage("method: " + method.getName() + " calledMethod: " + calledMethod + " " + calledMethodComplexity);
             }
         }
         double intentComplexity = 0.0;
@@ -149,9 +147,6 @@ Utils.showMessage("\t\t\t\t" + method.getName());
         }
 
         PsiClassType[] throwsTypes = calledMethod.getThrowsList().getReferencedTypes();
-        for(PsiClassType t: throwsTypes) {
-            Utils.showMessage(calledMethod.getName() + " throws " + t.getClassName() + " " + t.getName() + " " + t.getCanonicalText());
-        }
         weight += throwsTypes.length;
         return weight;
     }
