@@ -28,7 +28,7 @@ public class MethodComplexityAnalyzer {
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
 
         calledMethods = replaceAbstractsWithConcretes(calledMethods);
-
+Utils.showMessage("\t\t\t\t" + method.getName());
         double calledMethodComplexity = 0.0;
         for (PsiMethod calledMethod : calledMethods) {
             if (calledMethod.equals(method)) {
@@ -37,6 +37,7 @@ public class MethodComplexityAnalyzer {
                 calledMethodComplexity += getComplexity(calledMethod, includeCalledLocalMethods);
             } else {
                 calledMethodComplexity += getAPIComplexity(calledMethod);
+                Utils.showMessage("method: " + method.getName() + " calledMethod: " + calledMethod + " " + calledMethodComplexity);
             }
         }
         double intentComplexity = 0.0;
@@ -129,6 +130,7 @@ public class MethodComplexityAnalyzer {
     //    TODO Since polymorphism is used in the database-related methods, the Android database API methods are not directly called
 //    hence, this method does not match anything
     private double getAPIComplexity(PsiMethod calledMethod) {
+        double weight = 0.0;
         String calledMethodClassName = calledMethod.getContainingClass().getQualifiedName();
         String[] classNames = {
                 "android.database.sqlite.SQLiteDatabase",
@@ -141,15 +143,17 @@ public class MethodComplexityAnalyzer {
         for (int i = 0; i < classNames.length; i++) {
             String className = classNames[i];
             if (className.equals(calledMethodClassName)) {
-                return weights[i];
+                weight =  weights[i];
+                break;
             }
         }
 
         PsiClassType[] throwsTypes = calledMethod.getThrowsList().getReferencedTypes();
         for(PsiClassType t: throwsTypes) {
-            Utils.showMessage(calledMethod.getName() + " throws " + t.getClassName());
+            Utils.showMessage(calledMethod.getName() + " throws " + t.getClassName() + " " + t.getName() + " " + t.getCanonicalText());
         }
-        return 0.0;
+        weight += throwsTypes.length;
+        return weight;
     }
 
     /**
