@@ -316,11 +316,11 @@ public class RefactoryEngine {
         int weight = 0;
         double complexitySum = 0.0;
         for (CallbackMethodInfo info : callbackMethodInfos) {
-            complexitySum += info.getCallbackMethodComplexity();
+            complexitySum += info.getCallbackMethodComplexity().getTotalComplexity();
         }
         for (CallbackMethodInfo info : callbackMethodInfos) {
             if (info.getViewId() != null && info.getViewId().equals(viewId) && info.isBoundByAnnotation()) {
-                double complexity = info.getCallbackMethodComplexity();
+                double complexity = info.getCallbackMethodComplexity().getTotalComplexity();
                 weight = (int) ((100.0 * complexity) / complexitySum);
                 weight = Math.max(weight, 1);
                 break;
@@ -333,11 +333,11 @@ public class RefactoryEngine {
         int weight = 0;
         double complexitySum = 0.0;
         for (CallbackMethodInfo info : callbackMethodInfos) {
-            complexitySum += info.getCallbackMethodComplexity();
+            complexitySum += info.getCallbackMethodComplexity().getTotalComplexity();
         }
         for (CallbackMethodInfo info : callbackMethodInfos) {
             if (info.getCallbackName().equals(callbackMethodName)) {
-                double complexity = info.getCallbackMethodComplexity();
+                double complexity = info.getCallbackMethodComplexity().getTotalComplexity();
                 weight = (int) ((100.0 * complexity) / complexitySum);
                 weight = Math.max(weight, 1);
                 break;

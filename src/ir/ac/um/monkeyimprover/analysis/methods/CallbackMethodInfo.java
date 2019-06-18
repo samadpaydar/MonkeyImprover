@@ -19,11 +19,11 @@ public class CallbackMethodInfo {
     /**
      * complexity of the callback method
      */
-    private double callbackMethodComplexity;
+    private MethodComplexity callbackMethodComplexity;
 
     private boolean isBoundByAnnotation;
 
-    public CallbackMethodInfo(String viewId, String callbackName, PsiMethod callbackMethod, double callbackMethodComplexity) {
+    public CallbackMethodInfo(String viewId, String callbackName, PsiMethod callbackMethod, MethodComplexity callbackMethodComplexity) {
         setViewId(viewId);
         setCallbackName(callbackName);
         setCallbackMethod(callbackMethod);
@@ -46,11 +46,11 @@ public class CallbackMethodInfo {
         this.callbackMethod = callbackMethod;
     }
 
-    public double getCallbackMethodComplexity() {
+    public MethodComplexity getCallbackMethodComplexity() {
         return callbackMethodComplexity;
     }
 
-    private void setCallbackMethodComplexity(double callbackMethodComplexity) {
+    private void setCallbackMethodComplexity(MethodComplexity callbackMethodComplexity) {
         this.callbackMethodComplexity = callbackMethodComplexity;
     }
 
