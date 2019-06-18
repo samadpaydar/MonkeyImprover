@@ -144,6 +144,11 @@ public class MethodComplexityAnalyzer {
                 return weights[i];
             }
         }
+
+        PsiClassType[] throwsTypes = calledMethod.getThrowsList().getReferencedTypes();
+        for(PsiClassType t: throwsTypes) {
+            Utils.showMessage(calledMethod.getName() + " throws " + t.getClassName());
+        }
         return 0.0;
     }
 
