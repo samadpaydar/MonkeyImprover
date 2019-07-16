@@ -224,12 +224,8 @@ public class LayoutInformationExtractor {
             ClassFinder classFinder = new ClassFinder(monkeyImprover);
             MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
             for (String viewId : viewIds) {
-                Utils.showMessage("\t\t\t\tViewID: " + viewId);
                 List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(projectBaseDirectory, layoutFile, viewId);
                 if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
-                    for(VirtualFile file: relatedJavaFiles) {
-                        Utils.showMessage("\t\t\t\t\tFile: " + file.getName());
-                    }
                     CallbackMethodInfo info = methodComplexityAnalyzer.getCallbackMethodInfoByViewId(viewId, relatedJavaFiles);
                     if (info != null) {
                         infoList.add(info);

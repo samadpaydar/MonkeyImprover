@@ -27,13 +27,13 @@ public class ClassFinder {
 
     public List<VirtualFile> findRelatedJavaFile(VirtualFile directory, VirtualFile layoutXMLFile, String viewId) {
         List<VirtualFile> relatedJavaFiles = findRelatedJavaFileByContext(directory, layoutXMLFile);
-        if (relatedJavaFiles == null || relatedJavaFiles.isEmpty()) {
+        if (relatedJavaFiles.isEmpty()) {
             VirtualFile temp = findRelatedJavaFileByName(directory, layoutXMLFile);
             if (temp != null) {
                 relatedJavaFiles.add(temp);
             }
         }
-        if (relatedJavaFiles == null || relatedJavaFiles.isEmpty() && viewId != null) {
+        if (relatedJavaFiles.isEmpty() && viewId != null) {
             VirtualFile temp = findRelatedJavaFileByAnnotatedViewId(directory, viewId);
             if (temp != null) {
                 relatedJavaFiles.add(temp);
@@ -43,7 +43,7 @@ public class ClassFinder {
     }
 
     private List<VirtualFile> findRelatedJavaFileByContext(VirtualFile directory, VirtualFile layoutXMLFile) {
-        List<VirtualFile> relatedJavaFiles = null;
+        List<VirtualFile> relatedJavaFiles = new ArrayList<>();
         LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor(monkeyImprover);
         File xmlFile = new File(layoutXMLFile.getCanonicalPath());
         List<String> contextClassNames = layoutInformationExtractor.getContextClassNames(xmlFile);
@@ -78,9 +78,7 @@ public class ClassFinder {
         boolean result = false;
         if (file.getName().endsWith(".java")) {
             PsiFile javaFile = PsiManager.getInstance(monkeyImprover.getProject()).findFile(file);
-            Utils.showMessage("\t\t\t\t\t\t>>" + file.getName());
             if (javaFile != null && javaFile instanceof PsiJavaFile) {
-                Utils.showMessage("\t\t\t\t\t\t>>>>" + javaFile.getName());
                 MethodFinder methodFinder = new MethodFinder();
                 PsiMethod relatedMethod = methodFinder.findMethodByOnClickAnnotation((PsiJavaFile) javaFile, viewId);
                 if (relatedMethod != null) {
