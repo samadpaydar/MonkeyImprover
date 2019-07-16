@@ -220,26 +220,20 @@ public class LayoutInformationExtractor {
         List<CallbackMethodInfo> infoList = new ArrayList<>();
         File xmlFile = new File(layoutFile.getCanonicalPath());
         List<String> viewIds = getViewIds(xmlFile);
-        for(String viewId: viewIds) {
-            Utils.showMessage("\t\t\t\tViewID: " + viewId);
-        }
-        ClassFinder classFinder = new ClassFinder(monkeyImprover);
-        List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(projectBaseDirectory, layoutFile);
-        if( relatedJavaFiles != null) {
-            for (VirtualFile file : relatedJavaFiles) {
-                Utils.showMessage("\t\t\t\tRelated File: " + file.getName());
-            }
-        }
-        MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
-        if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
+        if (viewIds != null) {
+            ClassFinder classFinder = new ClassFinder(monkeyImprover);
+            MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
             for (String viewId : viewIds) {
-                CallbackMethodInfo info = methodComplexityAnalyzer.getCallbackMethodInfoByViewId(viewId, relatedJavaFiles);
-                if(info != null) {
-                    infoList.add(info);
+                Utils.showMessage("\t\t\t\tViewID: " + viewId);
+                List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(projectBaseDirectory, layoutFile, viewId);
+                if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
+                    CallbackMethodInfo info = methodComplexityAnalyzer.getCallbackMethodInfoByViewId(viewId, relatedJavaFiles);
+                    if (info != null) {
+                        infoList.add(info);
+                    }
                 }
             }
         }
-
         return infoList;
     }
 
@@ -258,7 +252,7 @@ public class LayoutInformationExtractor {
         MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
         if (callbackMethodNames != null && !callbackMethodNames.isEmpty()) {
             ClassFinder classFinder = new ClassFinder(monkeyImprover);
-            List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(projectBaseDirectory, layoutFile);
+            List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(projectBaseDirectory, layoutFile,null);
             if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
                 for (String callbackMethodName : callbackMethodNames) {
                     CallbackMethodInfo info = methodComplexityAnalyzer.getCallbackMethodInfo(callbackMethodName, relatedJavaFiles);
