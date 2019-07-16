@@ -6,6 +6,7 @@ import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
 import ir.ac.um.monkeyimprover.analysis.methods.MethodComplexityAnalyzer;
 import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
+import ir.ac.um.monkeyimprover.utils.Utils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -219,8 +220,14 @@ public class LayoutInformationExtractor {
         List<CallbackMethodInfo> infoList = new ArrayList<>();
         File xmlFile = new File(layoutFile.getCanonicalPath());
         List<String> viewIds = getViewIds(xmlFile);
+        for(String viewId: viewIds) {
+            Utils.showMessage("\t\t\t\tViewID: " + viewId);
+        }
         ClassFinder classFinder = new ClassFinder(monkeyImprover);
         List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(projectBaseDirectory, layoutFile);
+        for(VirtualFile file: relatedJavaFiles) {
+            Utils.showMessage("\t\t\t\tRelated File: " + file.getName());
+        }
         MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
         if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
             for (String viewId : viewIds) {
