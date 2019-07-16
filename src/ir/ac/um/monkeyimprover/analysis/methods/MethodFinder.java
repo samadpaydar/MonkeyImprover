@@ -46,7 +46,7 @@ public class MethodFinder {
                             }
                             String[] ids = text.split(",");
                             for(String id: ids) {
-                                if(id.equals("R.id." + viewId)) {
+                                if(id.trim().equals("R.id." + viewId)) {
                                     return method;
                                 }
                             }
