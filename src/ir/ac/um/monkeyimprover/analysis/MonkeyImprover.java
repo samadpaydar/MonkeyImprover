@@ -44,7 +44,7 @@ public class MonkeyImprover implements Runnable {
             Utils.showMessage("\tLayout " + layoutFile.getName());
             List<CallbackMethodInfo> info = layoutInformationExtractor.getCallbackMethodInfos(project.getBaseDir(), layoutFile);
             for(CallbackMethodInfo methodInfo: info) {
-                Utils.showMessage("\t\tCallback: " + methodInfo);
+                Utils.showMessage("\t\t>>Callback: " + methodInfo);
             }
             refactorLayout(new LayoutInfo(layoutFile, info));
         }
