@@ -76,7 +76,9 @@ public class ClassFinder {
 
     private boolean containsAnnotationForView(VirtualFile file, String viewId) {
         boolean result = false;
+        Utils.showMessage("\t\t\t\t\t\t>>" + file.getName());
         if (file != null && file instanceof PsiJavaFile) {
+            Utils.showMessage("\t\t\t\t\t\t>>>>" + file.getName());
             MethodFinder methodFinder = new MethodFinder();
             PsiMethod relatedMethod = methodFinder.findMethodByOnClickAnnotation((PsiJavaFile) file, viewId);
             if (relatedMethod != null) {
