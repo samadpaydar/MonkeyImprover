@@ -225,8 +225,10 @@ public class LayoutInformationExtractor {
         }
         ClassFinder classFinder = new ClassFinder(monkeyImprover);
         List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(projectBaseDirectory, layoutFile);
-        for(VirtualFile file: relatedJavaFiles) {
-            Utils.showMessage("\t\t\t\tRelated File: " + file.getName());
+        if( relatedJavaFiles != null) {
+            for (VirtualFile file : relatedJavaFiles) {
+                Utils.showMessage("\t\t\t\tRelated File: " + file.getName());
+            }
         }
         MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
         if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
