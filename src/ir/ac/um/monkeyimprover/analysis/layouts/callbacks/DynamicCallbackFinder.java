@@ -53,7 +53,7 @@ public class DynamicCallbackFinder extends CallbackFinder {
             DynamicCallbackVisitor visitor = new DynamicCallbackVisitor(viewId);
             psiJavaFile.accept(visitor);
             DynamicCallBackInfo temp = visitor.getDynamicCallBackInfo();
-            if(temp != null) {
+            if (temp != null) {
                 MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
                 info = new CallbackMethodInfo(viewId, temp.getMethod().getName(),
                         temp.getMethod(), methodComplexityAnalyzer.getComplexity(temp.getMethod(), true));
@@ -96,7 +96,7 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
     public void visitAssignmentExpression(PsiAssignmentExpression expression) {
         super.visitExpression(expression);
         DynamicCallBackInfo info = findDynamicCallbackInfoForView(expression, viewId);
-        if(info != null) {
+        if (info != null) {
             dynamicCallBackInfo = info;
         }
     }
@@ -105,7 +105,7 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
     public void visitDeclarationStatement(PsiDeclarationStatement statement) {
         super.visitStatement(statement);
         DynamicCallBackInfo info = findDynamicCallbackInfoForView(statement, viewId);
-        if(info != null) {
+        if (info != null) {
             dynamicCallBackInfo = info;
         }
     }
@@ -148,16 +148,17 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
         if (rightExpression instanceof PsiMethodCallExpression) {
             PsiMethodCallExpression methodCallExpression = (PsiMethodCallExpression) rightExpression;
             if (hasAccessToView(methodCallExpression, viewId)) {
-                String viewVariable = leftExpression.getReference().getElement().getText();
-                Utils.showMessage("\t\t\t\t\tViewVariable: " + viewVariable);
+                String variableName = leftExpression.getReference().getElement().getText();
+                OnClickFinder finder = new OnClickFinder(variableName);
                 PsiElement[] siblings = assignmentExpression.getParent().getChildren();
                 for (PsiElement sibling : siblings) {
-                    //   Utils.showMessage("\t\t\t>>" +sibling.getText());
+                    sibling.accept(finder);
+                    if (finder.getHandlerMethod() != null) {
+                        break;
+                    }
                 }
             }
-
         }
-
         return result;
     }
 

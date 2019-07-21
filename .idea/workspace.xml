@@ -31,8 +31,8 @@
       <file leaf-file-name="DynamicCallbackFinder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicCallbackFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="110" selection-start-line="110" selection-end-line="110" />
+            <state relative-caret-position="383">
+              <caret line="161" selection-start-line="161" selection-end-line="161" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#622#623#0" expanded="true" />
@@ -41,6 +41,7 @@
                 <element signature="e#4629#4630#0" expanded="true" />
                 <element signature="e#7685#7686#0" expanded="true" />
                 <element signature="e#7727#7728#0" expanded="true" />
+                <element signature="class#DynamicCallBackInfo#0" />
                 <element signature="e#7447#7448#0" expanded="true" />
                 <element signature="e#7476#7477#0" expanded="true" />
                 <element signature="e#7509#7510#0" expanded="true" />
@@ -443,12 +444,12 @@
       <workItem from="1560841279395" duration="4828000" />
       <workItem from="1563266318148" duration="6023000" />
       <workItem from="1563287606548" duration="21000" />
-      <workItem from="1563689257042" duration="20887000" />
+      <workItem from="1563689257042" duration="21769000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118541000" />
+    <option name="totallyTimeSpent" value="119423000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -468,7 +469,7 @@
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.155" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.155" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.499375" weight="0.32985657" />
       <window_info anchor="bottom" id="Java2RDF" order="8" weight="0.08083442" />
@@ -829,8 +830,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicCallbackFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="110" selection-start-line="110" selection-end-line="110" />
+        <state relative-caret-position="383">
+          <caret line="161" selection-start-line="161" selection-end-line="161" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#622#623#0" expanded="true" />
@@ -839,6 +840,7 @@
             <element signature="e#4629#4630#0" expanded="true" />
             <element signature="e#7685#7686#0" expanded="true" />
             <element signature="e#7727#7728#0" expanded="true" />
+            <element signature="class#DynamicCallBackInfo#0" />
             <element signature="e#7447#7448#0" expanded="true" />
             <element signature="e#7476#7477#0" expanded="true" />
             <element signature="e#7509#7510#0" expanded="true" />
