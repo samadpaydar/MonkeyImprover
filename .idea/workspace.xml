@@ -32,8 +32,8 @@
       <file leaf-file-name="DynamicCallbackFinder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicCallbackFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="206" column="66" selection-start-line="206" selection-start-column="66" selection-end-line="206" selection-end-column="66" />
+            <state relative-caret-position="383">
+              <caret line="213" column="81" selection-start-line="213" selection-start-column="81" selection-end-line="213" selection-end-column="81" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#622#623#0" expanded="true" />
@@ -47,8 +47,10 @@
                 <element signature="e#7538#7539#0" expanded="true" />
                 <element signature="e#8212#8213#0" expanded="true" />
                 <element signature="e#8260#8261#0" expanded="true" />
-                <element signature="e#8614#8615#0" expanded="true" />
-                <element signature="e#8650#8651#0" expanded="true" />
+                <element signature="e#9024#9393#0" expanded="true" />
+                <element signature="e#9392#9393#0" expanded="true" />
+                <element signature="e#9495#9496#0" expanded="true" />
+                <element signature="e#9531#9532#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -127,7 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>containsAnnotationForView</find>
       <find>findRelatedJavaFileByContext</find>
       <find>getCallbackMethodNames</find>
       <find>instanceof psiJava</find>
@@ -157,6 +158,7 @@
       <find>visit</find>
       <find>visitmethod</find>
       <find>getCallbackMethodInfoByViewId</find>
+      <find>argume</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src</dir>
@@ -432,12 +434,12 @@
       <workItem from="1560841279395" duration="4828000" />
       <workItem from="1563266318148" duration="6023000" />
       <workItem from="1563287606548" duration="21000" />
-      <workItem from="1563689257042" duration="18799000" />
+      <workItem from="1563689257042" duration="20270000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116453000" />
+    <option name="totallyTimeSpent" value="117924000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -818,8 +820,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicCallbackFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="206" column="66" selection-start-line="206" selection-start-column="66" selection-end-line="206" selection-end-column="66" />
+        <state relative-caret-position="383">
+          <caret line="213" column="81" selection-start-line="213" selection-start-column="81" selection-end-line="213" selection-end-column="81" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#622#623#0" expanded="true" />
@@ -833,8 +835,10 @@
             <element signature="e#7538#7539#0" expanded="true" />
             <element signature="e#8212#8213#0" expanded="true" />
             <element signature="e#8260#8261#0" expanded="true" />
-            <element signature="e#8614#8615#0" expanded="true" />
-            <element signature="e#8650#8651#0" expanded="true" />
+            <element signature="e#9024#9393#0" expanded="true" />
+            <element signature="e#9392#9393#0" expanded="true" />
+            <element signature="e#9495#9496#0" expanded="true" />
+            <element signature="e#9531#9532#0" expanded="true" />
           </folding>
         </state>
       </provider>

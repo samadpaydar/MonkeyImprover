@@ -2,10 +2,7 @@ package ir.ac.um.monkeyimprover.analysis.layouts.callbacks;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
-import com.intellij.psi.impl.source.tree.java.PsiDeclarationStatementImpl;
-import com.intellij.psi.impl.source.tree.java.PsiLocalVariableImpl;
-import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
-import com.intellij.psi.impl.source.tree.java.PsiTypeCastExpressionImpl;
+import com.intellij.psi.impl.source.tree.java.*;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
@@ -120,7 +117,7 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
                             PsiElement[] siblings = statement.getParent().getChildren();
                             for (PsiElement sibling : siblings) {
                                 sibling.accept(finder);
-                                if(finder.getHandlerMethod() != null) {
+                                if (finder.getHandlerMethod() != null) {
                                     break;
                                 }
                             }
@@ -200,11 +197,29 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
     @Override
     public void visitMethodCallExpression(PsiMethodCallExpression expression) {
         super.visitCallExpression(expression);
-        String calledMethodName = expression.getMethodExpression().getReferenceName();
-        if(calledMethodName.equals("setOnClickListener")) {
-            PsiExpressionList arguments = expression.getArgumentList();
-            PsiExpression firstArgument = arguments.getExpressions()[0];
-            Utils.showMessage("###### " + firstArgument.getClass());
+        try {
+            String name = expression.getMethodExpression().getQualifier().getText();
+            if (name != null && name.equals(variableName)) {
+                String calledMethodName = expression.getMethodExpression().getReferenceName();
+                if (calledMethodName.equals("setOnClickListener")) {
+                    PsiExpressionList arguments = expression.getArgumentList();
+                    PsiExpression firstArgument = arguments.getExpressions()[0];
+                    if (firstArgument instanceof PsiNewExpressionImpl) {
+                        PsiNewExpressionImpl newExpression = (PsiNewExpressionImpl) firstArgument;
+                        newExpression.accept(new JavaRecursiveElementVisitor() {
+                            @Override
+                            public void visitMethod(PsiMethod method) {
+                                super.visitMethod(method);
+                                if (method.getName().equals("onClick")) {
+                                    Utils.showMessage("##### " + method.getText());
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
