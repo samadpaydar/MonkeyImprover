@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicCallbackFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicCallbackFinder.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -32,12 +31,19 @@
       <file leaf-file-name="DynamicCallbackFinder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicCallbackFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="42" column="92" selection-start-line="42" selection-start-column="92" selection-end-line="42" selection-end-column="92" />
+            <state relative-caret-position="183">
+              <caret line="47" column="24" lean-forward="true" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#622#623#0" expanded="true" />
                 <element signature="e#674#675#0" expanded="true" />
+                <element signature="e#4593#4594#0" expanded="true" />
+                <element signature="e#4629#4630#0" expanded="true" />
+                <element signature="class#DynamicCallBackInfo#0" />
+                <element signature="e#7447#7448#0" expanded="true" />
+                <element signature="e#7476#7477#0" expanded="true" />
+                <element signature="e#7509#7510#0" expanded="true" />
+                <element signature="e#7538#7539#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -116,8 +122,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>methodFinder.findMethodByOnClickAnnotation</find>
-      <find>method1</find>
       <find>methodFinder.findMethodByName((PsiJavaFile) file, callbackMethodName);</find>
       <find>2(</find>
       <find>findRelatedJavaFile</find>
@@ -146,6 +150,8 @@
       <find>localv</find>
       <find>visitsta</find>
       <find>getCallbackMethodInfoByViewId</find>
+      <find>setsOnClickListenerForView</find>
+      <find>siblin</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src</dir>
@@ -421,12 +427,12 @@
       <workItem from="1560841279395" duration="4828000" />
       <workItem from="1563266318148" duration="6023000" />
       <workItem from="1563287606548" duration="21000" />
-      <workItem from="1563689257042" duration="16474000" />
+      <workItem from="1563689257042" duration="18018000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114128000" />
+    <option name="totallyTimeSpent" value="115672000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -807,12 +813,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicCallbackFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="42" column="92" selection-start-line="42" selection-start-column="92" selection-end-line="42" selection-end-column="92" />
+        <state relative-caret-position="183">
+          <caret line="47" column="24" lean-forward="true" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#622#623#0" expanded="true" />
             <element signature="e#674#675#0" expanded="true" />
+            <element signature="e#4593#4594#0" expanded="true" />
+            <element signature="e#4629#4630#0" expanded="true" />
+            <element signature="class#DynamicCallBackInfo#0" />
+            <element signature="e#7447#7448#0" expanded="true" />
+            <element signature="e#7476#7477#0" expanded="true" />
+            <element signature="e#7509#7510#0" expanded="true" />
+            <element signature="e#7538#7539#0" expanded="true" />
           </folding>
         </state>
       </provider>
