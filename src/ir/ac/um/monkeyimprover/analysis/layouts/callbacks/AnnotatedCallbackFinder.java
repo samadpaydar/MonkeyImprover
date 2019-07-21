@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is responsible for finding annotated callbacks, i.e. those callbacks that are
+ * This class is responsible for finding Annotated Callbacks, i.e. those callbacks that are
  * declared in the Java source code using @OnClick annotation before a method. For instance:
  * @OnClick(R.id.view_id) before a method definition means that the method handles events on
  * the view with the given id
