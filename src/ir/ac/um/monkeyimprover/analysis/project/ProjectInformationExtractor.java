@@ -5,6 +5,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import ir.ac.um.monkeyimprover.analysis.classes.JavaClassCollector;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutCollector;
+import ir.ac.um.monkeyimprover.utils.Utils;
 
 import java.util.List;
 
@@ -23,8 +24,11 @@ public class ProjectInformationExtractor {
 
     public List<VirtualFile> getLayoutXMLFiles(VirtualFile projectBaseDirectory) {
         VirtualFile srcDirectory = getSourceDirectory(projectBaseDirectory);
+        Utils.showMessage("srcDirectory: " + srcDirectory.getCanonicalPath());
         VirtualFile resourcesDirectory = getResourcesDirectory(srcDirectory);
+        Utils.showMessage("resourcesDirectory: " + resourcesDirectory.getCanonicalPath());
         VirtualFile layoutDirectory = getLayoutDirectory(resourcesDirectory);
+        Utils.showMessage("layoutDirectory: " + layoutDirectory.getCanonicalPath());
         LayoutCollector layoutCollector = new LayoutCollector();
         return layoutCollector.getLayouts(layoutDirectory);
     }
