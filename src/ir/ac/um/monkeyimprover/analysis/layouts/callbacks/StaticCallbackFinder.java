@@ -22,10 +22,8 @@ import java.util.List;
  * <Button .... onClick="exit" ....></Button>
  */
 public class StaticCallbackFinder extends CallbackFinder {
-    private MonkeyImprover monkeyImprover;
-
     public StaticCallbackFinder(MonkeyImprover monkeyImprover) {
-        this.monkeyImprover = monkeyImprover;
+        super(monkeyImprover);
     }
 
     @Override

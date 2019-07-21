@@ -4,6 +4,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.layouts.callbacks.AnnotatedCallbackFinder;
 import ir.ac.um.monkeyimprover.analysis.layouts.callbacks.CallbackFinder;
+import ir.ac.um.monkeyimprover.analysis.layouts.callbacks.DynamicCallbackFinder;
 import ir.ac.um.monkeyimprover.analysis.layouts.callbacks.StaticCallbackFinder;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
 import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
@@ -141,7 +142,8 @@ public class LayoutInformationExtractor {
     public List<CallbackMethodInfo> getCallbackMethodInfos(VirtualFile projectBaseDirectory, VirtualFile layoutFile) {
         CallbackFinder[] finders = {
                 new StaticCallbackFinder(monkeyImprover),
-                new AnnotatedCallbackFinder(monkeyImprover)
+                new AnnotatedCallbackFinder(monkeyImprover),
+                new DynamicCallbackFinder(monkeyImprover)
         };
         List<CallbackMethodInfo> list = new ArrayList<>();
         for(CallbackFinder finder: finders) {

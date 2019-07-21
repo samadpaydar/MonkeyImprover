@@ -25,16 +25,28 @@ public class ClassFinder {
         this.monkeyImprover = monkeyImprover;
     }
 
+
+    public List<VirtualFile> getAllJavaFiles(VirtualFile directory) {
+        VirtualFile[] children = directory.getChildren();
+        List<VirtualFile> javaFiles = new ArrayList<>();
+        for (VirtualFile child : children) {
+            if (child.isDirectory()) {
+                List<VirtualFile> innerJavaFiles = getAllJavaFiles(child);
+                javaFiles.addAll(innerJavaFiles);
+            } else {
+                String childName = child.getName();
+                if(childName.endsWith(".java")) {
+                    javaFiles.add(child);
+                }
+            }
+        }
+        return javaFiles;
+    }
+
     public List<VirtualFile> findRelatedJavaFile(VirtualFile directory, VirtualFile layoutXMLFile, String viewId) {
         List<VirtualFile> relatedJavaFiles = findRelatedJavaFileByContext(directory, layoutXMLFile);
         if (relatedJavaFiles.isEmpty()) {
             VirtualFile temp = findRelatedJavaFileByName(directory, layoutXMLFile);
-            if (temp != null) {
-                relatedJavaFiles.add(temp);
-            }
-        }
-        if (relatedJavaFiles.isEmpty() && viewId != null) {
-            VirtualFile temp = findRelatedJavaFileByAnnotatedViewId(directory, viewId);
             if (temp != null) {
                 relatedJavaFiles.add(temp);
             }
@@ -57,36 +69,6 @@ public class ClassFinder {
             }
         }
         return relatedJavaFiles;
-    }
-
-    private VirtualFile findRelatedJavaFileByAnnotatedViewId(VirtualFile directoryOrFile, String viewId) {
-        if (directoryOrFile.isDirectory()) {
-            VirtualFile[] children = directoryOrFile.getChildren();
-            for (VirtualFile child : children) {
-                VirtualFile temp = findRelatedJavaFileByAnnotatedViewId(child, viewId);
-                if (temp != null) {
-                    return temp;
-                }
-            }
-        } else if (containsAnnotationForView(directoryOrFile, viewId)) {
-            return directoryOrFile;
-        }
-        return null;
-    }
-
-    private boolean containsAnnotationForView(VirtualFile file, String viewId) {
-        boolean result = false;
-        if (file.getName().endsWith(".java")) {
-            PsiFile javaFile = PsiManager.getInstance(monkeyImprover.getProject()).findFile(file);
-            if (javaFile != null && javaFile instanceof PsiJavaFile) {
-                MethodFinder methodFinder = new MethodFinder();
-                PsiMethod relatedMethod = methodFinder.findMethodByOnClickAnnotation((PsiJavaFile) javaFile, viewId);
-                if (relatedMethod != null) {
-                    result = true;
-                }
-            }
-        }
-        return result;
     }
 
     private VirtualFile findRelatedJavaFileByName(VirtualFile directory, VirtualFile layoutXMLFile) {

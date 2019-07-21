@@ -24,7 +24,7 @@ public class MethodComplexityAnalyzer {
         return getComplexity(method, false);
     }
 
-    private MethodComplexity getComplexity(PsiMethod method, boolean includeCalledLocalMethods) {
+    public MethodComplexity getComplexity(PsiMethod method, boolean includeCalledLocalMethods) {
         MethodComplexity result = new MethodComplexity(method);
         double cyclomaticComplexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
@@ -53,24 +53,6 @@ public class MethodComplexityAnalyzer {
         result.setAsyncComplexity(asyncComplexity);
 
         return result;
-    }
-
-    public CallbackMethodInfo getCallbackMethodInfoByViewId(String viewId, List<VirtualFile> relatedJavaFiles) {
-        MethodFinder methodFinder = new MethodFinder();
-        CallbackMethodInfo info = null;
-        for (VirtualFile relatedJavaFile : relatedJavaFiles) {
-            PsiFile file = PsiManager.getInstance(monkeyImprover.getProject()).findFile(relatedJavaFile);
-            if (file != null && file instanceof PsiJavaFile) {
-                PsiMethod relatedMethod = methodFinder.findMethodByOnClickAnnotation((PsiJavaFile) file, viewId);
-                if (relatedMethod != null) {
-                    MethodComplexity methodComplexity = getComplexity(relatedMethod, true);
-                    info = new CallbackMethodInfo(viewId, relatedMethod.getName(), relatedMethod, methodComplexity);
-                    info.setBoundByAnnotation(true);
-                    break;
-                }
-            }
-        }
-        return info;
     }
 
     public CallbackMethodInfo getCallbackMethodInfo(String callbackMethodName, List<VirtualFile> relatedJavaFiles) {

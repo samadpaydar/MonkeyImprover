@@ -1,7 +1,15 @@
 package ir.ac.um.monkeyimprover.analysis.layouts.callbacks;
 
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiMethod;
+import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
+import ir.ac.um.monkeyimprover.analysis.methods.MethodComplexity;
+import ir.ac.um.monkeyimprover.analysis.methods.MethodComplexityAnalyzer;
+import ir.ac.um.monkeyimprover.analysis.methods.MethodFinder;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -17,6 +25,12 @@ import java.util.List;
  * finding methods that handle UI events, e.g. an onClick handler of a Button
  */
 public abstract class CallbackFinder {
+    protected MonkeyImprover monkeyImprover;
+
+    public CallbackFinder(MonkeyImprover monkeyImprover) {
+        this.monkeyImprover = monkeyImprover;
+    }
+
     public abstract List<CallbackMethodInfo> getCallbackMethodInfos(VirtualFile projectBaseDirectory, VirtualFile layoutFile);
 
     protected List<String> getViewIds(File xmlFile) {

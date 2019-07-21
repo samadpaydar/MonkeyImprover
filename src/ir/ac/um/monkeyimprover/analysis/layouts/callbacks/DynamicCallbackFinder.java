@@ -16,15 +16,28 @@ import java.util.List;
  * view.setOnClickListener(new OnClickListener() {...})
  */
 public class DynamicCallbackFinder extends CallbackFinder {
-    private MonkeyImprover monkeyImprover;
-
     public DynamicCallbackFinder(MonkeyImprover monkeyImprover) {
-        this.monkeyImprover = monkeyImprover;
+        super(monkeyImprover);
     }
 
     @Override
     public List<CallbackMethodInfo> getCallbackMethodInfos(VirtualFile projectBaseDirectory, VirtualFile layoutFile) {
         List<CallbackMethodInfo> infoList = new ArrayList<>();
+        File xmlFile = new File(layoutFile.getCanonicalPath());
+        List<String> viewIds = getViewIds(xmlFile);
+        if (viewIds != null) {
+            ClassFinder classFinder = new ClassFinder(monkeyImprover);
+            List<VirtualFile> allJavaFiles = classFinder.getAllJavaFiles(projectBaseDirectory);
+            for (String viewId : viewIds) {
+
+                /*if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
+                    CallbackMethodInfo info = getCallbackMethodInfoByViewId(viewId, relatedJavaFiles);
+                    if (info != null) {
+                        infoList.add(info);
+                    }
+                }*/
+            }
+        }
         return infoList;
     }
 }
