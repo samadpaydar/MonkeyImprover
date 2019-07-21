@@ -5,6 +5,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiDeclarationStatementImpl;
 import com.intellij.psi.impl.source.tree.java.PsiLocalVariableImpl;
 import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
+import com.intellij.psi.impl.source.tree.java.PsiTypeCastExpressionImpl;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
@@ -36,10 +37,10 @@ public class DynamicCallbackFinder extends CallbackFinder {
             ClassFinder classFinder = new ClassFinder(monkeyImprover);
             List<VirtualFile> allJavaFiles = classFinder.getAllJavaFilesInSrcDirectory();
             for (String viewId : viewIds) {
-                Utils.showMessage("\t\tViewId: " + viewId);
                 List<VirtualFile> relatedJavaFiles = new ArrayList<>();
                 for (VirtualFile javaFile : allJavaFiles) {
                     if (isRelated(javaFile, viewId)) {
+                        Utils.showMessage("JavaFile " + javaFile + " has a findViewById for " + viewId);
                         relatedJavaFiles.add(javaFile);
                     }
                 }
@@ -63,38 +64,57 @@ public class DynamicCallbackFinder extends CallbackFinder {
                 @Override
                 public void visitAssignmentExpression(PsiAssignmentExpression expression) {
                     super.visitExpression(expression);
-               //     if (setsOnClickListenerForView(expression, viewId)) {
-               //         relatedFiles.add(javaFile);
-               //     }
+                    if (setsOnClickListenerForView(expression, viewId)) {
+                        relatedFiles.add(javaFile);
+                    }
                 }
 
                 @Override
                 public void visitDeclarationStatement(PsiDeclarationStatement statement) {
                     super.visitStatement(statement);
                     PsiDeclarationStatementImpl declarationStatement = (PsiDeclarationStatementImpl) statement;
-                    String temp = statement.getText();
-                    if(temp != null && temp.contains("signUpButton")) {
-                        try {
-                            Utils.showMessage("\t\t\t\t\t" + statement.getDeclaredElements()[0]);
-                            PsiElement[] children = statement.getChildren();
-                            for(PsiElement child: children) {
-                                Utils.showMessage("\t\t\t\t\t\t" + child.getText() + " " +child.getClass());
+                    try {
+                        PsiElement[] children = declarationStatement.getChildren();
+                        if (children.length > 0 && children[0] instanceof PsiLocalVariableImpl) {
+                            PsiLocalVariableImpl variable = (PsiLocalVariableImpl) children[0];
+                            PsiExpression expression = variable.getInitializer();
+                            if (expression instanceof PsiTypeCastExpressionImpl) {
+                                PsiTypeCastExpressionImpl typeCastExpression = (PsiTypeCastExpressionImpl) expression;
+                                PsiExpression operand = typeCastExpression.getOperand();
+                                if (operand instanceof PsiMethodCallExpressionImpl) {
+                                    if (setsOnClickListenerForView((PsiMethodCallExpression) operand, viewId)) {
+                                        Utils.showMessage("stored view in a variable named: " + variable.getText());
+                                        relatedFiles.add(javaFile);
+                                    }
+                                }
                             }
-                        }catch (Exception e) {}
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
                 }
             });
         }
         return !relatedFiles.isEmpty();
     }
 
+    private boolean setsOnClickListenerForView(PsiMethodCallExpression methodCallExpression, String viewId) {
+        boolean result = false;
+        String calledMethodName = methodCallExpression.getMethodExpression().getReferenceName();
+        if (calledMethodName.equals("findViewById")) {
+            PsiExpressionList arguments = methodCallExpression.getArgumentList();
+            PsiExpression firstArgument = arguments.getExpressions()[0];
+            if (firstArgument.getText().equals("R.id." + viewId)) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
     private boolean setsOnClickListenerForView(PsiAssignmentExpression assignmentExpression, String viewId) {
         boolean result = false;
-        String text = assignmentExpression.getText();
-        if(text.contains("sign")) {
-            Utils.showMessage(">>>>>>>>>>>>>>>>>>>>> " + text);
-            PsiDeclarationStatement p;
-        }
         PsiExpression rightExpression = assignmentExpression.getRExpression();
         PsiExpression leftExpression = assignmentExpression.getLExpression();
         if (rightExpression instanceof PsiMethodCallExpression) {
@@ -103,8 +123,9 @@ public class DynamicCallbackFinder extends CallbackFinder {
             if (calledMethodName.equals("findViewById")) {
                 PsiExpressionList arguments = methodCallExpression.getArgumentList();
                 PsiExpression firstArgument = arguments.getExpressions()[0];
-                if (firstArgument.getText().equals("R.id." + viewId) && viewId.contains("sign")) {
-                    Utils.showMessage("left: " + leftExpression.getText());
+                if (firstArgument.getText().equals("R.id." + viewId)) {
+                    Utils.showMessage("stored view in a variable named: " + leftExpression.getText());
+                    result = true;
                 }
             }
         }
