@@ -34,6 +34,7 @@ public class ProjectInformationExtractor {
     }
 
     private VirtualFile getSourceDirectory(VirtualFile directory) {
+
         return getChildDirectory("src", directory);
     }
 
@@ -51,8 +52,15 @@ public class ProjectInformationExtractor {
         for (VirtualFile child : children) {
             if (child.isDirectory()) {
                 if (child.getName().equals(childDirectoryName)) {
-                    result = child;
-                    break;
+                    if (childDirectoryName.equals("src")) {
+                        if (containsSubDirectories(child, "main", "androidTest", "test")) {
+                            result = child;
+                            break;
+                        }
+                    } else {
+                        result = child;
+                        break;
+                    }
                 } else {
                     VirtualFile temp = getChildDirectory(childDirectoryName, child);
                     if (temp != null) {
@@ -65,4 +73,22 @@ public class ProjectInformationExtractor {
         return result;
     }
 
+    private boolean containsSubDirectories(VirtualFile directory, String... subDirectoryNames) {
+        boolean result = true;
+        VirtualFile[] children = directory.getChildren();
+        for (String subDirectoryName : subDirectoryNames) {
+            boolean exists = false;
+            for (VirtualFile child : children) {
+                if (child.isDirectory() && child.getName().equals(subDirectoryName)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
 }
