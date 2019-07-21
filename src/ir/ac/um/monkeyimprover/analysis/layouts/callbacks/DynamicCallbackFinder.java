@@ -15,7 +15,7 @@ import java.util.List;
  * set in the Java source files. For instance:
  * view.setOnClickListener(new OnClickListener() {...})
  */
-public class DynamicCallbackFinder implements CallbackFinder {
+public class DynamicCallbackFinder extends CallbackFinder {
     private MonkeyImprover monkeyImprover;
 
     public DynamicCallbackFinder(MonkeyImprover monkeyImprover) {

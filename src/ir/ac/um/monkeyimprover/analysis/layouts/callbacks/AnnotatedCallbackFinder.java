@@ -22,7 +22,7 @@ import java.util.List;
  * @OnClick(R.id.view_id) before a method definition means that the method handles events on
  * the view with the given id
  */
-public class AnnotatedCallbackFinder implements CallbackFinder {
+public class AnnotatedCallbackFinder extends CallbackFinder {
     private MonkeyImprover monkeyImprover;
 
     public AnnotatedCallbackFinder(MonkeyImprover monkeyImprover) {
@@ -49,40 +49,5 @@ public class AnnotatedCallbackFinder implements CallbackFinder {
         }
         return infoList;
     }
-
-    private List<String> getViewIds(File xmlFile) {
-        if (xmlFile.exists() && xmlFile.isFile()) {
-            try {
-                final List<String> viewIds = new ArrayList<>();
-                SAXParserFactory factory = SAXParserFactory.newInstance();
-                SAXParser saxParser = factory.newSAXParser();
-                saxParser.parse(xmlFile, new DefaultHandler() {
-                    @Override
-                    public void startElement(String uri, String localName,
-                                             String qName, Attributes attributes) throws SAXException {
-                        for (int i = 0; i < attributes.getLength(); i++) {
-                            String attributeQualifiedName = attributes.getQName(i);
-                            if (attributeQualifiedName != null
-                                    && attributeQualifiedName.toLowerCase()
-                                    .equalsIgnoreCase("android:id")) {
-                                String viewId = attributes.getValue(i);
-                                //it is needed to remove prefixes android:id="@+id/btn_modulo"
-                                int index = viewId.lastIndexOf('/');
-                                if (index != -1) {
-                                    viewId = viewId.substring(index + 1).trim();
-                                }
-                                viewIds.add(viewId);
-                            }
-                        }
-                    }
-                });
-                return viewIds;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
 
 }

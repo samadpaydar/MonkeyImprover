@@ -21,7 +21,7 @@ import java.util.List;
  * directly declared in the XML layout files. For instance:
  * <Button .... onClick="exit" ....></Button>
  */
-public class StaticCallbackFinder implements CallbackFinder {
+public class StaticCallbackFinder extends CallbackFinder {
     private MonkeyImprover monkeyImprover;
 
     public StaticCallbackFinder(MonkeyImprover monkeyImprover) {
