@@ -2,6 +2,7 @@ package ir.ac.um.monkeyimprover.analysis.layouts.callbacks;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.tree.java.PsiDeclarationStatementImpl;
 import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
@@ -37,7 +38,6 @@ public class DynamicCallbackFinder extends CallbackFinder {
                 Utils.showMessage("\t\tViewId: " + viewId);
                 List<VirtualFile> relatedJavaFiles = new ArrayList<>();
                 for (VirtualFile javaFile : allJavaFiles) {
-                    Utils.showMessage("\t\t\t\tJavaFile " + javaFile.getName());
                     if (isRelated(javaFile, viewId)) {
                         relatedJavaFiles.add(javaFile);
                     }
@@ -70,7 +70,18 @@ public class DynamicCallbackFinder extends CallbackFinder {
                 @Override
                 public void visitDeclarationStatement(PsiDeclarationStatement statement) {
                     super.visitStatement(statement);
-                    Utils.showMessage("\t\t\t" + statement.getText());
+                    String temp = statement.getText();
+                    if(temp != null && temp.contains("signUpButton")) {
+                        try {
+                            Utils.showMessage("\t\t\t" + statement.getText());
+                            Utils.showMessage("\t\t\t\t" + statement.getClass());
+                            Utils.showMessage("\t\t\t\t\t" + statement.getDeclaredElements()[0]);
+                            PsiElement[] children = statement.getChildren();
+                            for(PsiElement child: children) {
+                                Utils.showMessage("\t\t\t\t\t\t" + child.getClass() + " " + child.getText());
+                            }
+                        }catch (Exception e) {}
+                    }
                 }
             });
         }
