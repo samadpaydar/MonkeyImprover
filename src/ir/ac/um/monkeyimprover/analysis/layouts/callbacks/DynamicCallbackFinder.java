@@ -151,11 +151,14 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
             PsiMethodCallExpression methodCallExpression = (PsiMethodCallExpression) rightExpression;
             if (hasAccessToView(methodCallExpression, viewId)) {
                 String variableName = leftExpression.getReference().getElement().getText();
-                if(viewId.equals("lookup_button")) {
-                    Utils.showMessage("############ VariableName " + variableName);
-                }
                 OnClickFinder finder = new OnClickFinder(variableName);
                 PsiElement[] siblings = assignmentExpression.getParent().getChildren();
+                if(viewId.equals("lookup_button")) {
+                    Utils.showMessage("############ VariableName " + variableName);
+                    for (PsiElement sibling : siblings) {
+                        Utils.showMessage("............... " + sibling.getText());
+                    }
+                }
                 for (PsiElement sibling : siblings) {
                     sibling.accept(finder);
                     if (finder.getHandlerMethod() != null) {
