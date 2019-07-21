@@ -37,7 +37,6 @@ public class DynamicCallbackFinder extends CallbackFinder {
                 for (VirtualFile javaFile : allJavaFiles) {
                     CallbackMethodInfo info = getCallbackMethodInfo(javaFile, viewId);
                     if (info != null) {
-                        Utils.showMessage("###### Info: " + info);
                         infoList.add(info);
                     }
                 }
@@ -152,6 +151,9 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
             PsiMethodCallExpression methodCallExpression = (PsiMethodCallExpression) rightExpression;
             if (hasAccessToView(methodCallExpression, viewId)) {
                 String variableName = leftExpression.getReference().getElement().getText();
+                if(viewId.equals("lookup_button")) {
+                    Utils.showMessage("############ VariableName " + variableName);
+                }
                 OnClickFinder finder = new OnClickFinder(variableName);
                 PsiElement[] siblings = assignmentExpression.getParent().getChildren();
                 for (PsiElement sibling : siblings) {
