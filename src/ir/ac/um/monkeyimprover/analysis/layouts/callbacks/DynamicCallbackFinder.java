@@ -116,10 +116,13 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
                     PsiExpression operand = typeCastExpression.getOperand();
                     if (operand instanceof PsiMethodCallExpressionImpl) {
                         if (hasAccessToView((PsiMethodCallExpression) operand, viewId)) {
-                           // String viewVariable = variable.getText();
+                            OnClickFinder finder = new OnClickFinder(variable.getName());
                             PsiElement[] siblings = statement.getParent().getChildren();
-                            for(PsiElement sibling: siblings ) {
-                                Utils.showMessage("\t\t\t>>" +sibling.getText());
+                            for (PsiElement sibling : siblings) {
+                                sibling.accept(finder);
+                                if(finder.getHandlerMethod() != null) {
+                                    break;
+                                }
                             }
                         }
                     }
@@ -138,10 +141,11 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
         if (rightExpression instanceof PsiMethodCallExpression) {
             PsiMethodCallExpression methodCallExpression = (PsiMethodCallExpression) rightExpression;
             if (hasAccessToView(methodCallExpression, viewId)) {
-                //String viewVariable = leftExpression.getReference().getElement().getText();
+                String viewVariable = leftExpression.getReference().getElement().getText();
+                Utils.showMessage("\t\t\t\t\tViewVariable: " + viewVariable);
                 PsiElement[] siblings = assignmentExpression.getParent().getChildren();
-                for(PsiElement sibling: siblings ) {
-                    Utils.showMessage("\t\t\t>>" +sibling.getText());
+                for (PsiElement sibling : siblings) {
+                    //   Utils.showMessage("\t\t\t>>" +sibling.getText());
                 }
             }
 
@@ -182,5 +186,29 @@ class DynamicCallBackInfo {
 
     public String getViewId() {
         return viewId;
+    }
+}
+
+class OnClickFinder extends JavaRecursiveElementVisitor {
+    private String variableName;
+    private PsiMethod handlerMethod;
+
+    public OnClickFinder(String variableName) {
+        this.variableName = variableName;
+    }
+
+    @Override
+    public void visitMethodCallExpression(PsiMethodCallExpression expression) {
+        super.visitCallExpression(expression);
+        String calledMethodName = expression.getMethodExpression().getReferenceName();
+        if(calledMethodName.equals("setOnClickListener")) {
+            PsiExpressionList arguments = expression.getArgumentList();
+            PsiExpression firstArgument = arguments.getExpressions()[0];
+            Utils.showMessage("###### " + firstArgument.getClass());
+        }
+    }
+
+    public PsiMethod getHandlerMethod() {
+        return handlerMethod;
     }
 }
