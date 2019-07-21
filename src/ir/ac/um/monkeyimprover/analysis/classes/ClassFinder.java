@@ -26,7 +26,11 @@ public class ClassFinder {
     }
 
 
-    public List<VirtualFile> getAllJavaFiles(VirtualFile directory) {
+    public List<VirtualFile> getAllJavaFilesInSrcDirectory() {
+        return getAllJavaFiles(monkeyImprover.getSourceDirectory());
+    }
+
+    private List<VirtualFile> getAllJavaFiles(VirtualFile directory) {
         VirtualFile[] children = directory.getChildren();
         List<VirtualFile> javaFiles = new ArrayList<>();
         for (VirtualFile child : children) {

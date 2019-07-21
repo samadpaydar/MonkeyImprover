@@ -23,6 +23,8 @@ public class MonkeyImprover implements Runnable {
     private PsiElement psiElement;
     private List<PsiClass> projectJavaClasses;
 
+    private VirtualFile sourceDirectory;
+
     public MonkeyImprover(Project project, PsiElement psiElement) {
         this.project = project;
         this.psiElement = psiElement;
@@ -33,6 +35,7 @@ public class MonkeyImprover implements Runnable {
         Utils.showMessage("Started processing project " + project.getName());
         Utils.showMessage("Collecting project Java classes...");
         ProjectInformationExtractor projectInformationExtractor = new ProjectInformationExtractor(psiElement);
+        this.sourceDirectory = projectInformationExtractor.getSourceDirectory(project.getBaseDir());
         this.projectJavaClasses = projectInformationExtractor.getProjectJavaClasses();
         Utils.showMessage("Extracting layouts files...");
         List<VirtualFile> layoutFiles = projectInformationExtractor.getLayoutXMLFiles(project.getBaseDir());
@@ -82,4 +85,7 @@ public class MonkeyImprover implements Runnable {
         return null;
     }
 
+    public VirtualFile getSourceDirectory() {
+        return sourceDirectory;
+    }
 }

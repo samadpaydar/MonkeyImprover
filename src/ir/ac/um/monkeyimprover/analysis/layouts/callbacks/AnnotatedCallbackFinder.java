@@ -42,7 +42,7 @@ public class AnnotatedCallbackFinder extends CallbackFinder {
         List<String> viewIds = getViewIds(xmlFile);
         if (viewIds != null) {
             ClassFinder classFinder = new ClassFinder(monkeyImprover);
-            List<VirtualFile> allJavaFiles = classFinder.getAllJavaFiles(projectBaseDirectory);
+            List<VirtualFile> allJavaFiles = classFinder.getAllJavaFilesInSrcDirectory();
             for (String viewId : viewIds) {
                 List<VirtualFile> relatedJavaFiles = findRelatedJavaFile(allJavaFiles, layoutFile, viewId);
                 if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {

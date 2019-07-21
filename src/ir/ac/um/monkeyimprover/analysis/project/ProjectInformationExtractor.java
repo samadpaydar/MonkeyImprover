@@ -33,7 +33,7 @@ public class ProjectInformationExtractor {
         return layoutCollector.getLayouts(layoutDirectory);
     }
 
-    private VirtualFile getSourceDirectory(VirtualFile directory) {
+    public VirtualFile getSourceDirectory(VirtualFile directory) {
 
         return getChildDirectory("src", directory);
     }

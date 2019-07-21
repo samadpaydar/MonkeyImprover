@@ -2,6 +2,7 @@ package ir.ac.um.monkeyimprover.analysis.layouts.callbacks;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
@@ -29,12 +30,11 @@ public class DynamicCallbackFinder extends CallbackFinder {
         List<CallbackMethodInfo> infoList = new ArrayList<>();
         File xmlFile = new File(layoutFile.getCanonicalPath());
         List<String> viewIds = getViewIds(xmlFile);
-        Utils.showMessage("viewIds " + viewIds);
         if (viewIds != null) {
             ClassFinder classFinder = new ClassFinder(monkeyImprover);
-            List<VirtualFile> allJavaFiles = classFinder.getAllJavaFiles(projectBaseDirectory);
-            Utils.showMessage("allJavaFiles " + allJavaFiles.size());
+            List<VirtualFile> allJavaFiles = classFinder.getAllJavaFilesInSrcDirectory();
             for (String viewId : viewIds) {
+                Utils.showMessage("\t\tViewId: " + viewId);
                 List<VirtualFile> relatedJavaFiles = new ArrayList<>();
                 for (VirtualFile javaFile : allJavaFiles) {
                     if (isRelated(javaFile, viewId)) {
@@ -57,12 +57,11 @@ public class DynamicCallbackFinder extends CallbackFinder {
         PsiFile psiFile = PsiManager.getInstance(monkeyImprover.getProject()).findFile(javaFile);
         if (psiFile instanceof PsiJavaFile) {
             PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-
             psiJavaFile.accept(new JavaRecursiveElementVisitor() {
                 @Override
-                public void visitMethod(PsiMethod method) {
-                    super.visitMethod(method);
-                    if (setsOnClickListenerForView(method, viewId)) {
+                public void visitAssignmentExpression(PsiAssignmentExpression expression) {
+                    super.visitAssignmentExpression(expression);
+                    if (setsOnClickListenerForView(expression, viewId)) {
                         relatedFiles.add(javaFile);
                     }
                 }
@@ -71,24 +70,25 @@ public class DynamicCallbackFinder extends CallbackFinder {
         return !relatedFiles.isEmpty();
     }
 
-    private boolean setsOnClickListenerForView(PsiMethod method, String viewId) {
+    private boolean setsOnClickListenerForView(PsiAssignmentExpression assignmentExpression, String viewId) {
         boolean result = false;
-        method.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                super.visitMethodCallExpression(expression);
-                try {
-                    String calledMethodName = expression.getMethodExpression().getReferenceName();
-                    if (calledMethodName.equals("findViewById")) {
-                        PsiExpressionList arguments = expression.getArgumentList();
-                        PsiExpression firstArgument = arguments.getExpressions()[0];
-                        Utils.showMessage(">> " + firstArgument.getText());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+        PsiExpression leftExpression = assignmentExpression.getLExpression();
+        PsiExpression rightExpression = assignmentExpression.getRExpression();
+        if(rightExpression instanceof PsiMethodCallExpressionImpl) {
+            PsiMethodCallExpression methodCallExpression = (PsiMethodCallExpressionImpl) rightExpression;
+            String calledMethodName = methodCallExpression.getMethodExpression().getReferenceName();
+            if (calledMethodName.equals("findViewById")) {
+                Utils.showMessage("Left " + leftExpression.getType() + " " + leftExpression.getText() + " " +
+                leftExpression.getReference().getCanonicalText());
+                PsiExpressionList arguments = methodCallExpression.getArgumentList();
+                PsiExpression firstArgument = arguments.getExpressions()[0];
+                if (firstArgument.getText().equals("R.id." + viewId)) {
+                    Utils.showMessage("leftExpression " + leftExpression.getText() + " " + leftExpression.getReference());
+
                 }
             }
-        });
+
+        }
         return result;
     }
 

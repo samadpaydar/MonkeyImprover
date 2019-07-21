@@ -36,7 +36,7 @@ public class StaticCallbackFinder extends CallbackFinder {
         MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
         if (callbackMethodNames != null && !callbackMethodNames.isEmpty()) {
             ClassFinder classFinder = new ClassFinder(monkeyImprover);
-            List<VirtualFile> allJavaFiles = classFinder.getAllJavaFiles(projectBaseDirectory);
+            List<VirtualFile> allJavaFiles = classFinder.getAllJavaFilesInSrcDirectory();
             List<VirtualFile> relatedJavaFiles = new ArrayList<>();
             for (VirtualFile javaFile : allJavaFiles) {
                 if (isRelated(javaFile, layoutFile)) {
