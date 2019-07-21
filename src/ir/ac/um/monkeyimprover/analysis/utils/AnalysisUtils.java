@@ -22,8 +22,7 @@ public class AnalysisUtils {
             String methodSemiQualifiedName = getMethodSemiQualifiedName(method);
             String className = method.getContainingClass().getQualifiedName();
             if (className == null) {
-                //the method belongs to an anonymous class
-                return null;
+                return "AnonymousClass_" + methodSemiQualifiedName;
             }
             result = className + Constants.UNDERLINE_CHAR + methodSemiQualifiedName;
         } catch (Exception e) {

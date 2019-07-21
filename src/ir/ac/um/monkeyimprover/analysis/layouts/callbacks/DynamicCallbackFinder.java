@@ -52,12 +52,9 @@ public class DynamicCallbackFinder extends CallbackFinder {
         if (psiFile instanceof PsiJavaFile) {
             PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
             DynamicCallbackVisitor visitor = new DynamicCallbackVisitor(viewId);
-            System.out.println("AAAAA " + System.currentTimeMillis());
             psiJavaFile.accept(visitor);
-            System.out.println("BBBBB " + System.currentTimeMillis());
             DynamicCallBackInfo temp = visitor.getDynamicCallBackInfo();
             if (temp != null) {
-                Utils.showMessage("AAAAAAAAAAAAAAAAAAA " + temp.getMethod());
                 MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
                 info = new CallbackMethodInfo(viewId, temp.getMethod().getName(),
                         temp.getMethod(),
@@ -102,7 +99,6 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
         super.visitExpression(expression);
         DynamicCallBackInfo info = findDynamicCallbackInfoForView(expression, viewId);
         if (info != null) {
-            System.out.println("CCCC " + System.currentTimeMillis());
             dynamicCallBackInfo = info;
         }
     }
@@ -112,7 +108,6 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
         super.visitStatement(statement);
         DynamicCallBackInfo info = findDynamicCallbackInfoForView(statement, viewId);
         if (info != null) {
-            System.out.println("DDDD " + System.currentTimeMillis());
             dynamicCallBackInfo = info;
         }
     }

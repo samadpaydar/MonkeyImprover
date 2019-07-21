@@ -58,7 +58,7 @@ public class CallbackMethodInfo {
     public String toString() {
         return "[viewId: " + viewId
                 + ",callbackName: " + callbackName
-                + ", callbackMethod: " + (callbackMethod!= null ? AnalysisUtils.getMethodQualifiedName(callbackMethod) : "N/A")
+                + ", callbackMethod: " + (callbackMethod != null ? AnalysisUtils.getMethodQualifiedName(callbackMethod) : "N/A")
                 + ", callbackMethodComplexity: " + callbackMethodComplexity
                 + ", isBoundByAnnotation: " + isBoundByAnnotation
                 + "]";
