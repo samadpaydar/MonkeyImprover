@@ -3,6 +3,7 @@ package ir.ac.um.monkeyimprover.analysis.layouts.callbacks;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiDeclarationStatementImpl;
+import com.intellij.psi.impl.source.tree.java.PsiLocalVariableImpl;
 import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
@@ -61,24 +62,23 @@ public class DynamicCallbackFinder extends CallbackFinder {
             psiJavaFile.accept(new JavaRecursiveElementVisitor() {
                 @Override
                 public void visitAssignmentExpression(PsiAssignmentExpression expression) {
-                    super.visitAssignmentExpression(expression);
-                    if (setsOnClickListenerForView(expression, viewId)) {
-                        relatedFiles.add(javaFile);
-                    }
+                    super.visitExpression(expression);
+               //     if (setsOnClickListenerForView(expression, viewId)) {
+               //         relatedFiles.add(javaFile);
+               //     }
                 }
 
                 @Override
                 public void visitDeclarationStatement(PsiDeclarationStatement statement) {
                     super.visitStatement(statement);
+                    PsiDeclarationStatementImpl declarationStatement = (PsiDeclarationStatementImpl) statement;
                     String temp = statement.getText();
                     if(temp != null && temp.contains("signUpButton")) {
                         try {
-                            Utils.showMessage("\t\t\t" + statement.getText());
-                            Utils.showMessage("\t\t\t\t" + statement.getClass());
                             Utils.showMessage("\t\t\t\t\t" + statement.getDeclaredElements()[0]);
                             PsiElement[] children = statement.getChildren();
                             for(PsiElement child: children) {
-                                Utils.showMessage("\t\t\t\t\t\t" + child.getClass() + " " + child.getText());
+                                Utils.showMessage("\t\t\t\t\t\t" + child.getText() + " " +child.getClass());
                             }
                         }catch (Exception e) {}
                     }
@@ -90,22 +90,25 @@ public class DynamicCallbackFinder extends CallbackFinder {
 
     private boolean setsOnClickListenerForView(PsiAssignmentExpression assignmentExpression, String viewId) {
         boolean result = false;
-        PsiExpression leftExpression = assignmentExpression.getLExpression();
+        String text = assignmentExpression.getText();
+        if(text.contains("sign")) {
+            Utils.showMessage(">>>>>>>>>>>>>>>>>>>>> " + text);
+            PsiDeclarationStatement p;
+        }
         PsiExpression rightExpression = assignmentExpression.getRExpression();
-        if(rightExpression instanceof PsiMethodCallExpressionImpl) {
-            PsiMethodCallExpression methodCallExpression = (PsiMethodCallExpressionImpl) rightExpression;
+        PsiExpression leftExpression = assignmentExpression.getLExpression();
+        if (rightExpression instanceof PsiMethodCallExpression) {
+            PsiMethodCallExpression methodCallExpression = (PsiMethodCallExpression) rightExpression;
             String calledMethodName = methodCallExpression.getMethodExpression().getReferenceName();
             if (calledMethodName.equals("findViewById")) {
-                Utils.showMessage(leftExpression.getText());
                 PsiExpressionList arguments = methodCallExpression.getArgumentList();
                 PsiExpression firstArgument = arguments.getExpressions()[0];
-                if (firstArgument.getText().equals("R.id." + viewId)) {
-                    Utils.showMessage("leftExpression " + leftExpression.getText() + " " + leftExpression.getReference());
-
+                if (firstArgument.getText().equals("R.id." + viewId) && viewId.contains("sign")) {
+                    Utils.showMessage("left: " + leftExpression.getText());
                 }
             }
-
         }
+
         return result;
     }
 
