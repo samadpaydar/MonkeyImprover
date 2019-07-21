@@ -152,13 +152,8 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
             if (hasAccessToView(methodCallExpression, viewId)) {
                 String variableName = leftExpression.getReference().getElement().getText();
                 OnClickFinder finder = new OnClickFinder(variableName);
-                PsiElement[] siblings = assignmentExpression.getParent().getChildren();
-                if(viewId.equals("lookup_button")) {
-                    Utils.showMessage("############ VariableName " + variableName);
-                    for (PsiElement sibling : siblings) {
-                        Utils.showMessage("............... " + sibling.getText());
-                    }
-                }
+                //In the following statement, the two calls to getParent() is intentional, not a mistake, since it does not work with single call 
+                PsiElement[] siblings = assignmentExpression.getParent().getParent().getChildren();
                 for (PsiElement sibling : siblings) {
                     sibling.accept(finder);
                     if (finder.getHandlerMethod() != null) {
