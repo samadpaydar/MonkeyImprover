@@ -37,6 +37,7 @@ public class DynamicCallbackFinder extends CallbackFinder {
                 for (VirtualFile javaFile : allJavaFiles) {
                     CallbackMethodInfo info = getCallbackMethodInfo(javaFile, viewId);
                     if (info != null) {
+                        Utils.showMessage("###### Info: " + info);
                         infoList.add(info);
                     }
                 }
@@ -51,12 +52,16 @@ public class DynamicCallbackFinder extends CallbackFinder {
         if (psiFile instanceof PsiJavaFile) {
             PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
             DynamicCallbackVisitor visitor = new DynamicCallbackVisitor(viewId);
+            System.out.println("AAAAA " + System.currentTimeMillis());
             psiJavaFile.accept(visitor);
+            System.out.println("BBBBB " + System.currentTimeMillis());
             DynamicCallBackInfo temp = visitor.getDynamicCallBackInfo();
             if (temp != null) {
+                Utils.showMessage("AAAAAAAAAAAAAAAAAAA " + temp.getMethod());
                 MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
                 info = new CallbackMethodInfo(viewId, temp.getMethod().getName(),
-                        temp.getMethod(), methodComplexityAnalyzer.getComplexity(temp.getMethod(), true));
+                        temp.getMethod(),
+                        methodComplexityAnalyzer.getComplexity(temp.getMethod(), true));
             }
         }
         return info;
@@ -97,6 +102,7 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
         super.visitExpression(expression);
         DynamicCallBackInfo info = findDynamicCallbackInfoForView(expression, viewId);
         if (info != null) {
+            System.out.println("CCCC " + System.currentTimeMillis());
             dynamicCallBackInfo = info;
         }
     }
@@ -106,6 +112,7 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
         super.visitStatement(statement);
         DynamicCallBackInfo info = findDynamicCallbackInfoForView(statement, viewId);
         if (info != null) {
+            System.out.println("DDDD " + System.currentTimeMillis());
             dynamicCallBackInfo = info;
         }
     }
@@ -128,6 +135,7 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
                             for (PsiElement sibling : siblings) {
                                 sibling.accept(finder);
                                 if (finder.getHandlerMethod() != null) {
+                                    result = new DynamicCallBackInfo(viewId, finder.getHandlerMethod());
                                     break;
                                 }
                             }
@@ -154,6 +162,7 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
                 for (PsiElement sibling : siblings) {
                     sibling.accept(finder);
                     if (finder.getHandlerMethod() != null) {
+                        result = new DynamicCallBackInfo(viewId, finder.getHandlerMethod());
                         break;
                     }
                 }
@@ -230,6 +239,8 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
                                 }
                             }
                         });
+                    } else {
+                        Utils.showMessage("############# " + firstArgument.getClass());
                     }
                 }
             }
