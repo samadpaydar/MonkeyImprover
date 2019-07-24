@@ -47,7 +47,6 @@ public class RefactoryEngine {
 
             saveXMLDocument(document, xmlFile);
         } catch (Exception e) {
-            Utils.showMessage("Exception : " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -78,7 +77,6 @@ public class RefactoryEngine {
             transformer.transform(source, result);
             Utils.showMessage("\t\tSaved successfully.");
         } catch (Exception e) {
-            Utils.showMessage("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -114,8 +112,10 @@ public class RefactoryEngine {
     private Node getDocumentRootLayout(Document document) {
         Node root = null;
         Node child = document.getFirstChild();
+        /*
+        First child might be a Comment node, so it is needed to ignore it
+         */
         while(child != null && child.getNodeType() != Node.ELEMENT_NODE) {
-            Utils.showMessage("type: " + child.getNodeType());
             child = child.getNextSibling();
         }
         if(child != null) {
@@ -134,11 +134,7 @@ public class RefactoryEngine {
         updateViewWeights(document, callbackMethodInfos);
         addViews(childLayout1, currentRootLayout);
         addNonViewElements(childLayout2, currentRootLayout);
-        Utils.showMessage("Step5");
-        Utils.showMessage("newRootLayout: " + newRootLayout);
-        //Utils.showMessage("currentRootLayout: " + currentRootLayout);
         document.replaceChild(newRootLayout, currentRootLayout);
-        Utils.showMessage("Step6");
     }
 
     private void addViews(Node newParent, Node parent) {
