@@ -55,23 +55,7 @@ public class MethodComplexityAnalyzer {
         return result;
     }
 
-    public CallbackMethodInfo getCallbackMethodInfo(String callbackMethodName, List<VirtualFile> relatedJavaFiles) {
-        MethodComplexity methodComplexity = null;
-        PsiMethod method = null;
-        MethodFinder methodFinder = new MethodFinder();
-        for (VirtualFile relatedJavaFile : relatedJavaFiles) {
-            PsiFile file = PsiManager.getInstance(monkeyImprover.getProject()).findFile(relatedJavaFile);
-            if (file != null && file instanceof PsiJavaFile) {
-                PsiMethod relatedMethod = methodFinder.findMethodByName((PsiJavaFile) file, callbackMethodName);
-                if (relatedMethod != null) {
-                    method = relatedMethod;
-                    methodComplexity = getComplexity(relatedMethod, true);
-                    break;
-                }
-            }
-        }
-        return new CallbackMethodInfo(null, callbackMethodName, method, methodComplexity);
-    }
+
 
     private double getCyclomaticComplexity(PsiMethod method) {
         CyclomaticComplexityAnalyzer cyclomaticComplexityAnalyzer = new CyclomaticComplexityAnalyzer();

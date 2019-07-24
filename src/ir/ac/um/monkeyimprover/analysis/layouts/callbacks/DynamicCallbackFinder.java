@@ -52,7 +52,7 @@ public class DynamicCallbackFinder extends CallbackFinder {
             PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
             DynamicCallbackVisitor visitor = new DynamicCallbackVisitor(viewId);
             psiJavaFile.accept(visitor);
-            DynamicCallBackInfo temp = visitor.getDynamicCallBackInfo();
+            DynamicCallbackInfo temp = visitor.getDynamicCallbackInfo();
             if (temp != null) {
                 MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
                 info = new CallbackMethodInfo(viewId, temp.getMethod().getName(),
@@ -86,7 +86,7 @@ public class DynamicCallbackFinder extends CallbackFinder {
 
 
 class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
-    private DynamicCallBackInfo dynamicCallBackInfo = null;
+    private DynamicCallbackInfo dynamicCallbackInfo = null;
     private String viewId;
 
     public DynamicCallbackVisitor(String viewId) {
@@ -96,23 +96,23 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
     @Override
     public void visitAssignmentExpression(PsiAssignmentExpression expression) {
         super.visitExpression(expression);
-        DynamicCallBackInfo info = findDynamicCallbackInfoForView(expression, viewId);
+        DynamicCallbackInfo info = findDynamicCallbackInfoForView(expression, viewId);
         if (info != null) {
-            dynamicCallBackInfo = info;
+            dynamicCallbackInfo = info;
         }
     }
 
     @Override
     public void visitDeclarationStatement(PsiDeclarationStatement statement) {
         super.visitStatement(statement);
-        DynamicCallBackInfo info = findDynamicCallbackInfoForView(statement, viewId);
+        DynamicCallbackInfo info = findDynamicCallbackInfoForView(statement, viewId);
         if (info != null) {
-            dynamicCallBackInfo = info;
+            dynamicCallbackInfo = info;
         }
     }
 
-    private DynamicCallBackInfo findDynamicCallbackInfoForView(PsiDeclarationStatement statement, String viewId) {
-        DynamicCallBackInfo result = null;
+    private DynamicCallbackInfo findDynamicCallbackInfoForView(PsiDeclarationStatement statement, String viewId) {
+        DynamicCallbackInfo result = null;
         PsiDeclarationStatementImpl declarationStatement = (PsiDeclarationStatementImpl) statement;
         try {
             PsiElement[] children = declarationStatement.getChildren();
@@ -129,7 +129,7 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
                             for (PsiElement sibling : siblings) {
                                 sibling.accept(finder);
                                 if (finder.getHandlerMethod() != null) {
-                                    result = new DynamicCallBackInfo(viewId, finder.getHandlerMethod());
+                                    result = new DynamicCallbackInfo(viewId, finder.getHandlerMethod());
                                     break;
                                 }
                             }
@@ -143,8 +143,8 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
         return result;
     }
 
-    private DynamicCallBackInfo findDynamicCallbackInfoForView(PsiAssignmentExpression assignmentExpression, String viewId) {
-        DynamicCallBackInfo result = null;
+    private DynamicCallbackInfo findDynamicCallbackInfoForView(PsiAssignmentExpression assignmentExpression, String viewId) {
+        DynamicCallbackInfo result = null;
         PsiExpression rightExpression = assignmentExpression.getRExpression();
         PsiExpression leftExpression = assignmentExpression.getLExpression();
         if (rightExpression instanceof PsiMethodCallExpression) {
@@ -152,12 +152,12 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
             if (hasAccessToView(methodCallExpression, viewId)) {
                 String variableName = leftExpression.getReference().getElement().getText();
                 OnClickFinder finder = new OnClickFinder(variableName);
-                //In the following statement, the two calls to getParent() is intentional, not a mistake, since it does not work with single call 
+                //In the following statement, the two calls to getParent() is intentional, not a mistake, since it does not work with single call
                 PsiElement[] siblings = assignmentExpression.getParent().getParent().getChildren();
                 for (PsiElement sibling : siblings) {
                     sibling.accept(finder);
                     if (finder.getHandlerMethod() != null) {
-                        result = new DynamicCallBackInfo(viewId, finder.getHandlerMethod());
+                        result = new DynamicCallbackInfo(viewId, finder.getHandlerMethod());
                         break;
                     }
                 }
@@ -181,17 +181,17 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
         return result;
     }
 
-    public DynamicCallBackInfo getDynamicCallBackInfo() {
-        return dynamicCallBackInfo;
+    public DynamicCallbackInfo getDynamicCallbackInfo() {
+        return dynamicCallbackInfo;
     }
 }
 
 
-class DynamicCallBackInfo {
+class DynamicCallbackInfo {
     private String viewId;
     private PsiMethod method;
 
-    public DynamicCallBackInfo(String viewId, PsiMethod method) {
+    public DynamicCallbackInfo(String viewId, PsiMethod method) {
         this.viewId = viewId;
         this.method = method;
     }

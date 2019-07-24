@@ -1,12 +1,18 @@
 package ir.ac.um.monkeyimprover.analysis.layouts.callbacks;
 
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiMethod;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutInformationExtractor;
 import ir.ac.um.monkeyimprover.analysis.layouts.callbacks.CallbackFinder;
 import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
+import ir.ac.um.monkeyimprover.analysis.methods.MethodComplexity;
 import ir.ac.um.monkeyimprover.analysis.methods.MethodComplexityAnalyzer;
+import ir.ac.um.monkeyimprover.analysis.methods.MethodFinder;
 import ir.ac.um.monkeyimprover.utils.Utils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -33,7 +39,6 @@ public class StaticCallbackFinder extends CallbackFinder {
         List<CallbackMethodInfo> infoList = new ArrayList<>();
         File xmlFile = new File(layoutFile.getCanonicalPath());
         List<String> callbackMethodNames = getCallbackMethodNames(xmlFile);
-        MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
         if (callbackMethodNames != null && !callbackMethodNames.isEmpty()) {
             ClassFinder classFinder = new ClassFinder(monkeyImprover);
             List<VirtualFile> allJavaFiles = classFinder.getAllJavaFilesInSrcDirectory();
@@ -43,16 +48,34 @@ public class StaticCallbackFinder extends CallbackFinder {
                     relatedJavaFiles.add(javaFile);
                 }
             }
-            if (!relatedJavaFiles.isEmpty()) {
-                for (String callbackMethodName : callbackMethodNames) {
-                    CallbackMethodInfo info = methodComplexityAnalyzer.getCallbackMethodInfo(callbackMethodName, relatedJavaFiles);
-                    infoList.add(info);
-                }
+            if(relatedJavaFiles.isEmpty()) {
+                relatedJavaFiles = allJavaFiles;
+            }
+            for (String callbackMethodName : callbackMethodNames) {
+                CallbackMethodInfo info = getCallbackMethodInfo(callbackMethodName, relatedJavaFiles);
+                infoList.add(info);
             }
         }
         return infoList;
     }
-
+    public CallbackMethodInfo getCallbackMethodInfo(String callbackMethodName, List<VirtualFile> relatedJavaFiles) {
+        MethodComplexity methodComplexity = null;
+        PsiMethod method = null;
+        MethodFinder methodFinder = new MethodFinder();
+        MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
+        for (VirtualFile relatedJavaFile : relatedJavaFiles) {
+            PsiFile file = PsiManager.getInstance(monkeyImprover.getProject()).findFile(relatedJavaFile);
+            if (file != null && file instanceof PsiJavaFile) {
+                PsiMethod relatedMethod = methodFinder.findMethodByName((PsiJavaFile) file, callbackMethodName);
+                if (relatedMethod != null) {
+                    method = relatedMethod;
+                    methodComplexity = methodComplexityAnalyzer.getComplexity(relatedMethod, true);
+                    break;
+                }
+            }
+        }
+        return new CallbackMethodInfo(null, callbackMethodName, method, methodComplexity);
+    }
     private boolean isRelated(VirtualFile javaFile, VirtualFile layoutXMLFile) {
         return isRelatedByContext(javaFile, layoutXMLFile) || isRelatedByName(javaFile, layoutXMLFile);
     }
