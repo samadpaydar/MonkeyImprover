@@ -122,6 +122,8 @@ public class RefactoryEngine {
         addViews(childLayout1, currentRootLayout);
         addNonViewElements(childLayout2, currentRootLayout);
         Utils.showMessage("Step5");
+        Utils.showMessage("newRootLayout: " + newRootLayout);
+        Utils.showMessage("currentRootLayout: " + currentRootLayout);
         document.replaceChild(newRootLayout, currentRootLayout);
         Utils.showMessage("Step6");
     }
