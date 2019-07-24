@@ -77,6 +77,7 @@ public class RefactoryEngine {
             transformer.transform(source, result);
             Utils.showMessage("\t\tSaved successfully.");
         } catch (Exception e) {
+            Utils.showMessage("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -114,16 +115,18 @@ public class RefactoryEngine {
         Element childLayout1 = createChildLinearLayout(document, 1);
         Element childLayout2 = createChildLinearLayout(document, 0);
         Node currentRootLayout = document.getFirstChild();
-
+    Utils.showMessage("Step1");
         newRootLayout.appendChild(childLayout1);
         newRootLayout.appendChild(childLayout2);
-
+        Utils.showMessage("Step2");
         updateViewWeights(document, callbackMethodInfos);
-
+        Utils.showMessage("Step3");
         addViews(childLayout1, currentRootLayout);
+        Utils.showMessage("Step4");
         addNonViewElements(childLayout2, currentRootLayout);
-
+        Utils.showMessage("Step5");
         document.replaceChild(newRootLayout, currentRootLayout);
+        Utils.showMessage("Step6");
     }
 
     private void addViews(Node newParent, Node parent) {
