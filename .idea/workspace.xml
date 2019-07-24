@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="" />
+    <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,8 +18,8 @@
       <file leaf-file-name="RefactoryEngine.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="126" column="64" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="64" />
+            <state relative-caret-position="250">
+              <caret line="121" column="25" selection-start-line="121" selection-start-column="25" selection-end-line="121" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -33,8 +36,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>new ProjectInformationExtractor</find>
-      <find>visitvariable</find>
       <find>visitlocalv</find>
       <find>declara</find>
       <find>visitmethoca</find>
@@ -63,6 +64,8 @@
       <find>public</find>
       <find>Utils.sho</find>
       <find>refactorElements</find>
+      <find>&quot;exce</find>
+      <find>type</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src</dir>
@@ -332,12 +335,12 @@
       <workItem from="1563287606548" duration="21000" />
       <workItem from="1563689257042" duration="27449000" />
       <workItem from="1563947301567" duration="760000" />
-      <workItem from="1563948286337" duration="2424000" />
+      <workItem from="1563948286337" duration="4209000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128287000" />
+    <option name="totallyTimeSpent" value="130072000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -381,17 +384,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/CallbackMethodInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1500">
-          <caret line="60" column="96" lean-forward="true" selection-start-line="60" selection-start-column="96" selection-end-line="60" selection-end-column="96" />
-          <folding>
-            <element signature="e#1278#1279#0" expanded="true" />
-            <element signature="e#1330#1331#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/utils/AnalysisUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="625">
@@ -775,10 +767,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/org/w3c/dom/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="212" column="7" lean-forward="true" selection-start-line="212" selection-start-column="7" selection-end-line="212" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/RefactoryEngine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="126" column="64" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="64" />
+        <state relative-caret-position="250">
+          <caret line="121" column="25" selection-start-line="121" selection-start-column="25" selection-end-line="121" selection-end-column="25" />
         </state>
       </provider>
     </entry>

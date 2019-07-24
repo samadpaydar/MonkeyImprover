@@ -111,11 +111,24 @@ public class RefactoryEngine {
         return linearLayout;
     }
 
+    private Node getDocumentRootLayout(Document document) {
+        Node root = null;
+        Node child = document.getFirstChild();
+        while(child != null && child.getNodeType() != Node.ELEMENT_NODE) {
+            Utils.showMessage("type: " + child.getNodeType());
+            child = child.getNextSibling();
+        }
+        if(child != null) {
+            root = child;
+        }
+        return root;
+    }
+
     private void refactorElements(Document document, String rootLayoutId, String rootLayoutContext, List<CallbackMethodInfo> callbackMethodInfos) {
         Element newRootLayout = createRootLinearLayout(document, rootLayoutId, rootLayoutContext);
         Element childLayout1 = createChildLinearLayout(document, 1);
         Element childLayout2 = createChildLinearLayout(document, 0);
-        Node currentRootLayout = document.getFirstChild();
+        Node currentRootLayout = getDocumentRootLayout(document);
         newRootLayout.appendChild(childLayout1);
         newRootLayout.appendChild(childLayout2);
         updateViewWeights(document, callbackMethodInfos);
@@ -123,7 +136,7 @@ public class RefactoryEngine {
         addNonViewElements(childLayout2, currentRootLayout);
         Utils.showMessage("Step5");
         Utils.showMessage("newRootLayout: " + newRootLayout);
-        Utils.showMessage("currentRootLayout: " + currentRootLayout);
+        //Utils.showMessage("currentRootLayout: " + currentRootLayout);
         document.replaceChild(newRootLayout, currentRootLayout);
         Utils.showMessage("Step6");
     }
