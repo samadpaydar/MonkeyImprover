@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -18,8 +17,8 @@
       <file leaf-file-name="DynamicInteractableViewFinder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="228" column="55" selection-start-line="228" selection-start-column="55" selection-end-line="228" selection-end-column="55" />
+            <state relative-caret-position="243">
+              <caret line="235" column="85" selection-start-line="235" selection-start-column="85" selection-end-line="235" selection-end-column="85" />
               <folding>
                 <element signature="e#12104#12105#0" expanded="true" />
                 <element signature="e#12140#12141#0" expanded="true" />
@@ -243,12 +242,12 @@
       <option name="presentableId" value="Default" />
       <updated>1565852018523</updated>
       <workItem from="1565852019952" duration="12000" />
-      <workItem from="1565852047314" duration="1415000" />
+      <workItem from="1565852047314" duration="1770000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1440000" />
+    <option name="totallyTimeSpent" value="1795000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -294,8 +293,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="228" column="55" selection-start-line="228" selection-start-column="55" selection-end-line="228" selection-end-column="55" />
+        <state relative-caret-position="243">
+          <caret line="235" column="85" selection-start-line="235" selection-start-column="85" selection-end-line="235" selection-end-column="85" />
           <folding>
             <element signature="e#12104#12105#0" expanded="true" />
             <element signature="e#12140#12141#0" expanded="true" />

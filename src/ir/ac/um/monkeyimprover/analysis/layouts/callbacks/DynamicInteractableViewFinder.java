@@ -233,6 +233,7 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
                             }
                         } else {
                             Utils.showMessage("############# " + firstArgument.getClass());
+                            Utils.showMessage("############# " + expression.getText());
                         }
                     }
                 }
