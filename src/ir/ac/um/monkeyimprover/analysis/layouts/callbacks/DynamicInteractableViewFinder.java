@@ -225,17 +225,23 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
                             //setOnClickListener(this)
                             PsiThisExpressionImpl thisArgument = (PsiThisExpressionImpl) firstArgument;
                             PsiClass parentClass = getParentClass(thisArgument);
-                            if(parentClass != null) {
+                            if (parentClass != null) {
                                 PsiMethod onClickMethod = getOnClickMethod(parentClass);
-                                if(onClickMethod != null) {
+                                if (onClickMethod != null) {
                                     handlerMethod = onClickMethod;
                                 }
                             }
-                        } else if(firstArgument instanceof PsiReferenceExpressionImpl) {
+                        } else if (firstArgument instanceof PsiReferenceExpressionImpl) {
                             //setOnClickListener(listenerVariable)
-                            PsiReferenceExpressionImpl reference = (PsiReferenceExpressionImpl)firstArgument;
-                            Utils.showMessage("### getReference()" + reference.getReference());
-                            Utils.showMessage("### getType()" + reference.getType());
+                            PsiReferenceExpressionImpl referenceExpression = (PsiReferenceExpressionImpl) firstArgument;
+                            PsiReference reference = referenceExpression.getReference();
+                            if (reference instanceof PsiClass) {
+                                PsiMethod onClickMethod = getOnClickMethod((PsiClass) reference);
+                                if (onClickMethod != null) {
+                                    Utils.showMessage("######## " + onClickMethod.getText());
+                                    handlerMethod = onClickMethod;
+                                }
+                            }
                         } else {
                             Utils.showMessage("To do: handle " + firstArgument.getClass());
                         }
@@ -249,8 +255,8 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
     }
 
     private PsiMethod getOnClickMethod(PsiClass psiClass) {
-        for(PsiMethod method: psiClass.getMethods()) {
-            if(method.getName().equals("onClick")) {
+        for (PsiMethod method : psiClass.getMethods()) {
+            if (method.getName().equals("onClick")) {
                 return method;
             }
         }
