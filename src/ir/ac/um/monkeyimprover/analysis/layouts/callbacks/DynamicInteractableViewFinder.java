@@ -224,7 +224,7 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
                         } else if (firstArgument instanceof  PsiThisExpressionImpl){
                             //setOnClickListener(this)
                             PsiThisExpressionImpl thisArgument = (PsiThisExpressionImpl)firstArgument;
-                            Utils.showMessage("###" + thisArgument.getReference().getClass().toString());
+                            Utils.showMessage("###" + thisArgument.getQualifier().getClass().toString());
 
 
                         } else {
