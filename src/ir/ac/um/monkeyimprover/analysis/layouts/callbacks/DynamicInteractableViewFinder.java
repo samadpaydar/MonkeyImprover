@@ -221,12 +221,13 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
                                     }
                                 }
                             });
-                        } else if (firstArgument instanceof  PsiThisExpressionImpl){
+                        } else if (firstArgument instanceof PsiThisExpressionImpl) {
                             //setOnClickListener(this)
-                            PsiThisExpressionImpl thisArgument = (PsiThisExpressionImpl)firstArgument;
-                            Utils.showMessage("###" + thisArgument.getQualifier().getClass().toString());
-
-
+                            PsiThisExpressionImpl thisArgument = (PsiThisExpressionImpl) firstArgument;
+                            Utils.showMessage("### getQualifier(): " + thisArgument.getQualifier());
+                            Utils.showMessage("### getReference(): " + thisArgument.getReference());
+                            PsiClass parentClass = getParentClass(thisArgument);
+                            Utils.showMessage("### parentClass: " + parentClass);
                         } else {
                             Utils.showMessage("############# " + firstArgument.getClass());
                         }
@@ -237,6 +238,19 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
             Utils.showException(e);
             e.printStackTrace();
         }
+    }
+
+    private PsiClass getParentClass(PsiElement element) {
+        PsiClass parentClass = null;
+
+        while (element != null) {
+            element = element.getParent();
+            if (element instanceof PsiClass) {
+                parentClass = (PsiClass) element;
+                break;
+            }
+        }
+        return parentClass;
     }
 
     public PsiMethod getHandlerMethod() {

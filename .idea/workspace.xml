@@ -17,8 +17,12 @@
       <file leaf-file-name="DynamicInteractableViewFinder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="226" column="105" lean-forward="true" selection-start-line="226" selection-start-column="105" selection-end-line="226" selection-end-column="105" />
+            <state relative-caret-position="123">
+              <caret line="245" column="30" selection-start-line="245" selection-start-column="30" selection-end-line="245" selection-end-column="30" />
+              <folding>
+                <element signature="e#12107#12108#0" expanded="true" />
+                <element signature="e#12143#12144#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -238,12 +242,12 @@
       <option name="presentableId" value="Default" />
       <updated>1565852018523</updated>
       <workItem from="1565852019952" duration="12000" />
-      <workItem from="1565852047314" duration="584000" />
+      <workItem from="1565852047314" duration="1025000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="609000" />
+    <option name="totallyTimeSpent" value="1050000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -289,8 +293,12 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="226" column="105" lean-forward="true" selection-start-line="226" selection-start-column="105" selection-end-line="226" selection-end-column="105" />
+        <state relative-caret-position="123">
+          <caret line="245" column="30" selection-start-line="245" selection-start-column="30" selection-end-line="245" selection-end-column="30" />
+          <folding>
+            <element signature="e#12107#12108#0" expanded="true" />
+            <element signature="e#12143#12144#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
