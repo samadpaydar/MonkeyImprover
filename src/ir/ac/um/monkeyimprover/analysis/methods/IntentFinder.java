@@ -2,6 +2,7 @@ package ir.ac.um.monkeyimprover.analysis.methods;
 
 import com.intellij.psi.*;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
+import ir.ac.um.monkeyimprover.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,8 @@ public class IntentFinder extends JavaRecursiveElementVisitor {
     public void visitNewExpression(PsiNewExpression expression) {
         super.visitNewExpression(expression);
         try {
-            if (expression.getClassReference().getQualifiedName().equals("android.content.Intent")) {
+            PsiJavaCodeReferenceElement reference = expression.getClassReference();
+            if (reference!= null && reference.getQualifiedName()!=null && reference.getQualifiedName().equals("android.content.Intent")) {
                 PsiExpressionList list = expression.getArgumentList();
                 if (list.getExpressionCount() > 1) {
                     PsiExpression secondArgument = list.getExpressions()[1];
@@ -40,6 +42,7 @@ public class IntentFinder extends JavaRecursiveElementVisitor {
                 }
             }
         } catch (Exception e) {
+            Utils.showException(e);
             e.printStackTrace();
         }
     }

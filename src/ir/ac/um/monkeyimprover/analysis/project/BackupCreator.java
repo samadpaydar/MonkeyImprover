@@ -18,7 +18,12 @@ public class BackupCreator {
     public void createBackup(VirtualFile directory, List<VirtualFile> layoutFiles) {
         File backupDirectory = new File(directory.getCanonicalPath(), "backup");
         if (!backupDirectory.exists()) {
-            backupDirectory.mkdir();
+            boolean created = backupDirectory.mkdir();
+            if(created) {
+                Utils.showMessage("Backup directory created successfully.");
+            } else {
+                Utils.showMessage("Failed to create backup directory.");
+            }
         }
         if (backupDirectory.exists()) {
             String timestamp = Utils.getTimestamp();
@@ -33,6 +38,7 @@ public class BackupCreator {
                 }
                 zipOutputStream.close();
             } catch (IOException e) {
+                Utils.showException(e);
                 e.printStackTrace();
             }
 
@@ -40,18 +46,16 @@ public class BackupCreator {
     }
 
     private void addFileToZipFile(ZipOutputStream zipOutputStream, File file) {
-        try {
+        try (FileInputStream fileInputStream = new FileInputStream(file)){
             byte[] buffer = new byte[1024];
-            FileInputStream fileInputStream = new FileInputStream(file);
             zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
             int length;
             while ((length = fileInputStream.read(buffer)) > 0) {
                 zipOutputStream.write(buffer, 0, length);
             }
             zipOutputStream.closeEntry();
-
-            fileInputStream.close();
         } catch (IOException e) {
+            Utils.showException(e);
             e.printStackTrace();
         }
     }

@@ -15,7 +15,9 @@ import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.file.PsiJavaDirectoryImpl;
 import com.intellij.ui.content.Content;
+import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
 import ir.ac.um.monkeyimprover.utils.Constants;
+import ir.ac.um.monkeyimprover.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 
@@ -23,29 +25,32 @@ import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
  * @author Samad Paydar
  */
 public class AnalyzeAction extends AnAction {
-    private ConsoleView consoleView;
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
-        Navigatable navigatable = anActionEvent.getData(CommonDataKeys.NAVIGATABLE);
-        if (navigatable != null) {
-            Project project = anActionEvent.getProject();
-            PsiElement psiElement = anActionEvent.getData(LangDataKeys.PSI_ELEMENT);
-            processProject(project, psiElement);
+        if (anActionEvent != null) {
+            Navigatable navigatable = anActionEvent.getData(CommonDataKeys.NAVIGATABLE);
+            if (navigatable != null) {
+                Project project = anActionEvent.getProject();
+                PsiElement psiElement = anActionEvent.getData(LangDataKeys.PSI_ELEMENT);
+                processProject(project, psiElement);
+            }
         }
     }
 
     private void processProject(Project project, PsiElement psiElement) {
         ToolWindow toolWindow = ToolWindowManager.getInstance(project).getToolWindow(Constants.PLUGIN_NAME);
+        ConsoleView consoleView = Utils.getConsoleView();
         if (consoleView == null) {
             consoleView = TextConsoleBuilderFactory.getInstance().createBuilder(project).getConsole();
+            Utils.setConsoleView(consoleView);
             Content content = toolWindow.getContentManager().getFactory().createContent(consoleView.getComponent(), Constants.PLUGIN_NAME, true);
             toolWindow.getContentManager().addContent(content);
         }
         toolWindow.show(null);
         ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
             public void run() {
-                ApplicationManager.getApplication().runReadAction(new MonkeyImprover(project, psiElement, consoleView));
+                ApplicationManager.getApplication().runReadAction(new MonkeyImprover(project, psiElement));
             }
         });
 

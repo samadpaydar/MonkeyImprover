@@ -5,7 +5,9 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import ir.ac.um.monkeyimprover.analysis.classes.JavaClassCollector;
 import ir.ac.um.monkeyimprover.analysis.layouts.LayoutCollector;
+import ir.ac.um.monkeyimprover.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectInformationExtractor {
@@ -22,15 +24,42 @@ public class ProjectInformationExtractor {
     }
 
     public List<VirtualFile> getLayoutXMLFiles(VirtualFile projectBaseDirectory) {
+        List<VirtualFile> resultOnFailure = new ArrayList<>();
         VirtualFile srcDirectory = getSourceDirectory(projectBaseDirectory);
-        VirtualFile resourcesDirectory = getResourcesDirectory(srcDirectory);
+        if (srcDirectory == null) {
+            Utils.showMessage("Failed to detect source directory.");
+            return resultOnFailure;
+        }
+        Utils.showMessage("srcDirectory: " + srcDirectory.getCanonicalPath());
+        VirtualFile mainDirectory = getMainDirectory(srcDirectory);
+        if (mainDirectory == null) {
+            Utils.showMessage("Failed to detect main directory.");
+            return resultOnFailure;
+        }
+        Utils.showMessage("mainDirectory: " + mainDirectory.getCanonicalPath());
+        VirtualFile resourcesDirectory = getResourcesDirectory(mainDirectory);
+        if(resourcesDirectory == null) {
+            Utils.showMessage("Failed to detect resources directory.");
+            return resultOnFailure;
+        }
+        Utils.showMessage("resourcesDirectory: " + resourcesDirectory.getCanonicalPath());
         VirtualFile layoutDirectory = getLayoutDirectory(resourcesDirectory);
+        if(layoutDirectory == null) {
+            Utils.showMessage("Failed to detect layouts directory.");
+            return resultOnFailure;
+        }
+        Utils.showMessage("layoutDirectory: " + layoutDirectory.getCanonicalPath());
         LayoutCollector layoutCollector = new LayoutCollector();
         return layoutCollector.getLayouts(layoutDirectory);
     }
 
-    private VirtualFile getSourceDirectory(VirtualFile directory) {
+    public VirtualFile getSourceDirectory(VirtualFile directory) {
+
         return getChildDirectory("src", directory);
+    }
+
+    private VirtualFile getMainDirectory(VirtualFile directory) {
+        return getChildDirectory("main", directory);
     }
 
     private VirtualFile getResourcesDirectory(VirtualFile directory) {
@@ -47,8 +76,16 @@ public class ProjectInformationExtractor {
         for (VirtualFile child : children) {
             if (child.isDirectory()) {
                 if (child.getName().equals(childDirectoryName)) {
-                    result = child;
-                    break;
+                    if (childDirectoryName.equals("src")) {
+                        if (containsSubDirectories(child, "main", "androidTest")
+                                || containsSubDirectories(child, "main", "test")) {
+                            result = child;
+                            break;
+                        }
+                    } else {
+                        result = child;
+                        break;
+                    }
                 } else {
                     VirtualFile temp = getChildDirectory(childDirectoryName, child);
                     if (temp != null) {
@@ -61,4 +98,22 @@ public class ProjectInformationExtractor {
         return result;
     }
 
+    private boolean containsSubDirectories(VirtualFile directory, String... subDirectoryNames) {
+        boolean result = true;
+        VirtualFile[] children = directory.getChildren();
+        for (String subDirectoryName : subDirectoryNames) {
+            boolean exists = false;
+            for (VirtualFile child : children) {
+                if (child.isDirectory() && child.getName().equals(subDirectoryName)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
 }

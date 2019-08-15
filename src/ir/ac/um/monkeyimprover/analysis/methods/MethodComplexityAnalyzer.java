@@ -2,11 +2,9 @@ package ir.ac.um.monkeyimprover.analysis.methods;
 
 import com.intellij.lang.jvm.JvmModifier;
 import com.intellij.lang.jvm.JvmParameter;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
-import com.sun.deploy.util.JVMParameters;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
-import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
+import ir.ac.um.monkeyimprover.model.MethodComplexity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,23 +16,24 @@ public class MethodComplexityAnalyzer {
         this.monkeyImprover = monkeyImprover;
     }
 
-    public double getComplexity(PsiMethod method) {
+    public MethodComplexity getComplexity(PsiMethod method) {
         //false is passed to prevent from infinite loop, when this method is called from ClassComplexityAnalyzer
         return getComplexity(method, false);
     }
 
-    private double getComplexity(PsiMethod method, boolean includeCalledLocalMethods) {
+    public MethodComplexity getComplexity(PsiMethod method, boolean includeCalledLocalMethods) {
+        MethodComplexity result = new MethodComplexity(method);
         double cyclomaticComplexity = getCyclomaticComplexity(method);
         List<PsiMethod> calledMethods = getMethodsDirectlyCalledBy(method);
 
         calledMethods = replaceAbstractsWithConcretes(calledMethods);
-
         double calledMethodComplexity = 0.0;
         for (PsiMethod calledMethod : calledMethods) {
             if (calledMethod.equals(method)) {
                 //ignore recursive calls
             } else if (isLocalMethod(calledMethod)) {
-                calledMethodComplexity += getComplexity(calledMethod, includeCalledLocalMethods);
+                MethodComplexity temp = getComplexity(calledMethod, includeCalledLocalMethods);
+                calledMethodComplexity += temp.getTotalComplexity();
             } else {
                 calledMethodComplexity += getAPIComplexity(calledMethod);
             }
@@ -45,35 +44,15 @@ public class MethodComplexityAnalyzer {
             intentComplexity = getIntentComplexity(method);
             asyncComplexity = getAsyncTaskComplexity(method);
         }
-        double complexity = cyclomaticComplexity + calledMethodComplexity + intentComplexity + asyncComplexity;
-//        if (AnalysisUtils.getMethodQualifiedName(method).startsWith("ir.ac.um.pardisban.MainActivity_")) {
-//            monkeyImprover.showMessage("\tmethod " + AnalysisUtils.getMethodQualifiedName(method)
-//                    + " cyclomaticComplexity: " + cyclomaticComplexity
-//                    + " calledMethodComplexity: " + calledMethodComplexity
-//                    + " intentComplexity: " + intentComplexity
-//                    + " asyncComplexity: " + asyncComplexity
-//                    + " complexity: " + complexity);
-//        }
-        return complexity;
+        result.setCyclomaticComplexity(cyclomaticComplexity);
+        result.setCalledMethodComplexity(calledMethodComplexity);
+        result.setIntentComplexity(intentComplexity);
+        result.setAsyncComplexity(asyncComplexity);
+
+        return result;
     }
 
-    public CallbackMethodInfo getCallbackMethodInfo(String callbackMethodName, List<VirtualFile> relatedJavaFiles) {
-        double complexity = -1;
-        PsiMethod method = null;
-        MethodFinder methodFinder = new MethodFinder();
-        for (VirtualFile relatedJavaFile : relatedJavaFiles) {
-            PsiFile file = PsiManager.getInstance(monkeyImprover.getProject()).findFile(relatedJavaFile);
-            if (file != null && file instanceof PsiJavaFile) {
-                PsiMethod relatedMethod = methodFinder.findMethodByName((PsiJavaFile) file, callbackMethodName);
-                if (relatedMethod != null) {
-                    method = relatedMethod;
-                    complexity = getComplexity(relatedMethod, true);
-                    break;
-                }
-            }
-        }
-        return new CallbackMethodInfo(callbackMethodName, method, complexity);
-    }
+
 
     private double getCyclomaticComplexity(PsiMethod method) {
         CyclomaticComplexityAnalyzer cyclomaticComplexityAnalyzer = new CyclomaticComplexityAnalyzer();
@@ -111,6 +90,7 @@ public class MethodComplexityAnalyzer {
     //    TODO Since polymorphism is used in the database-related methods, the Android database API methods are not directly called
 //    hence, this method does not match anything
     private double getAPIComplexity(PsiMethod calledMethod) {
+        double weight = 0.0;
         String calledMethodClassName = calledMethod.getContainingClass().getQualifiedName();
         String[] classNames = {
                 "android.database.sqlite.SQLiteDatabase",
@@ -123,10 +103,14 @@ public class MethodComplexityAnalyzer {
         for (int i = 0; i < classNames.length; i++) {
             String className = classNames[i];
             if (className.equals(calledMethodClassName)) {
-                return weights[i];
+                weight = weights[i];
+                break;
             }
         }
-        return 0.0;
+
+        PsiClassType[] throwsTypes = calledMethod.getThrowsList().getReferencedTypes();
+        weight += throwsTypes.length;
+        return weight;
     }
 
     /**

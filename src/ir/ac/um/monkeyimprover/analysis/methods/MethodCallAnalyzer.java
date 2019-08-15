@@ -1,6 +1,7 @@
 package ir.ac.um.monkeyimprover.analysis.methods;
 
 import com.intellij.psi.*;
+import ir.ac.um.monkeyimprover.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +10,9 @@ import java.util.List;
  * @author Samad Paydar
  */
 public class MethodCallAnalyzer extends JavaRecursiveElementVisitor {
-    private PsiMethod caller;
     private List<PsiMethod> calledMethods;
 
     public MethodCallAnalyzer(PsiMethod caller) {
-        this.caller = caller;
         calledMethods = new ArrayList<>();
     }
 
@@ -26,6 +25,7 @@ public class MethodCallAnalyzer extends JavaRecursiveElementVisitor {
                 calledMethods.add((PsiMethod) element);
             }
         } catch (Exception e) {
+            Utils.showException(e);
             e.printStackTrace();
         }
     }

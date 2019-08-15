@@ -2,10 +2,12 @@ package ir.ac.um.monkeyimprover.analysis.layouts;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
-import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
-import ir.ac.um.monkeyimprover.analysis.methods.CallbackMethodInfo;
-import ir.ac.um.monkeyimprover.analysis.methods.MethodComplexityAnalyzer;
+import ir.ac.um.monkeyimprover.analysis.layouts.callbacks.*;
+import ir.ac.um.monkeyimprover.analysis.layouts.callbacks.AnnotatedInteractableViewFinder;
+import ir.ac.um.monkeyimprover.analysis.layouts.callbacks.InteractableViewFinder;
+import ir.ac.um.monkeyimprover.model.InteractableViewComplexity;
 import ir.ac.um.monkeyimprover.analysis.utils.AnalysisUtils;
+import ir.ac.um.monkeyimprover.utils.Utils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -49,33 +51,7 @@ public class LayoutInformationExtractor {
                 });
                 return contextClassNames;
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    private List<String> getCallbackMethodNames(File xmlFile) {
-        if (xmlFile.exists() && xmlFile.isFile()) {
-            try {
-                final List<String> callbackMethodNames = new ArrayList<>();
-                SAXParserFactory factory = SAXParserFactory.newInstance();
-                SAXParser saxParser = factory.newSAXParser();
-                saxParser.parse(xmlFile, new DefaultHandler() {
-                    @Override
-                    public void startElement(String uri, String localName,
-                                             String qName, Attributes attributes) throws SAXException {
-                        for (int i = 0; i < attributes.getLength(); i++) {
-                            String attributeQualifiedName = attributes.getQName(i);
-                            if (attributeQualifiedName != null
-                                    && attributeQualifiedName.toLowerCase().equalsIgnoreCase("android:onclick")) {
-                                callbackMethodNames.add(attributes.getValue(i));
-                            }
-                        }
-                    }
-                });
-                return callbackMethodNames;
-            } catch (Exception e) {
+                Utils.showException(e);
                 e.printStackTrace();
             }
         }
@@ -103,6 +79,7 @@ public class LayoutInformationExtractor {
                 saxParser.parse(xmlFile, handler);
                 return handler.count;
             } catch (Exception e) {
+                Utils.showException(e);
                 e.printStackTrace();
             }
         }
@@ -130,6 +107,7 @@ public class LayoutInformationExtractor {
                 });
                 return info;
             } catch (Exception e) {
+                Utils.showException(e);
                 e.printStackTrace();
             }
         }
@@ -158,28 +136,25 @@ public class LayoutInformationExtractor {
                 saxParser.parse(xmlFile, handler);
                 return handler.isFragment;
             } catch (Exception e) {
+                Utils.showException(e);
                 e.printStackTrace();
             }
         }
         return false;
     }
 
-    public List<CallbackMethodInfo> getCallbackMethodInfos(VirtualFile projectBaseDirectory, VirtualFile layoutFile) {
-        List<CallbackMethodInfo> infoList = new ArrayList<>();
-        File xmlFile = new File(layoutFile.getCanonicalPath());
-        List<String> callbackMethodNames = getCallbackMethodNames(xmlFile);
-        MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
-        if (callbackMethodNames != null && !callbackMethodNames.isEmpty()) {
-            ClassFinder classFinder = new ClassFinder(monkeyImprover);
-            List<VirtualFile> relatedJavaFiles = classFinder.findRelatedJavaFile(projectBaseDirectory, layoutFile);
-            if (relatedJavaFiles != null && !relatedJavaFiles.isEmpty()) {
-                for (String callbackMethodName : callbackMethodNames) {
-                    CallbackMethodInfo info = methodComplexityAnalyzer.getCallbackMethodInfo(callbackMethodName, relatedJavaFiles);
-                    infoList.add(info);
-                }
-            }
+    public List<InteractableViewComplexity> getInteractableViews(VirtualFile projectBaseDirectory, VirtualFile layoutFile) {
+        InteractableViewFinder[] finders = {
+                new StaticInteractableViewFinder(monkeyImprover),
+                new AnnotatedInteractableViewFinder(monkeyImprover),
+                new DynamicInteractableViewFinder(monkeyImprover),
+                new ViewAccessorFinder(monkeyImprover)
+        };
+        List<InteractableViewComplexity> list = new ArrayList<>();
+        for(InteractableViewFinder finder: finders) {
+            list.addAll(finder.getInteractableViewInfo(projectBaseDirectory, layoutFile));
         }
-        return infoList;
+        return list;
     }
 
 }

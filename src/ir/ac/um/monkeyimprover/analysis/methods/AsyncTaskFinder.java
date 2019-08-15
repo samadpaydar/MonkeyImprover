@@ -2,6 +2,7 @@ package ir.ac.um.monkeyimprover.analysis.methods;
 
 import com.intellij.psi.*;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
+import ir.ac.um.monkeyimprover.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class AsyncTaskFinder extends JavaRecursiveElementVisitor {
                 }
             }
         } catch (Exception e) {
+            Utils.showException(e);
             e.printStackTrace();
         }
     }
