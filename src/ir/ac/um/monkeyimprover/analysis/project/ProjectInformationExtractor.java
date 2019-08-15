@@ -38,13 +38,13 @@ public class ProjectInformationExtractor {
         }
         Utils.showMessage("mainDirectory: " + mainDirectory.getCanonicalPath());
         VirtualFile resourcesDirectory = getResourcesDirectory(mainDirectory);
-        if(resourcesDirectory == null) {
+        if (resourcesDirectory == null) {
             Utils.showMessage("Failed to detect resources directory.");
             return resultOnFailure;
         }
         Utils.showMessage("resourcesDirectory: " + resourcesDirectory.getCanonicalPath());
         VirtualFile layoutDirectory = getLayoutDirectory(resourcesDirectory);
-        if(layoutDirectory == null) {
+        if (layoutDirectory == null) {
             Utils.showMessage("Failed to detect layouts directory.");
             return resultOnFailure;
         }
@@ -70,6 +70,18 @@ public class ProjectInformationExtractor {
         return getChildDirectory("layout", directory);
     }
 
+    private boolean hasAndroidManifest(VirtualFile directory) {
+        boolean result = false;
+        VirtualFile[] children = directory.getChildren();
+        for (VirtualFile child : children) {
+            if (child.getName().equals("AndroidManifest.xml")) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
     private VirtualFile getChildDirectory(String childDirectoryName, VirtualFile parentDirectory) {
         VirtualFile result = null;
         VirtualFile[] children = parentDirectory.getChildren();
@@ -78,7 +90,8 @@ public class ProjectInformationExtractor {
                 if (child.getName().equals(childDirectoryName)) {
                     if (childDirectoryName.equals("src")) {
                         if (containsSubDirectories(child, "main", "androidTest")
-                                || containsSubDirectories(child, "main", "test")) {
+                                || containsSubDirectories(child, "main", "test")
+                                || (containsSubDirectories(child, "main") && hasAndroidManifest(child))) {
                             result = child;
                             break;
                         }
