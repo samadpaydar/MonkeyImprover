@@ -73,10 +73,16 @@ public class ProjectInformationExtractor {
     private boolean hasAndroidManifest(VirtualFile directory) {
         boolean result = false;
         VirtualFile[] children = directory.getChildren();
+        search:
         for (VirtualFile child : children) {
-            if (child.getName().equals("AndroidManifest.xml")) {
-                result = true;
-                break;
+            if (child.isDirectory()) {
+                VirtualFile[] children2 = child.getChildren();
+                for (VirtualFile child2 : children2) {
+                    if (child2.getName().equals("AndroidManifest.xml")) {
+                        result = true;
+                        break;
+                    }
+                }
             }
         }
         return result;
