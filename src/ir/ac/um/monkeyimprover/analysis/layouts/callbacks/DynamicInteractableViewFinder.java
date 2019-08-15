@@ -2,6 +2,7 @@ package ir.ac.um.monkeyimprover.analysis.layouts.callbacks;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import com.intellij.psi.codeStyle.arrangement.JavaArrangementVisitor;
 import com.intellij.psi.impl.source.tree.java.*;
 import ir.ac.um.monkeyimprover.analysis.MonkeyImprover;
 import ir.ac.um.monkeyimprover.analysis.classes.ClassFinder;
@@ -210,40 +211,13 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
                         PsiExpressionList arguments = expression.getArgumentList();
                         PsiExpression firstArgument = arguments.getExpressions()[0];
                         if (firstArgument instanceof PsiNewExpressionImpl) {
-                            //setOnClickListener(new ...)
-                            PsiNewExpressionImpl newExpression = (PsiNewExpressionImpl) firstArgument;
-                            newExpression.accept(new JavaRecursiveElementVisitor() {
-                                @Override
-                                public void visitMethod(PsiMethod method) {
-                                    super.visitMethod(method);
-                                    if (method.getName().equals("onClick")) {
-                                        handlerMethod = method;
-                                    }
-                                }
-                            });
+                            handleCase1((PsiNewExpressionImpl) firstArgument);
                         } else if (firstArgument instanceof PsiThisExpressionImpl) {
-                            //setOnClickListener(this)
-                            PsiThisExpressionImpl thisArgument = (PsiThisExpressionImpl) firstArgument;
-                            PsiClass parentClass = getParentClass(thisArgument);
-                            if (parentClass != null) {
-                                PsiMethod onClickMethod = getOnClickMethod(parentClass);
-                                if (onClickMethod != null) {
-                                    handlerMethod = onClickMethod;
-                                }
-                            }
+                            handleCase2((PsiThisExpressionImpl) firstArgument);
                         } else if (firstArgument instanceof PsiReferenceExpressionImpl) {
-                            //setOnClickListener(listenerVariable)
-                            PsiReferenceExpressionImpl referenceExpression = (PsiReferenceExpressionImpl) firstArgument;
-                            PsiReference reference = referenceExpression.getReference();
-                            if (reference instanceof PsiClass) {
-                                PsiMethod onClickMethod = getOnClickMethod((PsiClass) reference);
-                                if (onClickMethod != null) {
-                                    Utils.showMessage("######## " + onClickMethod.getText());
-                                    handlerMethod = onClickMethod;
-                                }
-                            }
+                            handleCase3((PsiReferenceExpressionImpl) firstArgument);
                         } else {
-                            Utils.showMessage("To do: handle " + firstArgument.getClass());
+                            Utils.showMessage("TODO: handle " + firstArgument.getClass());
                         }
                     }
                 }
@@ -252,6 +226,93 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
             Utils.showException(e);
             e.printStackTrace();
         }
+    }
+
+    /**
+     * This is for detecting handlers that are set by setOnClickListener(new ...)
+     *
+     * @param newExpression
+     */
+    private void handleCase1(PsiNewExpressionImpl newExpression) {
+        newExpression.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitMethod(PsiMethod method) {
+                super.visitMethod(method);
+                if (method.getName().equals("onClick")) {
+                    handlerMethod = method;
+                }
+            }
+        });
+    }
+
+    /**
+     * This is for detecting handlers that are set by setOnClickListener(this)
+     *
+     * @param thisExpression
+     */
+    private void handleCase2(PsiThisExpressionImpl thisExpression) {
+        PsiClass parentClass = getParentClass(thisExpression);
+        if (parentClass != null) {
+            PsiMethod onClickMethod = getOnClickMethod(parentClass);
+            if (onClickMethod != null) {
+                handlerMethod = onClickMethod;
+            }
+        }
+    }
+
+    /**
+     * This is for detecting handlers that are set by setOnClickListener(listenerVariable)
+     * where listenerVariable is defined in the same class
+     *
+     * @param referenceExpression
+     */
+    private void handleCase3(PsiReferenceExpressionImpl referenceExpression) {
+        PsiElement referenceNameElement = referenceExpression.getReferenceNameElement();
+        final String VARIABLE_NAME = referenceNameElement.getText();
+        PsiClass parentClass = getParentClass(referenceNameElement);
+        parentClass.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitField(PsiField field) {
+                super.visitVariable(field);
+                if (field.getName().equals(VARIABLE_NAME)) {
+                    getHandlerForField(field, VARIABLE_NAME);
+                }
+            }
+        });
+    }
+
+    private void getHandlerForField(PsiField field, String variableName) {
+        field.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitNewExpression(PsiNewExpression expression) {
+                super.visitCallExpression(expression);
+                if (expression.getText().contains("OnClickListener()")) {
+                    PsiElement assignedVariable = getAssignedVariable(expression, variableName);
+                    if (assignedVariable != null) {
+                        PsiClass referenceClass = expression.getAnonymousClass();
+                        for (PsiMethod method : referenceClass.getMethods()) {
+                            if (method.getName().equals("onClick")) {
+                                handlerMethod = method;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private PsiElement getAssignedVariable(PsiExpression expression, String variableName) {
+        PsiElement result = null;
+        PsiElement sibling = expression.getPrevSibling();
+        while (sibling != null) {
+            if (sibling.getText().equals(variableName)) {
+                result = sibling;
+                break;
+            }
+            sibling = sibling.getPrevSibling();
+        }
+        return result;
     }
 
     private PsiMethod getOnClickMethod(PsiClass psiClass) {
