@@ -24,17 +24,29 @@ public class IntentFinder extends JavaRecursiveElementVisitor {
         super.visitNewExpression(expression);
         try {
             PsiJavaCodeReferenceElement reference = expression.getClassReference();
-            if (reference!= null && reference.getQualifiedName()!=null && reference.getQualifiedName().equals("android.content.Intent")) {
-                PsiExpressionList list = expression.getArgumentList();
-                if (list.getExpressionCount() > 1) {
-                    PsiExpression secondArgument = list.getExpressions()[1];
-                    String className = secondArgument.getType().getCanonicalText();
-                    final String CLASS_PREFIX = "java.lang.Class";
-                    if (className != null && className.startsWith(CLASS_PREFIX)) {
-                        className = className.replace(CLASS_PREFIX, "");
-                        className = className.replace("<", "");
-                        className = className.replace(">", "");
-                        PsiClass theClass = monkeyImprover.getProjectClassByName(className);
+            if (reference != null && reference.getQualifiedName() != null) {
+                String name = reference.getQualifiedName();
+                if (name.equals("android.content.Intent") || name.equals("Intent")) {
+                    PsiExpressionList list = expression.getArgumentList();
+                    if (list.getExpressionCount() > 1) {
+                        PsiExpression secondArgument = list.getExpressions()[1];
+                        String className = secondArgument.getType().getCanonicalText();
+                        final String CLASS_PREFIX = "java.lang.Class";
+                        PsiClass theClass = null;
+                        if (className != null && className.startsWith(CLASS_PREFIX)) {
+                            className = className.replace(CLASS_PREFIX, "");
+                            className = className.replace("<", "");
+                            className = className.replace(">", "");
+                            theClass = monkeyImprover.getProjectClassByName(className);
+                        }
+                        if(theClass == null) {
+                            className = secondArgument.getText();
+                            final String CLASS_POSTFIX = ".class";
+                            if (className != null && className.endsWith(CLASS_POSTFIX)) {
+                                className = className.replace(CLASS_POSTFIX, "");
+                                theClass = monkeyImprover.getProjectClassByName(className);
+                            }
+                        }
                         if (theClass != null) {
                             intentClasses.add(theClass);
                         }
