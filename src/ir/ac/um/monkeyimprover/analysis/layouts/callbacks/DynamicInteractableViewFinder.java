@@ -86,19 +86,25 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
                 PsiExpression firstArgument = arguments.getExpressions()[0];
                 if (firstArgument.getText().equals("R.id." + viewId)) {
                     if (viewId.contains("map_empty_panel")) {
-                        OnClickFinder finder = new OnClickFinder(null);
                         PsiElement[] siblings = expression.getParent().getChildren();
                         for (PsiElement sibling : siblings) {
                             Utils.showMessage("### " + sibling);
-                            sibling.accept(finder);
-                            if (finder.getHandlerMethod() != null) {
-                                Utils.showMessage("@#@#@@#");
-                                InteractableView info = new InteractableView(viewId, finder.getHandlerMethod().getName(), finder.getHandlerMethod(), InteractableViewFinderType.DYNAMIC_FINDER);
-                                if (info != null) {
-                                    interactableView = info;
-                                    break;
+                            String text = sibling.getText();
+                            if(text != null && text.equals("setOnClickListener")) {
+                                Utils.showMessage("#######");
+                                for(PsiElement child: sibling.getChildren()) {
+                                    Utils.showMessage("\t\t\t>>>> " + child);
                                 }
                             }
+//                            sibling.accept(finder);
+//                            if (finder.getHandlerMethod() != null) {
+//                                Utils.showMessage("@#@#@@#");
+//                                InteractableView info = new InteractableView(viewId, finder.getHandlerMethod().getName(), finder.getHandlerMethod(), InteractableViewFinderType.DYNAMIC_FINDER);
+//                                if (info != null) {
+//                                    interactableView = info;
+//                                    break;
+//                                }
+//                            }
                         }
                     }
                 }
