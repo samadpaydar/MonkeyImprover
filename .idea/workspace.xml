@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de77096f-236f-4d66-8ab8-e50a723162cd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -19,15 +17,17 @@
       <file leaf-file-name="DynamicInteractableViewFinder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="125" column="13" selection-start-line="125" selection-start-column="13" selection-end-line="125" selection-end-column="13" />
+            <state relative-caret-position="298">
+              <caret line="91" column="63" selection-start-line="91" selection-start-column="63" selection-end-line="91" selection-end-column="63" />
               <folding>
                 <element signature="e#4560#4561#0" expanded="true" />
                 <element signature="e#4596#4597#0" expanded="true" />
-                <element signature="e#9341#9342#0" expanded="true" />
-                <element signature="e#9380#9381#0" expanded="true" />
-                <element signature="e#9553#9554#0" expanded="true" />
-                <element signature="e#9601#9602#0" expanded="true" />
+                <element signature="e#9859#9860#0" expanded="true" />
+                <element signature="e#9898#9899#0" expanded="true" />
+                <element signature="e#10071#10072#0" expanded="true" />
+                <element signature="e#10119#10120#0" expanded="true" />
+                <element signature="e#15614#15615#0" expanded="true" />
+                <element signature="e#15650#15651#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -49,7 +49,6 @@
       <find>decl</find>
       <find>&gt;&gt;</find>
       <find>getOnClickMethod</find>
-      <find>method</find>
       <find>decla</find>
       <find>public void visitConditionalExpression(PsiConditional</find>
       <find>initi</find>
@@ -66,6 +65,8 @@
       <find>getCallbackMethodInfoByViewId</find>
       <find>asd</find>
       <find>string viewid</find>
+      <find>method</find>
+      <find>visit</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src</dir>
@@ -266,12 +267,12 @@
       <workItem from="1565852019952" duration="12000" />
       <workItem from="1565852047314" duration="11777000" />
       <workItem from="1565964218218" duration="596000" />
-      <workItem from="1566227231091" duration="1180000" />
+      <workItem from="1566227231091" duration="1900000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13578000" />
+    <option name="totallyTimeSpent" value="14298000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -322,10 +323,12 @@
           <folding>
             <element signature="e#4560#4561#0" expanded="true" />
             <element signature="e#4596#4597#0" expanded="true" />
-            <element signature="e#9341#9342#0" expanded="true" />
-            <element signature="e#9380#9381#0" expanded="true" />
-            <element signature="e#9553#9554#0" expanded="true" />
-            <element signature="e#9601#9602#0" expanded="true" />
+            <element signature="e#9859#9860#0" expanded="true" />
+            <element signature="e#9898#9899#0" expanded="true" />
+            <element signature="e#10071#10072#0" expanded="true" />
+            <element signature="e#10119#10120#0" expanded="true" />
+            <element signature="e#15614#15615#0" expanded="true" />
+            <element signature="e#15650#15651#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -404,15 +407,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="125" column="13" selection-start-line="125" selection-start-column="13" selection-end-line="125" selection-end-column="13" />
+        <state relative-caret-position="298">
+          <caret line="91" column="63" selection-start-line="91" selection-start-column="63" selection-end-line="91" selection-end-column="63" />
           <folding>
             <element signature="e#4560#4561#0" expanded="true" />
             <element signature="e#4596#4597#0" expanded="true" />
-            <element signature="e#9341#9342#0" expanded="true" />
-            <element signature="e#9380#9381#0" expanded="true" />
-            <element signature="e#9553#9554#0" expanded="true" />
-            <element signature="e#9601#9602#0" expanded="true" />
+            <element signature="e#9859#9860#0" expanded="true" />
+            <element signature="e#9898#9899#0" expanded="true" />
+            <element signature="e#10071#10072#0" expanded="true" />
+            <element signature="e#10119#10120#0" expanded="true" />
+            <element signature="e#15614#15615#0" expanded="true" />
+            <element signature="e#15650#15651#0" expanded="true" />
           </folding>
         </state>
       </provider>

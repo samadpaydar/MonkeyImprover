@@ -65,26 +65,6 @@ public class DynamicInteractableViewFinder extends InteractableViewFinder {
         }
         return info;
     }
-
-    /*private InteractableViewComplexity getCallbackMethodInfoByViewId(String viewId, List<VirtualFile> relatedJavaFiles) {
-        MethodFinder methodFinder = new MethodFinder();
-        InteractableViewComplexity info = null;
-        MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
-        for (VirtualFile relatedJavaFile : relatedJavaFiles) {
-            PsiFile file = PsiManager.getInstance(monkeyImprover.getProject()).findFile(relatedJavaFile);
-            if (file != null && file instanceof PsiJavaFile) {
-                PsiMethod relatedMethod = methodFinder.findMethodByOnClickAnnotation((PsiJavaFile) file, viewId);
-                if (relatedMethod != null) {
-                    MethodComplexity methodComplexity = methodComplexityAnalyzer.getComplexity(relatedMethod, true);
-                    info = new InteractableViewComplexity(new InteractableView(viewId, relatedMethod.getName(), relatedMethod, InteractableViewFinderType.DYNAMIC_FINDER), methodComplexity);
-                    info.setBoundByAnnotation(true);
-                    break;
-                }
-            }
-        }
-        return info;
-    }
-*/
 }
 
 
@@ -97,10 +77,53 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
     }
 
     @Override
-    public void visitAssignmentExpression(PsiAssignmentExpression expression) {
-        if(viewId.contains("map_empty_panel")) {
-            Utils.showMessage("%%%%%%%%%%%%%%%%%%%%%%%%%");
+    public void visitMethodCallExpression(PsiMethodCallExpression expression) {
+        super.visitCallExpression(expression);
+        try {
+            String calledMethodName = expression.getMethodExpression().getReferenceName();
+            if (calledMethodName.equals("findViewById")) {
+                PsiExpressionList arguments = expression.getArgumentList();
+                PsiExpression firstArgument = arguments.getExpressions()[0];
+                if (firstArgument.getText().equals("R.id." + viewId)) {
+                    if(viewId.contains("map_empty_panel")) {
+                        PsiElement sibling = expression.getNextSibling();
+                        while(sibling != null) {
+                            Utils.showMessage("### SIBLING " + sibling);
+                            sibling = sibling.getNextSibling();
+                        }
+                    }
+                }
+            }
+/*
+            PsiElement qualifier = expression.getMethodExpression().getQualifier();
+            if (qualifier != null) {
+                String name = qualifier.getText();
+                if (name != null && name.equals(variableName)) {
+                    String calledMethodName = expression.getMethodExpression().getReferenceName();
+                    if (calledMethodName.equals("setOnClickListener")) {
+                        PsiExpressionList arguments = expression.getArgumentList();
+                        PsiExpression firstArgument = arguments.getExpressions()[0];
+                        if (firstArgument instanceof PsiNewExpressionImpl) {
+                            handleCase1((PsiNewExpressionImpl) firstArgument);
+                        } else if (firstArgument instanceof PsiThisExpressionImpl) {
+                            handleCase2((PsiThisExpressionImpl) firstArgument);
+                        } else if (firstArgument instanceof PsiReferenceExpressionImpl) {
+                            handleCase3((PsiReferenceExpressionImpl) firstArgument);
+                        } else {
+                            Utils.showMessage("TODO: handle " + firstArgument.getClass());
+                        }
+                    }
+                }
+            }
+            */
+        } catch (Exception e) {
+            Utils.showException(e);
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    public void visitAssignmentExpression(PsiAssignmentExpression expression) {
         super.visitExpression(expression);
         InteractableView info = findDynamicCallbackInfoForView(expression);
         if (info != null) {
@@ -118,9 +141,6 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
     }
 
     private InteractableView findDynamicCallbackInfoForView(PsiDeclarationStatement statement) {
-        if(viewId.contains("map_empty_panel")) {
-            Utils.showMessage("#######");
-        }
         InteractableView result = null;
         PsiDeclarationStatementImpl declarationStatement = (PsiDeclarationStatementImpl) statement;
         try {
