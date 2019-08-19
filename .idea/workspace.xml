@@ -17,15 +17,19 @@
       <file leaf-file-name="DynamicInteractableViewFinder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="90" column="56" selection-start-line="90" selection-start-column="56" selection-end-line="90" selection-end-column="56" />
+            <state relative-caret-position="243">
+              <caret line="95" column="94" selection-start-line="95" selection-start-column="94" selection-end-line="95" selection-end-column="94" />
               <folding>
                 <element signature="e#4560#4561#0" expanded="true" />
                 <element signature="e#4596#4597#0" expanded="true" />
-                <element signature="e#9859#9860#0" expanded="true" />
-                <element signature="e#9898#9899#0" expanded="true" />
+                <element signature="e#4060#4849#0" expanded="true" />
+                <element signature="e#4848#4849#0" expanded="true" />
+                <element signature="e#10788#10789#0" expanded="true" />
+                <element signature="e#10827#10828#0" expanded="true" />
                 <element signature="e#10071#10072#0" expanded="true" />
                 <element signature="e#10119#10120#0" expanded="true" />
+                <element signature="e#11198#11498#0" expanded="true" />
+                <element signature="e#11497#11498#0" expanded="true" />
                 <element signature="e#15614#15615#0" expanded="true" />
                 <element signature="e#15650#15651#0" expanded="true" />
               </folding>
@@ -67,6 +71,8 @@
       <find>string viewid</find>
       <find>method</find>
       <find>visit</find>
+      <find>accept(new</find>
+      <find>new JavaRecursiveElementVisitor()</find>
     </findStrings>
     <dirStrings>
       <dir>D:\Projects\Plugin for Android Studio\MonkyImprover\src</dir>
@@ -267,12 +273,12 @@
       <workItem from="1565852019952" duration="12000" />
       <workItem from="1565852047314" duration="11777000" />
       <workItem from="1565964218218" duration="596000" />
-      <workItem from="1566227231091" duration="2129000" />
+      <workItem from="1566227231091" duration="2399000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14527000" />
+    <option name="totallyTimeSpent" value="14797000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -323,10 +329,14 @@
           <folding>
             <element signature="e#4560#4561#0" expanded="true" />
             <element signature="e#4596#4597#0" expanded="true" />
-            <element signature="e#9859#9860#0" expanded="true" />
-            <element signature="e#9898#9899#0" expanded="true" />
+            <element signature="e#4060#4849#0" expanded="true" />
+            <element signature="e#4848#4849#0" expanded="true" />
+            <element signature="e#10788#10789#0" expanded="true" />
+            <element signature="e#10827#10828#0" expanded="true" />
             <element signature="e#10071#10072#0" expanded="true" />
             <element signature="e#10119#10120#0" expanded="true" />
+            <element signature="e#11198#11498#0" expanded="true" />
+            <element signature="e#11497#11498#0" expanded="true" />
             <element signature="e#15614#15615#0" expanded="true" />
             <element signature="e#15650#15651#0" expanded="true" />
           </folding>
@@ -407,15 +417,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/layouts/callbacks/DynamicInteractableViewFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="90" column="56" selection-start-line="90" selection-start-column="56" selection-end-line="90" selection-end-column="56" />
+        <state relative-caret-position="243">
+          <caret line="95" column="94" selection-start-line="95" selection-start-column="94" selection-end-line="95" selection-end-column="94" />
           <folding>
             <element signature="e#4560#4561#0" expanded="true" />
             <element signature="e#4596#4597#0" expanded="true" />
-            <element signature="e#9859#9860#0" expanded="true" />
-            <element signature="e#9898#9899#0" expanded="true" />
+            <element signature="e#4060#4849#0" expanded="true" />
+            <element signature="e#4848#4849#0" expanded="true" />
+            <element signature="e#10788#10789#0" expanded="true" />
+            <element signature="e#10827#10828#0" expanded="true" />
             <element signature="e#10071#10072#0" expanded="true" />
             <element signature="e#10119#10120#0" expanded="true" />
+            <element signature="e#11198#11498#0" expanded="true" />
+            <element signature="e#11497#11498#0" expanded="true" />
             <element signature="e#15614#15615#0" expanded="true" />
             <element signature="e#15650#15651#0" expanded="true" />
           </folding>

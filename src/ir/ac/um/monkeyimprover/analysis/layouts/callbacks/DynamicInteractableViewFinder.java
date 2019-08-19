@@ -85,12 +85,23 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
                 PsiExpressionList arguments = expression.getArgumentList();
                 PsiExpression firstArgument = arguments.getExpressions()[0];
                 if (firstArgument.getText().equals("R.id." + viewId)) {
-                    if(viewId.contains("map_empty_panel")) {
-                        PsiElement[] children = expression.getChildren();
-                        for(PsiElement child: children) {
-                            Utils.showMessage("### child " + child);
-                            //sibling = sibling.getNextSibling();
-                        }
+                    if (viewId.contains("map_empty_panel")) {
+                        expression.getParent().accept(new JavaRecursiveElementVisitor() {
+                            @Override
+                            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
+                                super.visitCallExpression(expression);
+                                try {
+                                    String calledMethodName = expression.getMethodExpression().getReferenceName();
+                                    if (calledMethodName.equals("setOnClickListener")) {
+                                        Utils.showMessage("########## " + expression.getText());
+                                    }
+                                } catch (Exception ex) {
+                                    Utils.showException(ex);
+                                    ex.printStackTrace();
+                                }
+
+                            }
+                        });
                     }
                 }
             }
