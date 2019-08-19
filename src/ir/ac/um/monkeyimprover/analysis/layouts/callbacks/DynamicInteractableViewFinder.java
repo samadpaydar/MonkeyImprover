@@ -86,22 +86,20 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
                 PsiExpression firstArgument = arguments.getExpressions()[0];
                 if (firstArgument.getText().equals("R.id." + viewId)) {
                     if (viewId.contains("map_empty_panel")) {
-                        expression.getParent().accept(new JavaRecursiveElementVisitor() {
-                            @Override
-                            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                                super.visitCallExpression(expression);
-                                try {
-                                    String calledMethodName = expression.getMethodExpression().getReferenceName();
-                                    if (calledMethodName.equals("setOnClickListener")) {
-                                        Utils.showMessage("########## " + expression.getText());
-                                    }
-                                } catch (Exception ex) {
-                                    Utils.showException(ex);
-                                    ex.printStackTrace();
+                        OnClickFinder finder = new OnClickFinder(null);
+                        PsiElement[] siblings = expression.getParent().getChildren();
+                        for (PsiElement sibling : siblings) {
+                            Utils.showMessage("### " + sibling);
+                            sibling.accept(finder);
+                            if (finder.getHandlerMethod() != null) {
+                                Utils.showMessage("@#@#@@#");
+                                InteractableView info = new InteractableView(viewId, finder.getHandlerMethod().getName(), finder.getHandlerMethod(), InteractableViewFinderType.DYNAMIC_FINDER);
+                                if (info != null) {
+                                    interactableView = info;
+                                    break;
                                 }
-
                             }
-                        });
+                        }
                     }
                 }
             }
@@ -269,8 +267,7 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
      *
      * @param newExpression
      */
-    private void handleCase1
-    (PsiNewExpressionImpl newExpression) {
+    private void handleCase1(PsiNewExpressionImpl newExpression) {
         newExpression.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethod(PsiMethod method) {
