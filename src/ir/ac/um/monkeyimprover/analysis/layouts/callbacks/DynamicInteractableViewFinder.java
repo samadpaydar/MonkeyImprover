@@ -66,7 +66,7 @@ public class DynamicInteractableViewFinder extends InteractableViewFinder {
         return info;
     }
 
-    private InteractableViewComplexity getCallbackMethodInfoByViewId(String viewId, List<VirtualFile> relatedJavaFiles) {
+    /*private InteractableViewComplexity getCallbackMethodInfoByViewId(String viewId, List<VirtualFile> relatedJavaFiles) {
         MethodFinder methodFinder = new MethodFinder();
         InteractableViewComplexity info = null;
         MethodComplexityAnalyzer methodComplexityAnalyzer = new MethodComplexityAnalyzer(monkeyImprover);
@@ -84,7 +84,7 @@ public class DynamicInteractableViewFinder extends InteractableViewFinder {
         }
         return info;
     }
-
+*/
 }
 
 
@@ -92,14 +92,17 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
     private InteractableView interactableView = null;
     private String viewId;
 
-    public DynamicCallbackVisitor(String viewId) {
+    DynamicCallbackVisitor(String viewId) {
         this.viewId = viewId;
     }
 
     @Override
     public void visitAssignmentExpression(PsiAssignmentExpression expression) {
+        if(viewId.contains("map_empty_panel")) {
+            Utils.showMessage("%%%%%%%%%%%%%%%%%%%%%%%%%");
+        }
         super.visitExpression(expression);
-        InteractableView info = findDynamicCallbackInfoForView(expression, viewId);
+        InteractableView info = findDynamicCallbackInfoForView(expression);
         if (info != null) {
             interactableView = info;
         }
@@ -108,13 +111,16 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
     @Override
     public void visitDeclarationStatement(PsiDeclarationStatement statement) {
         super.visitStatement(statement);
-        InteractableView info = findDynamicCallbackInfoForView(statement, viewId);
+        InteractableView info = findDynamicCallbackInfoForView(statement);
         if (info != null) {
             interactableView = info;
         }
     }
 
-    private InteractableView findDynamicCallbackInfoForView(PsiDeclarationStatement statement, String viewId) {
+    private InteractableView findDynamicCallbackInfoForView(PsiDeclarationStatement statement) {
+        if(viewId.contains("map_empty_panel")) {
+            Utils.showMessage("#######");
+        }
         InteractableView result = null;
         PsiDeclarationStatementImpl declarationStatement = (PsiDeclarationStatementImpl) statement;
         try {
@@ -126,7 +132,7 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
                     PsiTypeCastExpressionImpl typeCastExpression = (PsiTypeCastExpressionImpl) expression;
                     PsiExpression operand = typeCastExpression.getOperand();
                     if (operand instanceof PsiMethodCallExpressionImpl) {
-                        if (hasAccessToView((PsiMethodCallExpression) operand, viewId)) {
+                        if (hasAccessToView((PsiMethodCallExpression) operand)) {
                             OnClickFinder finder = new OnClickFinder(variable.getName());
                             PsiElement[] siblings = statement.getParent().getChildren();
                             for (PsiElement sibling : siblings) {
@@ -147,13 +153,13 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
         return result;
     }
 
-    private InteractableView findDynamicCallbackInfoForView(PsiAssignmentExpression assignmentExpression, String viewId) {
+    private InteractableView findDynamicCallbackInfoForView(PsiAssignmentExpression assignmentExpression) {
         InteractableView result = null;
         PsiExpression rightExpression = assignmentExpression.getRExpression();
         PsiExpression leftExpression = assignmentExpression.getLExpression();
         if (rightExpression instanceof PsiMethodCallExpression) {
             PsiMethodCallExpression methodCallExpression = (PsiMethodCallExpression) rightExpression;
-            if (hasAccessToView(methodCallExpression, viewId)) {
+            if (hasAccessToView(methodCallExpression)) {
                 String variableName = leftExpression.getReference().getElement().getText();
                 OnClickFinder finder = new OnClickFinder(variableName);
                 //In the following statement, the two calls to getParent() is intentional, not a mistake, since it does not work with single call
@@ -170,8 +176,7 @@ class DynamicCallbackVisitor extends JavaRecursiveElementVisitor {
         return result;
     }
 
-
-    private boolean hasAccessToView(PsiMethodCallExpression methodCallExpression, String viewId) {
+    private boolean hasAccessToView(PsiMethodCallExpression methodCallExpression) {
         boolean result = false;
         String calledMethodName = methodCallExpression.getMethodExpression().getReferenceName();
         if (calledMethodName.equals("findViewById")) {
@@ -194,7 +199,7 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
     private String variableName;
     private PsiMethod handlerMethod;
 
-    public OnClickFinder(String variableName) {
+    OnClickFinder(String variableName) {
         this.variableName = variableName;
     }
 
@@ -233,7 +238,8 @@ class OnClickFinder extends JavaRecursiveElementVisitor {
      *
      * @param newExpression
      */
-    private void handleCase1(PsiNewExpressionImpl newExpression) {
+    private void handleCase1
+    (PsiNewExpressionImpl newExpression) {
         newExpression.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitMethod(PsiMethod method) {
