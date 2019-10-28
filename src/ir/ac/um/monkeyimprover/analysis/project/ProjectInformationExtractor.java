@@ -55,19 +55,19 @@ public class ProjectInformationExtractor {
 
     public VirtualFile getSourceDirectory(VirtualFile directory) {
 
-        return getChildDirectory("src", directory);
+        return getChildDirectory("src", directory, true);
     }
 
     private VirtualFile getMainDirectory(VirtualFile directory) {
-        return getChildDirectory("main", directory);
+        return getChildDirectory("main", directory, false);
     }
 
     private VirtualFile getResourcesDirectory(VirtualFile directory) {
-        return getChildDirectory("res", directory);
+        return getChildDirectory("res", directory, true);
     }
 
     private VirtualFile getLayoutDirectory(VirtualFile directory) {
-        return getChildDirectory("layout", directory);
+        return getChildDirectory("layout", directory, true);
     }
 
     private boolean hasAndroidManifest(VirtualFile directory) {
@@ -88,7 +88,7 @@ public class ProjectInformationExtractor {
         return result;
     }
 
-    private VirtualFile getChildDirectory(String childDirectoryName, VirtualFile parentDirectory) {
+    private VirtualFile getChildDirectory(String childDirectoryName, VirtualFile parentDirectory, boolean depthFirst) {
         VirtualFile result = null;
         VirtualFile[] children = parentDirectory.getChildren();
         for (VirtualFile child : children) {
@@ -105,8 +105,8 @@ public class ProjectInformationExtractor {
                         result = child;
                         break;
                     }
-                } else {
-                    VirtualFile temp = getChildDirectory(childDirectoryName, child);
+                } else if (depthFirst) {
+                    VirtualFile temp = getChildDirectory(childDirectoryName, child, depthFirst);
                     if (temp != null) {
                         result = temp;
                         break;
