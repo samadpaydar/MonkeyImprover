@@ -1,6 +1,7 @@
 package ir.ac.um.monkeyimprover.analysis;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import ir.ac.um.monkeyimprover.model.LayoutInfo;
@@ -34,17 +35,18 @@ public class MonkeyImprover implements Runnable {
         Utils.showMessage("Started processing project " + project.getName());
         Utils.showMessage("Collecting project Java classes...");
         ProjectInformationExtractor projectInformationExtractor = new ProjectInformationExtractor(psiElement);
-        this.sourceDirectory = projectInformationExtractor.getSourceDirectory(project.getBaseDir());
+        VirtualFile baseDirectory = LocalFileSystem.getInstance().findFileByPath(project.getBasePath());
+        this.sourceDirectory = projectInformationExtractor.getSourceDirectory(baseDirectory);
         this.projectJavaClasses = projectInformationExtractor.getProjectJavaClasses();
         Utils.showMessage("Extracting layouts files...");
-        List<VirtualFile> layoutFiles = projectInformationExtractor.getLayoutXMLFiles(project.getBaseDir());
+        List<VirtualFile> layoutFiles = projectInformationExtractor.getLayoutXMLFiles(baseDirectory);
         Utils.showMessage("Creating backup for layout files...");
-        createBackup(project.getBaseDir(), layoutFiles);
+        createBackup(baseDirectory, layoutFiles);
         Utils.showMessage("Refactorying layout files...");
         LayoutInformationExtractor layoutInformationExtractor = new LayoutInformationExtractor(this);
         for (VirtualFile layoutFile : layoutFiles) {
             Utils.showMessage("\tLayout " + layoutFile.getName());
-            List<InteractableViewComplexity> info = layoutInformationExtractor.getInteractableViews(project.getBaseDir(), layoutFile);
+            List<InteractableViewComplexity> info = layoutInformationExtractor.getInteractableViews(baseDirectory, layoutFile);
             for(InteractableViewComplexity methodInfo: info) {
                 Utils.showMessage("\t\tCallback: " + methodInfo);
             }

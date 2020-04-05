@@ -147,13 +147,7 @@ public class MethodComplexityAnalyzer {
     }
 
     private boolean isAbstract(PsiMethod method) {
-        JvmModifier[] modifiers = method.getModifiers();
-        for (JvmModifier modifier : modifiers) {
-            if (modifier.toString().equalsIgnoreCase("abstract")) {
-                return true;
-            }
-        }
-        return false;
+        return method.hasModifier(JvmModifier.ABSTRACT);
     }
 
     private List<PsiClass> getImplementingClasses(PsiClass theInterface) {

@@ -61,7 +61,8 @@ public class AnalyzeAction extends AnAction {
         Project project = anActionEvent.getProject();
         PsiElement psiElement = anActionEvent.getData(LangDataKeys.PSI_ELEMENT);
         boolean enabled = project != null && (psiElement instanceof PsiJavaDirectoryImpl)
-                && ((PsiDirectory) psiElement).getVirtualFile().getCanonicalPath().equals(project.getBaseDir().getCanonicalPath());
+                && ((PsiDirectory) psiElement).getVirtualFile().getCanonicalPath().equals(
+                        project.getBasePath());
         anActionEvent.getPresentation().setEnabledAndVisible(enabled);
     }
 

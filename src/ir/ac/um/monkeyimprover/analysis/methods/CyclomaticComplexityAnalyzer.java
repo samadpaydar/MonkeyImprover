@@ -5,6 +5,7 @@ import com.intellij.psi.*;
 public class CyclomaticComplexityAnalyzer {
     public int getComplexity(PsiMethod method) {
         PsiCodeBlock methodBody = method.getBody();
+
         //TODO modify the implementation
         /* for a simple method that has if-then-else statement, complexity should be 2, but 3 is returned.
          the reason is that the default value of 1 is added to the complexity of the method.
