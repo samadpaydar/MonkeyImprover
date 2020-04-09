@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="MonkyImprover:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MonkyImprover_jar</output-path>
+    <root id="archive" name="MonkyImprover.jar">
+      <element id="module-output" name="MonkyImprover" />
+    </root>
+  </artifact>
+</component>

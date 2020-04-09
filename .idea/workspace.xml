@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="MonkyImprover:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="610fc898-5799-4baa-b1f6-9db71757c850" name="Default" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="monkeyimprover" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectId" id="1a8NlE1lmgrQvykIxw0Dn1ucF0f" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/MonkyImprover.iml" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Plugin" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+      <module name="MonkyImprover" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -ea" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="610fc898-5799-4baa-b1f6-9db71757c850" name="Default" comment="" />
+      <created>1585499728072</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585499728072</updated>
+      <workItem from="1585499729880" duration="289000" />
+      <workItem from="1585500475797" duration="194000" />
+      <workItem from="1586114468903" duration="86000" />
+      <workItem from="1586114750861" duration="280000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="849000" />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="275" y="21" key="#Project_Structure" timestamp="1586117716217">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="21" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1586117716217" />
+    <state x="137" y="17" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586118083854">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="137" y="17" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1586118083854" />
+    <state x="413" y="146" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1586117922511">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="413" y="146" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1366.728@0.0.1366.728" timestamp="1586117922511" />
+    <state x="475" y="168" key="FileChooserDialogImpl" timestamp="1586117984483">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="475" y="168" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1586117984483" />
+    <state width="661" height="377" key="GridCell.Tab.0.bottom" timestamp="1586119710725">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="661" height="377" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586119710725" />
+    <state width="661" height="377" key="GridCell.Tab.0.center" timestamp="1586119710725">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="661" height="377" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1586119710725" />
+    <state width="661" height="377" key="GridCell.Tab.0.left" timestamp="1586119710725">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="661" height="377" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1586119710725" />
+    <state width="661" height="377" key="GridCell.Tab.0.right" timestamp="1586119710725">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="661" height="377" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1586119710725" />
+    <state width="661" height="377" key="GridCell.Tab.1.bottom" timestamp="1586119710725">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="661" height="377" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586119710725" />
+    <state width="661" height="377" key="GridCell.Tab.1.center" timestamp="1586119710725">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="661" height="377" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1586119710725" />
+    <state width="661" height="377" key="GridCell.Tab.1.left" timestamp="1586119710725">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="661" height="377" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1586119710725" />
+    <state width="661" height="377" key="GridCell.Tab.1.right" timestamp="1586119710725">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="661" height="377" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1586119710725" />
+    <state x="263" y="97" key="IDE.errors.dialog" timestamp="1586118967235">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="263" y="97" key="IDE.errors.dialog/0.0.1366.728@0.0.1366.728" timestamp="1586118967235" />
+    <state x="348" y="61" key="NewModule_or_Project.wizard" timestamp="1586116586260">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="348" y="61" key="NewModule_or_Project.wizard/0.0.1366.728@0.0.1366.728" timestamp="1586116586260" />
+    <state x="163" y="0" key="SettingsEditor" timestamp="1586119572572">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1586119572572" />
+    <state x="384" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1586113635738">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="384" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1586113635738" />
+    <state x="380" y="0" width="606" height="728" key="find.popup" timestamp="1586119321127">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="380" y="0" width="606" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1586119321127" />
+    <state x="66" y="0" key="new project wizard" timestamp="1586116475593">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="66" y="0" key="new project wizard/0.0.1366.728@0.0.1366.728" timestamp="1586116475593" />
+  </component>
+</project>
