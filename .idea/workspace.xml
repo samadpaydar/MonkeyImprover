@@ -6,7 +6,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="610fc898-5799-4baa-b1f6-9db71757c850" name="Default" comment="" />
+    <list default="true" id="610fc898-5799-4baa-b1f6-9db71757c850" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/MonkyImprover_jar/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/MonkyImprover_jar/MonkyImprover.jar" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +52,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/MonkyImprover.iml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="project.propCompiler" />
@@ -169,10 +172,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="348" y="61" key="NewModule_or_Project.wizard/0.0.1366.728@0.0.1366.728" timestamp="1586116586260" />
-    <state x="163" y="0" key="SettingsEditor" timestamp="1586119572572">
+    <state x="163" y="0" key="SettingsEditor" timestamp="1586449911489">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1586119572572" />
+    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1586449911489" />
     <state x="384" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1586113635738">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
