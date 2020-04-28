@@ -1,0 +1,42 @@
+<idea-plugin>
+    <id>ir.ac.um.monkeyimprover</id>
+    <name>Monkey Improver</name>
+    <version>1.0</version>
+    <vendor email="s-paydar@um.ac.ir" url="http://s-paydar.profcms.um.ac.ir/index.php?mclang=en-GB">Samad Paydar's
+        Homepage
+    </vendor>
+
+    <description><![CDATA[
+      This is a plugin for Android Studio to make Android apps more Monkey-Friendly
+    ]]></description>
+
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="141.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <toolWindow id="MonkeyImprover"
+                    anchor="bottom"
+                    icon="/images/monkey.png"
+                    factoryClass="ir.ac.um.monkeyimprover.ui.MonkeyImproverToolWindowFactory"></toolWindow>
+    </extensions>
+
+    <actions>
+        <action id="ir.ac.um.monkeyimprover.ui.AnalyzeAction" class="ir.ac.um.monkeyimprover.ui.AnalyzeAction"
+                text="Do Monkey Analysis"
+                description="Refactors app layout to become more monkey-friendly">
+            <add-to-group group-id="AnalyzeMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift M"/>
+        </action>
+    </actions>
+
+</idea-plugin>

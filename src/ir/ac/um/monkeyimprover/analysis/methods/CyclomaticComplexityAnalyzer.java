@@ -3,6 +3,7 @@ package ir.ac.um.monkeyimprover.analysis.methods;
 import com.intellij.psi.*;
 
 public class CyclomaticComplexityAnalyzer {
+
     public int getComplexity(PsiMethod method) {
         PsiCodeBlock methodBody = method.getBody();
 

@@ -7,8 +7,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="610fc898-5799-4baa-b1f6-9db71757c850" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MonkyImprover.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/MonkyImprover.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/MonkyImprover_jar/MonkyImprover.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/MonkyImprover_jar/MonkyImprover.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/CyclomaticComplexityAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/analysis/methods/CyclomaticComplexityAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/ui/AnalyzeAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ir/ac/um/monkeyimprover/ui/AnalyzeAction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +42,12 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1" />
+    <option name="y" value="1" />
+    <option name="width" value="1364" />
+    <option name="height" value="726" />
+  </component>
   <component name="ProjectId" id="1a8NlE1lmgrQvykIxw0Dn1ucF0f" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -52,7 +63,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/MonkyImprover.iml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="project.propCompiler" />
@@ -106,32 +117,38 @@
       <workItem from="1585500475797" duration="194000" />
       <workItem from="1586114468903" duration="86000" />
       <workItem from="1586114750861" duration="280000" />
+      <workItem from="1587503796576" duration="591000" />
+      <workItem from="1587565970686" duration="103000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="849000" />
+    <option name="totallyTimeSpent" value="1543000" />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="275" y="21" key="#Project_Structure" timestamp="1586117716217">
+    <state x="275" y="21" key="#Project_Structure" timestamp="1588088293522">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="21" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1586117716217" />
+    <state x="275" y="21" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1588088293522" />
     <state x="137" y="17" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586118083854">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="137" y="17" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1586118083854" />
+    <state x="488" y="72" key="#com.intellij.ide.util.MemberChooser" timestamp="1588074312322">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="488" y="72" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1588074312322" />
     <state x="413" y="146" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1586117922511">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="146" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1366.728@0.0.1366.728" timestamp="1586117922511" />
-    <state x="475" y="168" key="FileChooserDialogImpl" timestamp="1586117984483">
+    <state x="475" y="144" key="FileChooserDialogImpl" timestamp="1588088289922">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="475" y="168" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1586117984483" />
+    <state x="475" y="144" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1588088289922" />
     <state width="661" height="377" key="GridCell.Tab.0.bottom" timestamp="1586119710725">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -172,10 +189,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="348" y="61" key="NewModule_or_Project.wizard/0.0.1366.728@0.0.1366.728" timestamp="1586116586260" />
-    <state x="163" y="0" key="SettingsEditor" timestamp="1586449911489">
+    <state x="163" y="0" key="SettingsEditor" timestamp="1588088250428">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1586449911489" />
+    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1588088250428" />
     <state x="384" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1586113635738">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
