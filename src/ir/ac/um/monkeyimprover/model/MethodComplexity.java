@@ -15,7 +15,15 @@ public class MethodComplexity {
     private double calledMethodComplexity;
     private double intentComplexity;
     private double asyncComplexity;
+    private double halsteadComplexity;
 
+    public void setHalsteadComplexity(double halsteadComplexity) {
+        this.halsteadComplexity = halsteadComplexity;
+    }
+
+    public double getHalsteadComplexity() {
+        return halsteadComplexity;
+    }
 
     public double getCyclomaticComplexity() {
         return cyclomaticComplexity;
@@ -51,7 +59,7 @@ public class MethodComplexity {
 
     public double getTotalComplexity() {
         return cyclomaticComplexity + calledMethodComplexity
-                + intentComplexity + asyncComplexity;
+                + intentComplexity + asyncComplexity + halsteadComplexity;
     }
 
     @Override
@@ -62,6 +70,7 @@ public class MethodComplexity {
                 + " calledMethodComplexity: " + String.format("%.2f", calledMethodComplexity)
                 + " intentComplexity: " + String.format("%.2f", intentComplexity)
                 + " asyncComplexity: " + String.format("%.2f", asyncComplexity)
+                + " halsteadComplexity: " + String.format("%.2f", halsteadComplexity)
                 + " totalComplexity: " + String.format("%.2f", totalComplexity);
     }
 }

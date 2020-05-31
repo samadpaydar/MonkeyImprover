@@ -50,7 +50,7 @@ public class MonkeyImprover implements Runnable {
             for(InteractableViewComplexity methodInfo: info) {
                 Utils.showMessage("\t\tCallback: " + methodInfo);
             }
-            refactorLayout(new LayoutInfo(layoutFile, info));
+//            refactorLayout(new LayoutInfo(layoutFile, info));
         }
 
         Utils.showMessage("Finished");

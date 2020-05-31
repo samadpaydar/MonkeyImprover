@@ -44,10 +44,14 @@ public class MethodComplexityAnalyzer {
             intentComplexity = getIntentComplexity(method);
             asyncComplexity = getAsyncTaskComplexity(method);
         }
+
+        double halsteadComplexity = getHalsteadComplexity(method);
+
         result.setCyclomaticComplexity(cyclomaticComplexity);
         result.setCalledMethodComplexity(calledMethodComplexity);
         result.setIntentComplexity(intentComplexity);
         result.setAsyncComplexity(asyncComplexity);
+        result.setHalsteadComplexity(halsteadComplexity);
 
         return result;
     }
@@ -67,6 +71,12 @@ public class MethodComplexityAnalyzer {
     private double getAsyncTaskComplexity(PsiMethod method) {
         AsyncTaskComplexityAnalyzer asyncTaskComplexityAnalyzer = new AsyncTaskComplexityAnalyzer(monkeyImprover);
         return asyncTaskComplexityAnalyzer.getComplexity(method);
+    }
+
+    private double getHalsteadComplexity(PsiMethod method) {
+        HalsteadComplexityAnalyzer halsteadComplexityAnalyzer = new HalsteadComplexityAnalyzer();
+        return  halsteadComplexityAnalyzer.getComplexity(method);
+
     }
 
     private boolean isLocalMethod(PsiMethod calledMethod) {
