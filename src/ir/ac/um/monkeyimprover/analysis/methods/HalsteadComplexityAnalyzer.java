@@ -83,6 +83,8 @@ public class HalsteadComplexityAnalyzer {
         operatorList = new ArrayList<>();
         operandList = new ArrayList<>();
 
+        if(method.getBody() == null)
+            return 0;
 
         // detecting just unique variables
         method.getBody().accept(new JavaRecursiveElementVisitor() {
@@ -116,13 +118,6 @@ public class HalsteadComplexityAnalyzer {
             }
         });
 
-
-
-
-
-
-
-
         method.getBody().accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitJavaToken(PsiJavaToken token) {
@@ -150,10 +145,6 @@ public class HalsteadComplexityAnalyzer {
         double result = 0;
         if(n2 != 0)
             result =  ((double) n1/2) * ((double) N2/n2);
-
-
-
-
 
         return result;
     }
